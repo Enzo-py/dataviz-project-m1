@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJET MBAPPE</title>
+
+    <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" rel="stylesheet" /> -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" as="style" onload="this.onload=null;this.rel='stylesheet'">
+</head>
+<body onload="create_graph_layout()">
+    <main>
+        <menu class="right">
+            <div class="search-blob">
+                <input type="text" id="search" placeholder="Search for a team / player" list="search-list">
+                <span class="material-symbols-outlined">search</span>
+                <datalist id="search-list">
+                    <option value="Paris Saint-Germain"></option>
+                    <option value="Olympique de Marseille"></option>
+                    <option value="Olympique Lyonnais"></option>
+                    <option value="AS Monaco"></option>
+                    <option value="..."></option>
+                </datalist>
+            </div>
+
+            <button >
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 220, 'GRAD' 200, 'opsz' 40;"title="Match">sports_soccer</span>
+            </button>
+            
+        </menu>
+        <div class="map"></div>
+    </main>
+</body>
+</html>
