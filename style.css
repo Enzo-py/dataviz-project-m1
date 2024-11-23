@@ -122,13 +122,23 @@ div.las-palmas span {
 .logo-wrapper > div { 
     display: none;
     flex-direction: column;
-    row-gap: 8px;
-    background-color: var(--background-color);
     align-items: center;
     padding: 10px;
-    border-radius: 8px;
+    background-color: var(--background-color);
     border: solid 2px var(--secondary-color);
+    border-radius: 8px;
+    row-gap: 8px;
 }
+
+.logo-wrapper > div > div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px;
+    height: fit-content;
+    max-height: min(calc(100svh - 40px - 22px), calc((150px + 8px) * 5));
+}
+
 .logo-wrapper > div.active, .logo-wrapper > .logo-city.force-active { display: flex; }
 
 .logo-wrapper > div h3 {

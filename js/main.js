@@ -63,10 +63,8 @@ function city_event(event, city_name) {
 }
     
 function render_map() {
-    
     wanted_cities_names = ctx.data["clubs_cities"].map(d => d.City.toLowerCase())
 
-    // ctx.data["comm2016"].features = ctx.data["comm2016"].features.filter(d => wanted_cities_names.includes(d.properties.COMM_NAME.toLowerCase()) || wanted_cities_names.includes(d.properties.NAME_NSI ? d.properties.NAME_NSI.toLowerCase() : ''))
     // create new attr: NAME
     ctx.data["cities"].features.forEach(d => {
         d.properties.NAME = d.properties.NUTS_NAME ? d.properties.NUTS_NAME : d.properties.COMM_NAME
@@ -76,7 +74,7 @@ function render_map() {
     wanted_cities_names = wanted_cities_names.filter(d => !finded_cities.includes(d))
     wanted_cities_names = new Set(wanted_cities_names.sort())
     if (wanted_cities_names.size > 0) console.warn("Not found cities:", wanted_cities_names)
-        
+
     wanted_countries = ["ES", "PT", "FR", "IT", "DE", "BE", "UK", "NL", "IE", "LU", "CH"]
     ctx.data["map-focus"] = JSON.parse(JSON.stringify(ctx.data["nutsrg"]))
     ctx.data["map-focus"].features = ctx.data["nutsrg"].features.filter(d => wanted_countries.includes(d.properties.id.slice(0, 2)))
@@ -109,9 +107,9 @@ function render_map() {
         .attr("stroke-width", 1.5)
         .style("cursor", "pointer")
         .attr("name", d => d.properties.NAME.toLowerCase())
-        .on("click", event, d => city_event(event, d.properties.NAME))
-        .on("mouseenter", event, d => city_event(event, d.properties.NAME))
-        .on("mouseleave", event, d => city_event(event, d.properties.NAME))
+        .on("click", (event, d) => city_event(event, d.properties.NAME))
+        .on("mouseenter", (event, d) => city_event(event, d.properties.NAME))
+        .on("mouseleave", (event, d) => city_event(event, d.properties.NAME))
         .append("title")
         .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1))
     
@@ -138,7 +136,7 @@ function render_map() {
         city_name = d.City.split(" ").join("-").split("/")[0]
 
         // logo storage
-        logos_city = logos_wrapper.select("#" + city_name.toLowerCase())
+        logos_city = logos_wrapper.select("#" + city_name.toLowerCase() + " .imgs-wrapper")
         if (logos_city.empty()) {
             logos_city = logos_wrapper.append("div")
                 .attr("id", city_name.toLowerCase())
@@ -146,6 +144,8 @@ function render_map() {
                 .append("h3")
                 .text(d.City)
                 .select(function() { return this.parentNode })
+                .append("div")
+                .attr("class", "imgs-wrapper")
         }
         logos_city.append("img") // Logo_URL
             .attr("src", club_logo.Logo_URL)
