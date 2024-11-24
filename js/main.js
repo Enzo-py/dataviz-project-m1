@@ -1,5 +1,3 @@
-
-
 const ctx = {
     MAP_W: window.innerWidth,
     MAP_H: window.innerHeight + 40,
@@ -43,7 +41,7 @@ function load_data() {
 }
 
 function city_event(event, city_name) {
-    city_name = city_name.toLowerCase().split(" ").join("-").split("/")[0]
+    city_name = city_name_to_id(city_name)
     let logo = d3.select(".logo-city#" + city_name)
 
     if (event.type == "click") {
@@ -70,6 +68,7 @@ function render_map() {
         d.properties.NAME = d.properties.NUTS_NAME ? d.properties.NUTS_NAME : d.properties.COMM_NAME
     })
 
+    ctx.data["cities"].features = ctx.data["cities"].features.filter(d => wanted_cities_names.includes(d.properties.NAME.toLowerCase()))
     finded_cities = ctx.data["cities"].features.map(d => d.properties.NAME.toLowerCase())
     wanted_cities_names = wanted_cities_names.filter(d => !finded_cities.includes(d))
     wanted_cities_names = new Set(wanted_cities_names.sort())
@@ -133,13 +132,13 @@ function render_map() {
     
     ctx.data["clubs_cities"].forEach(d => {
         let club_logo = ctx.data["clubs_logo"].filter(e => e.Club == d.Club)[0]
-        city_name = d.City.split(" ").join("-").split("/")[0]
+        city_name = city_name_to_id(d.City)
 
         // logo storage
         logos_city = logos_wrapper.select("#" + city_name.toLowerCase() + " .imgs-wrapper")
         if (logos_city.empty()) {
             logos_city = logos_wrapper.append("div")
-                .attr("id", city_name.toLowerCase())
+                .attr("id", city_name)
                 .attr("class", "logo-city")
                 .append("h3")
                 .text(d.City)
@@ -153,6 +152,13 @@ function render_map() {
             .attr("title", d.Club)
             .attr("class", "club-logo")
     })
+}
+
+function city_name_to_id(city_name) {
+    city_name = city_name.toLowerCase().split(" ").join("-").split("/")[0]
+    allowed_chars = "abcdefghijklmnopqrstuvwxyz-"
+    city_name = city_name.split("").filter(c => allowed_chars.includes(c)).join("")
+    return city_name
 }
 
 function update_map() {
