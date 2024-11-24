@@ -152,6 +152,22 @@ function render_map() {
             .attr("title", d.Club)
             .attr("class", "club-logo")
     })
+
+    // populate datalist for search
+    let datalist = d3.select("main #search-list")
+    cities = Array.from(new Set(ctx.data["clubs_cities"].map(d => d.City))).sort()
+    cities.forEach(city => {
+        datalist.append("option")
+            .attr("value", city)
+            .attr("name", "city")
+    })
+
+    clubs = Array.from(new Set(ctx.data["clubs_cities"].map(d => d.Club))).sort()
+    clubs.forEach(club => {
+        datalist.append("option")
+            .attr("value", club)
+            .attr("name", "club")
+    })
 }
 
 function city_name_to_id(city_name) {
@@ -182,4 +198,28 @@ function update_map() {
     d3.select("#cities")
         .selectAll("path")
         .attr("d", ctx.path)
+}
+
+function search(event, input) {
+    if (event.key != "Enter") return
+    let search = input.value.toLowerCase()
+    
+    let possible_cities = ctx.data["clubs_cities"].filter(d => d.City.toLowerCase() == search)
+    let possible_clubs = ctx.data["clubs_cities"].filter(d => d.Club.toLowerCase() == search)
+
+    if (possible_cities.length > 0) {
+        city_name = city_name_to_id(possible_cities[0].City)
+        city_event({type: "click"}, possible_cities[0].City)
+        input.classList.add("found")
+        setTimeout(() => input.classList.remove("found"), 500)
+        return
+    }
+    if (possible_clubs.length > 0) {
+        console.log("Club:", possible_clubs[0].Club)
+        return
+    }
+
+    // animation input not found
+    input.classList.add("not-found")
+    setTimeout(() => input.classList.remove("not-found"), 500)
 }
