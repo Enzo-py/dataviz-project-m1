@@ -4,6 +4,9 @@
     --shadow-color: #878787;
     --sea-background: linear-gradient(90deg, rgb(36 55 101) 10%, #30679f 100%);
     --earth-color: #fff;
+
+    --danger-color: #af2c35;
+    --success-color: #2c9f2c;
 }
 
 body, body * {
@@ -76,6 +79,38 @@ menu.right > button span:hover {
     padding: 2px;
     margin: 0;
     outline: none !important;
+}
+
+/* shake animation */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-10px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(10px);
+    }
+}
+
+.search-blob:has(input.not-found) {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+    animation: shake 0.5s;
+}
+
+.search-blob input.not-found {
+    color: var(--danger-color);
+}
+
+.search-blob:has(input.found) {
+    color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.search-blob input.found {
+    color: var(--success-color);
 }
 
 .search-blob span {
@@ -153,4 +188,5 @@ img.club-logo {
     border: solid 1px;
     border-radius: 8px;
     cursor: pointer;
+    padding: 4px;
 }
