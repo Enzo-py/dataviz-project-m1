@@ -82,7 +82,6 @@ function render_map() {
         .reflectY(true)
         .fitSize([ctx.MAP_W, ctx.MAP_H], ctx.data["map-focus"])
 
-    const countriesWithGlow = ["FR", "ES", "DE", "IT", "UK"];
     ctx.path = d3.geoPath(ctx.proj);
     d3.select(".map svg").append("g")
         .attr("id", "countries-area")
@@ -94,16 +93,18 @@ function render_map() {
         .attr("fill", "var(--earth-color)")
         .attr("stroke", "#000")
         .attr("stroke-width", 0.5)
-        .on("mouseover", function(event, d) {
-            if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
+        .on("mouseover", function(d) {
+            const countriesWithGlow = ["FR", "UK", "IT", "ES", "DE"];
+            if (countriesWithGlow.includes(d.properties.id.slice(0, 2))) {
                 d3.select(this).classed("glow", true);
             }
         })
-        .on("mouseout", function(event, d) {
-            if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
+        .on("mouseout", function(d) {
+            const countriesWithGlow = ["FR", "UK", "IT", "ES", "DE"];
+            if (countriesWithGlow.includes(d.properties.id.slice(0, 2))) {
                 d3.select(this).classed("glow", false);
             }
-        });
+        })
 
     d3.select(".map svg").append("g")
         .attr("id", "cities")

@@ -94,16 +94,12 @@ function render_map() {
         .attr("fill", "var(--earth-color)")
         .attr("stroke", "#000")
         .attr("stroke-width", 0.5)
-        .on("mouseover", function(event, d) {
-            if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
-                d3.select(this).classed("glow", true);
-            }
+                .on("mouseover", function() {
+            d3.select(this).classed("glow", true);
         })
-        .on("mouseout", function(event, d) {
-            if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
-                d3.select(this).classed("glow", false);
-            }
-        });
+        .on("mouseout", function() {
+            d3.select(this).classed("glow", false);
+        })
 
     d3.select(".map svg").append("g")
         .attr("id", "cities")

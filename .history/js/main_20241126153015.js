@@ -95,12 +95,13 @@ function render_map() {
         .attr("stroke", "#000")
         .attr("stroke-width", 0.5)
         .on("mouseover", function(event, d) {
-            if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
+            console.log(d.properties.CNT)
+            if (d.properties.id && countriesWithGlow.includes(d.properties.id.slice(0, 2))) {
                 d3.select(this).classed("glow", true);
             }
         })
         .on("mouseout", function(event, d) {
-            if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
+            if (d.properties.id && countriesWithGlow.includes(d.properties.id.slice(0, 2))) {
                 d3.select(this).classed("glow", false);
             }
         });

@@ -95,6 +95,7 @@ function render_map() {
         .attr("stroke", "#000")
         .attr("stroke-width", 0.5)
         .on("mouseover", function(event, d) {
+            console.log(d.properties.CNTR_ID)
             if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
                 d3.select(this).classed("glow", true);
             }

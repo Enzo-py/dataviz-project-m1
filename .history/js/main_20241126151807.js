@@ -82,7 +82,7 @@ function render_map() {
         .reflectY(true)
         .fitSize([ctx.MAP_W, ctx.MAP_H], ctx.data["map-focus"])
 
-    const countriesWithGlow = ["FR", "ES", "DE", "IT", "UK"];
+        
     ctx.path = d3.geoPath(ctx.proj);
     d3.select(".map svg").append("g")
         .attr("id", "countries-area")
@@ -95,15 +95,20 @@ function render_map() {
         .attr("stroke", "#000")
         .attr("stroke-width", 0.5)
         .on("mouseover", function(event, d) {
-            if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
+            if (currentCountry !== d) {
+                if (currentCountry) {
+                    d3.select(currentCountry).classed("glow", false);
+                }
                 d3.select(this).classed("glow", true);
+                currentCountry = this;
             }
         })
         .on("mouseout", function(event, d) {
-            if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
+            if (currentCountry === this) {
                 d3.select(this).classed("glow", false);
+                currentCountry = null;
             }
-        });
+        })
 
     d3.select(".map svg").append("g")
         .attr("id", "cities")

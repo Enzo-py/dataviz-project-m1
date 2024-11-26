@@ -192,7 +192,7 @@ img.club-logo {
 }
 
 .glow {
-    stroke: #FFD700; /* Gold color for the glow */
+    stroke: #ff2f00; /* Gold color for the glow */
     stroke-width: 3.5;
     filter: drop-shadow(0 0 5px #FFD700);
 }
