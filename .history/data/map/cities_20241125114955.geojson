@@ -1297,7 +1297,7 @@
         "LAT": 46.27327559,
         "LON": 7.44313321,
         "CNTR_CODE": "CH",
-        "COMM_NAME": "LensCH",
+        "COMM_NAME": "Lens",
         "NAME_ASCI": "Lens",
         "TRUE_FLAG": "T",
         "NSI_CODE": "CH6240",
@@ -3611,7 +3611,7 @@
         "LAT": 50.56071285,
         "LON": 3.90284494,
         "CNTR_CODE": "BE",
-        "COMM_NAME": "LensBE",
+        "COMM_NAME": "Lens",
         "NAME_ASCI": "Lens",
         "TRUE_FLAG": "T",
         "NSI_CODE": "53046",
@@ -3834,9 +3834,9 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates":[
-          4492955.4047,
-          2522793.0011
+        "coordinates": [
+          4501340.6619,
+          2485101.749399999
         ]
       },
       "properties": {
@@ -7787,8 +7787,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          3353487.1985,
-          2320865.7665
+          3670487.1985,
+          2623865.7665
         ]
       },
       "properties": {
@@ -7797,7 +7797,7 @@
         "LAT": 46.39382792,
         "LON": 1.53036984,
         "CNTR_CODE": "FR",
-        "COMM_NAME": "Saint-S\u00e9bastien",
+        "COMM_NAME": "Saint-S\u00e9bastienFR",
         "NAME_ASCI": "Saint-Sebastien",
         "TRUE_FLAG": "T",
         "NSI_CODE": "23239",
@@ -8644,9 +8644,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates":[
-          4084572.534,
-          3152377.4855000004]
+        "coordinates": [
+          4111784.399599999,
+          3098916.1587
+        ]
       },
       "properties": {
         "COMM_ID": "IT103017059",
@@ -9881,8 +9882,8 @@
         "NUTS_ID": "CH022",
         "LEVL_CODE": 3,
         "CNTR_CODE": "CH",
-        "NAME_LATN": "FreiburgCH",
-        "NUTS_NAME": "FreiburgCH",
+        "NAME_LATN": "Freiburg",
+        "NUTS_NAME": "Freiburg",
         "MOUNT_TYPE": 3,
         "URBN_TYPE": 2,
         "COAST_TYPE": 0

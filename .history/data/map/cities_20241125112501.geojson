@@ -1297,7 +1297,7 @@
         "LAT": 46.27327559,
         "LON": 7.44313321,
         "CNTR_CODE": "CH",
-        "COMM_NAME": "LensCH",
+        "COMM_NAME": "Lens",
         "NAME_ASCI": "Lens",
         "TRUE_FLAG": "T",
         "NSI_CODE": "CH6240",
@@ -2519,7 +2519,7 @@
         "LAT": 51.25585331,
         "LON": 4.83405871,
         "CNTR_CODE": "BE",
-        "COMM_NAME": "LilleBE",
+        "COMM_NAME": "Lille",
         "NAME_ASCI": "Lille",
         "TRUE_FLAG": "T",
         "NSI_CODE": "13019",
@@ -3611,7 +3611,7 @@
         "LAT": 50.56071285,
         "LON": 3.90284494,
         "CNTR_CODE": "BE",
-        "COMM_NAME": "LensBE",
+        "COMM_NAME": "Lens",
         "NAME_ASCI": "Lens",
         "TRUE_FLAG": "T",
         "NSI_CODE": "53046",
@@ -3834,17 +3834,17 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates":[
-          4492955.4047,
-          2522793.0011
+        "coordinates": [
+          4027261.7447999995,
+          2700590.2443
         ]
       },
       "properties": {
-        "COMM_ID": "FIT27251598",
-        "CNTR_ID": "IT",
-        "LAT": 47.350000,
-        "LON": 6.116667,
-        "CNTR_CODE": "IT",
+        "COMM_ID": "FR27251598",
+        "CNTR_ID": "FR",
+        "LAT": 47.34952869,
+        "LON": 6.11325897,
+        "CNTR_CODE": "FR",
         "COMM_NAME": "Venise",
         "NAME_ASCI": "Venise",
         "TRUE_FLAG": "T",
@@ -7641,7 +7641,7 @@
         "LAT": 47.83471371,
         "LON": 26.61157739,
         "CNTR_CODE": "RO",
-        "COMM_NAME": "RomaRO",
+        "COMM_NAME": "Roma",
         "NAME_ASCI": "Roma",
         "TRUE_FLAG": "T",
         "NSI_CODE": "38811",
@@ -7787,8 +7787,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          3353487.1985,
-          2320865.7665
+          3670487.1985,
+          2623865.7665
         ]
       },
       "properties": {
@@ -8644,9 +8644,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates":[
-          4084572.534,
-          3152377.4855000004]
+        "coordinates": [
+          4315662.8135,
+          2496089.527
+        ]
       },
       "properties": {
         "COMM_ID": "IT103017059",
@@ -9881,8 +9882,8 @@
         "NUTS_ID": "CH022",
         "LEVL_CODE": 3,
         "CNTR_CODE": "CH",
-        "NAME_LATN": "FreiburgCH",
-        "NUTS_NAME": "FreiburgCH",
+        "NAME_LATN": "Freiburg",
+        "NUTS_NAME": "Freiburg",
         "MOUNT_TYPE": 3,
         "URBN_TYPE": 2,
         "COAST_TYPE": 0
