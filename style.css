@@ -138,6 +138,22 @@ div.las-palmas {
     cursor: pointer;
 }
 
+/* Villes trouvées */
+@keyframes found-city {
+    0%, 100% {
+        border-width: 1.5px;
+        border-color: green;
+    }
+    50% {
+        border-width: 15px;
+        border-color: darkgreen;
+    }
+}
+
+.extra-cities .found span {
+    animation: found-city 1s infinite;
+}
+
 div.las-palmas span {
     display: block;
     width: 10px;

@@ -261,7 +261,7 @@ function update_map() {
 }
 
 function search(event, input) {
-    if (event.key != "Enter") return
+    if (event.key != "Enter" && event.type != "click") return
     let search = input.value.toLowerCase()
     
     let possible_cities = ctx.data["clubs_cities"].filter(d => d.City.toLowerCase() == search)
@@ -269,9 +269,36 @@ function search(event, input) {
 
     if (possible_cities.length > 0) {
         city_name = city_name_to_id(possible_cities[0].City)
-        city_event({type: "click"}, possible_cities[0].City)
+        city_event({type: "click"}, city_name)
+
         input.classList.add("found")
         setTimeout(() => input.classList.remove("found"), 500)
+
+        if (d3.select(`#cities path[name='${possible_cities[0].City.toLowerCase()}']`).empty()) {
+            let node = d3.select(`.extra-cities .${city_name}`).node()
+            if (node == null) return
+            node.classList.add("found")
+            setTimeout(() => node.classList.remove("found"), 2000)
+            return
+        }
+        d3.select(`#cities path[name='${possible_cities[0].City.toLowerCase()}']`)
+            .transition()
+            .duration(500)
+            .attr("stroke", "darkgreen")
+            .attr("stroke-width", 15)
+            .transition()
+            .duration(500)
+            .attr("stroke", "green")
+            .attr("stroke-width", 1.5)
+            .transition()
+            .duration(500)
+            .attr("stroke", "darkgreen")
+            .attr("stroke-width", 15)
+            .transition()
+            .duration(500)
+            .attr("stroke", "green")
+            .attr("stroke-width", 1.5)
+
         return
     }
     if (possible_clubs.length > 0) {

@@ -17,7 +17,7 @@
         <menu class="right">
             <div class="search-blob">
                 <input type="text" id="search" placeholder="Search for a team / player" list="search-list" onkeydown="search(event, this)">
-                <span class="material-symbols-outlined">search</span>
+                <span class="material-symbols-outlined" onclick="search(event, this.parentNode.querySelector('input'))">search</span>
                 <datalist id="search-list">
                 </datalist>
             </div>
