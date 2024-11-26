@@ -155,7 +155,7 @@ function render_map() {
             cityGroup.append("circle")
                 .attr("cx", 0)
                 .attr("cy", 0)
-                .attr("r", 6)
+                .attr("r", 5)
                 .attr("fill", "green")
                 .style("cursor", "pointer")
                 .on("click", (event) => city_event(event, d.properties.NAME))

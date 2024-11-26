@@ -155,7 +155,7 @@ function render_map() {
             cityGroup.append("circle")
                 .attr("cx", 0)
                 .attr("cy", 0)
-                .attr("r", 6)
+                .attr("r", 5)
                 .attr("fill", "green")
                 .style("cursor", "pointer")
                 .on("click", (event) => city_event(event, d.properties.NAME))
@@ -170,8 +170,8 @@ function render_map() {
             
             cityGroup.append("image")
                 .attr("xlink:href", logoURL)
-                .attr("x", -10)
-                .attr("y", -10)
+                .attr("x", -15)
+                .attr("y", -15)
                 .attr("width", 20)
                 .attr("height", 20)
                 .style("cursor", "pointer")
@@ -183,8 +183,6 @@ function render_map() {
 
         }
     });
-
-    
     window.addEventListener('resize', update_map);
 
     let logos_wrapper = d3.select("main").append("div")

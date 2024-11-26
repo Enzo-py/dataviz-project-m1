@@ -197,18 +197,18 @@ img.club-logo {
         filter: drop-shadow(0 0 5px #FFD700);
     }
     50% {
-        stroke-width: 4;
+        stroke-width: 5;
         filter: drop-shadow(0 0 10px #FFD700);
     }
     100% {
-        stroke-width: 2;
+        stroke-width: 3.5;
         filter: drop-shadow(0 0 5px #FFD700);
     }
 }
 
 .glow {
     stroke: #FFD700; /* Gold color for the glow */
-    stroke-width: 2;
+    stroke-width: 3.5;
     filter: drop-shadow(0 0 5px #FFD700);
     animation: glow-animation 2s infinite;
 }

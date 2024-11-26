@@ -105,24 +105,23 @@ function render_map() {
             }
         });
 
-    // ---------------Points for clubs----------------
-    // d3.select(".map svg").append("g")
-    //     .attr("id", "cities")
-    //     .selectAll("path")
-    //     .data(ctx.data["cities"].features)
-    //     .enter()
-    //     .append("path")
-    //     .attr("d", ctx.path)
-    //     .attr("fill", "transparent")
-    //     .attr("stroke", "green")
-    //     .attr("stroke-width", 1.5)
-    //     .style("cursor", "pointer")
-    //     .attr("name", d => d.properties.NAME.toLowerCase())
-    //     .on("click", (event, d) => city_event(event, d.properties.NAME))
-    //     .on("mouseenter", (event, d) => city_event(event, d.properties.NAME))
-    //     .on("mouseleave", (event, d) => city_event(event, d.properties.NAME))
-    //     .append("title")
-    //     .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1))
+    d3.select(".map svg").append("g")
+        .attr("id", "cities")
+        .selectAll("path")
+        .data(ctx.data["cities"].features)
+        .enter()
+        .append("path")
+        .attr("d", ctx.path)
+        .attr("fill", "transparent")
+        .attr("stroke", "green")
+        .attr("stroke-width", 1.5)
+        .style("cursor", "pointer")
+        .attr("name", d => d.properties.NAME.toLowerCase())
+        .on("click", (event, d) => city_event(event, d.properties.NAME))
+        .on("mouseenter", (event, d) => city_event(event, d.properties.NAME))
+        .on("mouseleave", (event, d) => city_event(event, d.properties.NAME))
+        .append("title")
+        .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1))
     
     // ajout de las palmas (hors carte)
     d3.select(".map").append("div")
@@ -135,55 +134,27 @@ function render_map() {
         .on("mouseenter", event => city_event(event, "Las Palmas"))
         .on("mouseleave", event => city_event(event, "Las Palmas"))
         .attr("title", "Las Palmas")
-
-    // ---------------Logos for clubs----------------
+    
     d3.select(".map svg").append("g")
-    .attr("id", "cities")
-    .selectAll("g")
-    .data(ctx.data["cities"].features)
-    .enter()
-    .append("g")
-    .attr("transform", d => {
-        const [x, y] = ctx.proj([d.geometry.coordinates[0], d.geometry.coordinates[1]]);
-        return `translate(${x}, ${y})`;
-    })
-    .each(function(d) {
-        const cityGroup = d3.select(this);
-        const clubs = ctx.data["clubs_cities"].filter(c => c.City.toLowerCase() === d.properties.NAME.toLowerCase());
-        
-        if (clubs.length > 1) {
-            cityGroup.append("circle")
-                .attr("cx", 0)
-                .attr("cy", 0)
-                .attr("r", 6)
-                .attr("fill", "green")
-                .style("cursor", "pointer")
-                .on("click", (event) => city_event(event, d.properties.NAME))
-                .on("mouseenter", (event) => city_event(event, d.properties.NAME))
-                .on("mouseleave", (event) => city_event(event, d.properties.NAME))
-                .append("title")
-                .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1));
-       } else if (clubs.length === 1) {
-            const club = clubs[0];
-            const club_logo = ctx.data["clubs_logo"].find(e => e.Club === club.Club);
-            const logoURL = club_logo ? club_logo.Logo_URL : 'default/path/to/default-icon.svg';
-            
-            cityGroup.append("image")
-                .attr("xlink:href", logoURL)
-                .attr("x", -10)
-                .attr("y", -10)
-                .attr("width", 20)
-                .attr("height", 20)
-                .style("cursor", "pointer")
-                .on("click", (event) => city_event(event, d.properties.NAME))
-                .on("mouseenter", (event, d) => city_event(event, d.properties.NAME))
-                .on("mouseleave", (event, d) => city_event(event, d.properties.NAME))
-                .append("title")
-                .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1))
-
-        }
-    });
-
+        .attr("id", "cities")
+        .selectAll("image")
+        .data(ctx.data["cities"].features)
+        .enter()
+        .append("image")
+        Club,Logo_URL
+        Brighton & Hove Albion,https://upload.wikimedia.org/wikipedia/fr/thumb/8/8c/Logo_Brighton_Hove_Albion_2011.svg/1200px-Logo_Brighton_Hove_Albion_2011.svg.png
+        West Ham United,https://upload.wikimedia.org/wikipedia/fr/thumb/c/c2/West_Ham_United_FC_logo.svg/1845px-West_Ham_United_FC_logo.svg.png
+        Burnley,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY_kESfnyA0Zr3nt3F5bMPa8ZVYlYmiVCBXg&s
+        Arsenal,https://upload.wikimedia.org/wikipedia/fr/thumb/5/53/Arsenal_FC.svg/1200px-Arsenal_FC.svg.png
+        Manchester United,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6ybrpSqYVk4NpraPdvTLe1yAC5ux8VmQj0Q&s
+        Everton,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKLeh-CelZw81q84aFBU6u5XReYYjWyUN0LA&s
+        Southam
+        .attr("x", d => ctx.proj([d.geometry.coordinates[0], d.geometry.coordinates[1]])[0] - 10)
+        .attr("y", d => ctx.proj([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1] - 10)
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("cursor", "pointer")
+        .on("click", (event, d) => city_event(event, d.properties.NAME));
     
     window.addEventListener('resize', update_map);
 

@@ -155,7 +155,7 @@ function render_map() {
             cityGroup.append("circle")
                 .attr("cx", 0)
                 .attr("cy", 0)
-                .attr("r", 6)
+                .attr("r", 5)
                 .attr("fill", "green")
                 .style("cursor", "pointer")
                 .on("click", (event) => city_event(event, d.properties.NAME))
@@ -165,26 +165,39 @@ function render_map() {
                 .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1));
        } else if (clubs.length === 1) {
             const club = clubs[0];
-            const club_logo = ctx.data["clubs_logo"].find(e => e.Club === club.Club);
-            const logoURL = club_logo ? club_logo.Logo_URL : 'default/path/to/default-icon.svg';
+              const logoURL = club_logo ? club_logo.Logo_URL : 'default/path/to/default-icon.svg';
+
             
-            cityGroup.append("image")
-                .attr("xlink:href", logoURL)
-                .attr("x", -10)
-                .attr("y", -10)
-                .attr("width", 20)
-                .attr("height", 20)
-                .style("cursor", "pointer")
-                .on("click", (event) => city_event(event, d.properties.NAME))
-                .on("mouseenter", (event, d) => city_event(event, d.properties.NAME))
-                .on("mouseleave", (event, d) => city_event(event, d.properties.NAME))
+
+             cityGroup.append("image")
+
+                  .attr("xlink:href", logoURL)
+
+                   .attr("x", -7.5)
+
+                    .attr("y", -7.5)
+
+                     .attr("width", 15)
+
+                      .attr("height", 15)
+
+                       .style("cursor", "pointer")
+
+                        .on("click", (event) => city_event(event, d.properties.NAME))
+
+                         .on("mouseenter", (event) => city_event(event, d.properties.NAME))
+
+                          .on("mouseleave", (event) => city_event(event, d.properties.NAME))
+
+                           .append("title")
+
+                            .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1));
+
                 .append("title")
                 .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1))
 
         }
     });
-
-    
     window.addEventListener('resize', update_map);
 
     let logos_wrapper = d3.select("main").append("div")

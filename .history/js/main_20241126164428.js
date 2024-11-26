@@ -126,15 +126,19 @@ function render_map() {
     
     // ajout de las palmas (hors carte)
     d3.select(".map").append("div")
-        .attr("class", "extra-cities")
-        .append("div")
-        .attr("class", "las-palmas")
-        .append("span")
-        .attr("name", "las palmas")
-        .on("click", event => city_event(event, "Las Palmas"))
-        .on("mouseenter", event => city_event(event, "Las Palmas"))
-        .on("mouseleave", event => city_event(event, "Las Palmas"))
-        .attr("title", "Las Palmas")
+    .attr("class", "extra-cities")
+    .append("div")
+    .attr("class", "las-palmas")
+    .append("img")
+    .attr("src", "path/to/las-palmas-logo.svg") // Replace with the actual path to the Las Palmas logo
+    .attr("alt", "Las Palmas Logo")
+    .attr("width", 30) // Adjust the width as needed
+    .attr("height", 30) // Adjust the height as needed
+    .style("cursor", "pointer")
+    .on("click", event => city_event(event, "Las Palmas"))
+    .on("mouseenter", event => city_event(event, "Las Palmas"))
+    .on("mouseleave", event => city_event(event, "Las Palmas"))
+    .attr("title", "Las Palmas");
 
     // ---------------Logos for clubs----------------
     d3.select(".map svg").append("g")

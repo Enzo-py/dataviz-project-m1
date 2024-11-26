@@ -105,24 +105,23 @@ function render_map() {
             }
         });
 
-    // ---------------Points for clubs----------------
-    // d3.select(".map svg").append("g")
-    //     .attr("id", "cities")
-    //     .selectAll("path")
-    //     .data(ctx.data["cities"].features)
-    //     .enter()
-    //     .append("path")
-    //     .attr("d", ctx.path)
-    //     .attr("fill", "transparent")
-    //     .attr("stroke", "green")
-    //     .attr("stroke-width", 1.5)
-    //     .style("cursor", "pointer")
-    //     .attr("name", d => d.properties.NAME.toLowerCase())
-    //     .on("click", (event, d) => city_event(event, d.properties.NAME))
-    //     .on("mouseenter", (event, d) => city_event(event, d.properties.NAME))
-    //     .on("mouseleave", (event, d) => city_event(event, d.properties.NAME))
-    //     .append("title")
-    //     .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1))
+    d3.select(".map svg").append("g")
+        .attr("id", "cities")
+        .selectAll("path")
+        .data(ctx.data["cities"].features)
+        .enter()
+        .append("path")
+        .attr("d", ctx.path)
+        .attr("fill", "transparent")
+        .attr("stroke", "green")
+        .attr("stroke-width", 1.5)
+        .style("cursor", "pointer")
+        .attr("name", d => d.properties.NAME.toLowerCase())
+        .on("click", (event, d) => city_event(event, d.properties.NAME))
+        .on("mouseenter", (event, d) => city_event(event, d.properties.NAME))
+        .on("mouseleave", (event, d) => city_event(event, d.properties.NAME))
+        .append("title")
+        .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1))
     
     // ajout de las palmas (hors carte)
     d3.select(".map").append("div")
@@ -135,60 +134,62 @@ function render_map() {
         .on("mouseenter", event => city_event(event, "Las Palmas"))
         .on("mouseleave", event => city_event(event, "Las Palmas"))
         .attr("title", "Las Palmas")
-
-    // ---------------Logos for clubs----------------
-    d3.select(".map svg").append("g")
-    .attr("id", "cities")
-    .selectAll("g")
-    .data(ctx.data["cities"].features)
-    .enter()
-    .append("g")
-    .attr("transform", d => {
-        const [x, y] = ctx.proj([d.geometry.coordinates[0], d.geometry.coordinates[1]]);
-        return `translate(${x}, ${y})`;
-    })
-    .each(function(d) {
-        const cityGroup = d3.select(this);
-        const clubs = ctx.data["clubs_cities"].filter(c => c.City.toLowerCase() === d.properties.NAME.toLowerCase());
-        
-        if (clubs.length > 1) {
-            cityGroup.append("circle")
-                .attr("cx", 0)
-                .attr("cy", 0)
-                .attr("r", 6)
-                .attr("fill", "green")
-                .style("cursor", "pointer")
-                .on("click", (event) => city_event(event, d.properties.NAME))
-                .on("mouseenter", (event) => city_event(event, d.properties.NAME))
-                .on("mouseleave", (event) => city_event(event, d.properties.NAME))
-                .append("title")
-                .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1));
-       } else if (clubs.length === 1) {
-            const club = clubs[0];
-            const club_logo = ctx.data["clubs_logo"].find(e => e.Club === club.Club);
-            const logoURL = club_logo ? club_logo.Logo_URL : 'default/path/to/default-icon.svg';
+    
+        d3.select(".map svg").append("g")
+        .attr("id", "cities")
+        .selectAll("g")
+        .data(ctx.data["cities"].features)
+        .enter()
+        .append("g")
+        .attr("transform", d => {
+            const [x, y] = ctx.proj([d.geometry.coordinates[0], d.geometry.coordinates[1]]);
+            return `translate(${x}, ${y})`;
+        })
+        .each(function(d) {
+            const cityGroup = d3.select(this);
+            const clubs = ctx.data["clubs_cities"].filter(c => c.City.toLowerCase() === d.properties.NAME.toLowerCase());
             
-            cityGroup.append("image")
-                .attr("xlink:href", logoURL)
-                .attr("x", -10)
-                .attr("y", -10)
-                .attr("width", 20)
-                .attr("height", 20)
-                .style("cursor", "pointer")
-                .on("click", (event) => city_event(event, d.properties.NAME))
-                .on("mouseenter", (event, d) => city_event(event, d.properties.NAME))
-                .on("mouseleave", (event, d) => city_event(event, d.properties.NAME))
-                .append("title")
-                .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1))
-
-        }
-    });
-
+            if (clubs.length > 1) {
+                const radius = 20; // Radius for circular arrangement
+                const angleStep = (2 * Math.PI) / clubs.length; // Angle step for each logo
+    
+                clubs.forEach((club, index) => {
+                    const club_logo = ctx.data["clubs_logo"].find(e => e.Club === club.Club);
+                    const logoURL = club_logo ? club_logo.Logo_URL : 'default/path/to/default-icon.svg';
+                    
+                    const angle = index * angleStep;
+                    const x = radius * Math.cos(angle) - 15; // Adjust x position for each logo
+                    const y = radius * Math.sin(angle) - 15; // Adjust y position for each logo
+                    
+                    cityGroup.append("image")
+                        .attr("xlink:href", logoURL)
+                        .attr("x", x)
+                        .attr("y", y)
+                        .attr("width", 15)
+                        .attr("height", 30)
+                        .style("cursor", "pointer")
+                        .on("click", (event) => city_event(event, d.properties.NAME));
+                });
+            } else if (clubs.length === 1) {
+                const club = clubs[0];
+                const club_logo = ctx.data["clubs_logo"].find(e => e.Club === club.Club);
+                const logoURL = club_logo ? club_logo.Logo_URL : 'default/path/to/default-icon.svg';
+                
+                cityGroup.append("image")
+                    .attr("xlink:href", logoURL)
+                    .attr("x", -15)
+                    .attr("y", -15)
+                    .attr("width", 30)
+                    .attr("height", 30)
+                    .style("cursor", "pointer")
+                    .on("click", (event) => city_event(event, d.properties.NAME));
+            }
+        });
     
     window.addEventListener('resize', update_map);
-
+    
     let logos_wrapper = d3.select("main").append("div")
-        .attr("class", "logo-wrapper")
+        .attr("class", "logo-wrapper");
     
     ctx.data["clubs_cities"].forEach(d => {
         let club_logo = ctx.data["clubs_logo"].filter(e => e.Club == d.Club)[0]
