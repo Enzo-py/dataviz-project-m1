@@ -2,17 +2,16 @@ const ctx = {
     MAP_W: window.innerWidth,
     MAP_H: window.innerHeight + 40,
     proj: null,
-    showLogos: false, // Changed to false to load circles initially
+    showLogos: true,
 }
 
 const countryWallpapers = {
-    "FR": "/data/img/wallpaper/france.png",
-    "ES": "/data/img/wallpaper/spain.png",
-    "DE": "/data/img/wallpaper/germany.jpg",
-    "IT": "/data/img/wallpaper/italy.webp",
-    "UK": "/data/img/wallpaper/uk.png"
+    "FR": "wallpaper/france.jpg",
+    "ES": "wallpaper/spain.jpg",
+    "DE": "wallpaper/germany.jpg",
+    "IT": "wallpaper/italy.jpg",
+    "UK": "wallpaper/uk.jpg"
 };
-
 
 function create_graph_layout() {
     const map = d3.select(".map")
@@ -30,19 +29,7 @@ function create_toggle_button() {
         .attr("class", "toggle-button")
         .on("click", toggle_rendering);
 
-    toggleButton.append("img")
-        .attr("src", "https://upload.wikimedia.org/wikipedia/fr/thumb/f/ff/Logo_Paris_Saint-Germain_2024.svg/1200px-Logo_Paris_Saint-Germain_2024.svg.png")
-        .attr("alt", "PSG Logo");
-
-    toggleButton.append("span")
-        .style("fill", "none")
-        .style("border-radius", "50%")
-        .style("stroke", "green")
-        .style("width", "60px")
-        .style("border", "3px solid green")
-        // Center
-        .style("margin", "auto")
-        .style("height", "26px");
+    toggleButton.append("span").text("Toggle Rendering");
 }
 
 function toggle_rendering() {
@@ -136,25 +123,12 @@ function render_map() {
             if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
                 d3.select(this).classed("glow", true);
             }
-            // const countryCode = d.properties.CNTR_ID.slice(0, 2);
-            // if (countryWallpapers[countryCode]) {
-            //     document.body.style.backgroundImage = `url(${countryWallpapers[countryCode]})`;
-            // }
+            const countryCode = d.properties.CNTR_ID.slice(0, 2);
+            if (countryWallpapers[countryCode]) {
+                document.body.style.backgroundImage = `url(${countryWallpapers[countryCode]})`;
+            }
         })
         .on("mouseout", function(event, d) {
-            if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
-                d3.select(this).classed("glow", false);
-            }
-            document.body.style.backgroundImage = "";
-        });
-
-    d3.select("#cities").remove();
-
-    if (ctx.showLogos) {
-        d3.select(".map svg").append("g")
-            .attr("id", "cities")
-            .selectAll("g")
-            .data(ctx.data["cities"].features)
             .enter()
             .append("g")
             .attr("transform", d => {

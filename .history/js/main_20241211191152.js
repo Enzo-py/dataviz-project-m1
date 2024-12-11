@@ -34,16 +34,14 @@ function create_toggle_button() {
         .attr("src", "https://upload.wikimedia.org/wikipedia/fr/thumb/f/ff/Logo_Paris_Saint-Germain_2024.svg/1200px-Logo_Paris_Saint-Germain_2024.svg.png")
         .attr("alt", "PSG Logo");
 
-    toggleButton.append("span")
-        .style("fill", "none")
-        .style("border-radius", "50%")
-        .style("stroke", "green")
-        .style("width", "60px")
-        .style("border", "3px solid green")
-        // Center
-        .style("margin", "auto")
-        .style("height", "26px");
-}
+    toggleButton.append("img")
+    .attr("src", "    toggleButton.append("img")
+        .attr("src", "https://upload.wikimedia.org/wikipedia/fr/thumb/f/ff/Logo_Paris_Saint-Germain_2024.svg/1200px-Logo_Paris_Saint-Germain_2024.svg.png")
+        .attr("alt", "PSG Logo");
+")
+    .attr("alt", "PSG Logo");
+
+ 
 
 function toggle_rendering() {
     ctx.showLogos = !ctx.showLogos;

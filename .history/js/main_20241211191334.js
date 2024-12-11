@@ -40,9 +40,7 @@ function create_toggle_button() {
         .style("stroke", "green")
         .style("width", "60px")
         .style("border", "3px solid green")
-        // Center
-        .style("margin", "auto")
-        .style("height", "26px");
+        .style("height", "30px");
 }
 
 function toggle_rendering() {

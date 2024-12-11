@@ -9,7 +9,7 @@
     --success-color: #2c9f2c;
     --toggle-background: #f0f0f0;
     --toggle-border: #ccc;
-    --toggle-active: #fdfdfd;
+    --toggle-active: #392e83;
 }
 
 body, body * {
@@ -250,8 +250,8 @@ img.club-logo {
 }
 
 .toggle-button.active {
-    background-color: var(--toggle-active);
-    color: #fff;
+    background-color: #fff;
+    color: var(--toggle-active);
 }
 
 .toggle-button img {

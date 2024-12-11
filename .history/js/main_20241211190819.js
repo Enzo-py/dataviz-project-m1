@@ -35,14 +35,12 @@ function create_toggle_button() {
         .attr("alt", "PSG Logo");
 
     toggleButton.append("span")
-        .style("fill", "none")
-        .style("border-radius", "50%")
-        .style("stroke", "green")
-        .style("width", "60px")
-        .style("border", "3px solid green")
-        // Center
-        .style("margin", "auto")
-        .style("height", "26px");
+        .style("display", "block")
+        .style("width", "20px")
+        .style("height", "20px")
+        .style("border", "2px solid green")
+        .style("border-radius", "50%");
+        
 }
 
 function toggle_rendering() {

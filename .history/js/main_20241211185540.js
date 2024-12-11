@@ -2,7 +2,7 @@ const ctx = {
     MAP_W: window.innerWidth,
     MAP_H: window.innerHeight + 40,
     proj: null,
-    showLogos: false, // Changed to false to load circles initially
+    showLogos: true,
 }
 
 const countryWallpapers = {
@@ -35,14 +35,11 @@ function create_toggle_button() {
         .attr("alt", "PSG Logo");
 
     toggleButton.append("span")
-        .style("fill", "none")
+        .style("background-color", "transparent")
         .style("border-radius", "50%")
-        .style("stroke", "green")
-        .style("width", "60px")
-        .style("border", "3px solid green")
-        // Center
-        .style("margin", "auto")
-        .style("height", "26px");
+        .style("border", "2px solid green")
+        .style("width", "100%")
+        .style("height", "100%");
 }
 
 function toggle_rendering() {
@@ -226,6 +223,7 @@ function render_map() {
         .on("click", event => city_event(event, "Las Palmas"))
         .on("mouseenter", event => city_event(event, "Las Palmas"))
         .on("mouseleave", event => city_event(event, "Las Palmas"))
+        .attr("title", "Las Palmas")
         .attr("title", "Las Palmas")
 
     window.addEventListener('resize', update_map);

@@ -38,11 +38,9 @@ function create_toggle_button() {
         .style("fill", "none")
         .style("border-radius", "50%")
         .style("stroke", "green")
-        .style("width", "60px")
-        .style("border", "3px solid green")
-        // Center
-        .style("margin", "auto")
-        .style("height", "26px");
+        .style("width", "50px")
+        .style("border", "2px solid green")
+        .style("height", "50px");
 }
 
 function toggle_rendering() {

@@ -2,7 +2,7 @@ const ctx = {
     MAP_W: window.innerWidth,
     MAP_H: window.innerHeight + 40,
     proj: null,
-    showLogos: false, // Changed to false to load circles initially
+    showLogos: true,
 }
 
 const countryWallpapers = {
@@ -22,6 +22,13 @@ function create_graph_layout() {
 
     load_data();
     create_toggle_button();
+    create_tooltip();
+}
+
+function create_tooltip() {
+    ctx.tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 }
 
 function create_toggle_button() {
@@ -34,15 +41,13 @@ function create_toggle_button() {
         .attr("src", "https://upload.wikimedia.org/wikipedia/fr/thumb/f/ff/Logo_Paris_Saint-Germain_2024.svg/1200px-Logo_Paris_Saint-Germain_2024.svg.png")
         .attr("alt", "PSG Logo");
 
+
     toggleButton.append("span")
-        .style("fill", "none")
+        .style("fill", "transparent")
         .style("border-radius", "50%")
         .style("stroke", "green")
-        .style("width", "60px")
-        .style("border", "3px solid green")
-        // Center
-        .style("margin", "auto")
-        .style("height", "26px");
+        .style("width", "100%")
+        .style("height", "100%");
 }
 
 function toggle_rendering() {
@@ -91,21 +96,14 @@ function city_event(event, city_name) {
     } else if (event.type == "mouseenter") {
         if (d3.selectAll(".logo-city.force-active").nodes().length != 0) return
         logo.node().classList.add("active")
+        ctx.tooltip.transition()
+            .duration(200)
+            .style("opacity", .9);
+        ctx.tooltip.html(city_name)
+            .style("left", (event.pageX + 5) + "px")
+            .style("top", (event.pageY - 28) + "px");
 
     } else if (event.type == "mouseleave") {
-        if (d3.selectAll(".logo-city.force-active").nodes().length != 0) return
-        logo.node().classList.remove("active")
-    }
-}
-    
-function render_map() {
-    wanted_cities_names = ctx.data["clubs_cities"].map(d => d.City.toLowerCase())
-
-    // create new attr: NAME
-    ctx.data["cities"].features.forEach(d => {
-        d.properties.NAME = d.properties.NUTS_NAME ? d.properties.NUTS_NAME : d.properties.COMM_NAME
-    })
-
     ctx.data["cities"].features = ctx.data["cities"].features.filter(d => wanted_cities_names.includes(d.properties.NAME.toLowerCase()))
     finded_cities = ctx.data["cities"].features.map(d => d.properties.NAME.toLowerCase())
     wanted_cities_names = wanted_cities_names.filter(d => !finded_cities.includes(d))

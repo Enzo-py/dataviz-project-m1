@@ -2,7 +2,7 @@ const ctx = {
     MAP_W: window.innerWidth,
     MAP_H: window.innerHeight + 40,
     proj: null,
-    showLogos: false, // Changed to false to load circles initially
+    showLogos: true,
 }
 
 const countryWallpapers = {
@@ -34,15 +34,16 @@ function create_toggle_button() {
         .attr("src", "https://upload.wikimedia.org/wikipedia/fr/thumb/f/ff/Logo_Paris_Saint-Germain_2024.svg/1200px-Logo_Paris_Saint-Germain_2024.svg.png")
         .attr("alt", "PSG Logo");
 
+        .attr("d", ctx.path)
+        .attr("fill", "transparent")
+        .attr("stroke", "green")
+        .attr("stroke-width", 1.5)
+
     toggleButton.append("span")
-        .style("fill", "none")
+        .style("fill", "green")
         .style("border-radius", "50%")
-        .style("stroke", "green")
-        .style("width", "60px")
-        .style("border", "3px solid green")
-        // Center
-        .style("margin", "auto")
-        .style("height", "26px");
+        .style("width", "100%")
+        .style("height", "100%");
 }
 
 function toggle_rendering() {

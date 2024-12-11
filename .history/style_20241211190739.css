@@ -275,3 +275,12 @@ img.club-logo {
 .toggle-button span {
     margin-left: 8px;
 }
+
+/* New styles for the green circle when logos are not displayed */
+.toggle-button:not(.active) span {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid green;
+    border-radius: 50%;
+}

@@ -9,7 +9,7 @@
     --success-color: #2c9f2c;
     --toggle-background: #f0f0f0;
     --toggle-border: #ccc;
-    --toggle-active: #fdfdfd;
+    --toggle-active: #392e83;
 }
 
 body, body * {
@@ -237,20 +237,17 @@ img.club-logo {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: #fff;
+    background-color: var(--toggle-background);
     border: 2px solid var(--toggle-border);
     border-radius: 8px;
     padding: 6px;
     width: 40px;
     height: 40px;
     transition: background-color 0.3s;
-    flex-shrink: 0;
-    flex-grow: 0;
-    flex-basis: auto;
 }
 
 .toggle-button.active {
-    background-color: var(--toggle-active);
+    background-color: var(--toggle-background);
     color: #fff;
 }
 

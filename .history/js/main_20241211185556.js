@@ -2,7 +2,7 @@ const ctx = {
     MAP_W: window.innerWidth,
     MAP_H: window.innerHeight + 40,
     proj: null,
-    showLogos: false, // Changed to false to load circles initially
+    showLogos: true,
 }
 
 const countryWallpapers = {
@@ -35,14 +35,11 @@ function create_toggle_button() {
         .attr("alt", "PSG Logo");
 
     toggleButton.append("span")
-        .style("fill", "none")
+        .style("background-color", "transparent")
         .style("border-radius", "50%")
-        .style("stroke", "green")
-        .style("width", "60px")
-        .style("border", "3px solid green")
-        // Center
-        .style("margin", "auto")
-        .style("height", "26px");
+        .style("border", "2px solid green")
+        .style("width", "100%")
+        .style("height", "100%");
 }
 
 function toggle_rendering() {
@@ -306,6 +303,7 @@ function update_map() {
 function search(event, input) {
     if (event.key != "Enter" && event.type != "click") return
     let search = input.value.toLowerCase()
+    
     
     let possible_cities = ctx.data["clubs_cities"].filter(d => d.City.toLowerCase() == search)
     let possible_clubs = ctx.data["clubs_cities"].filter(d => d.Club.toLowerCase() == search)
