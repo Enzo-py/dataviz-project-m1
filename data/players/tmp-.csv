@@ -1,0 +1,12 @@
+import os
+# file in ./
+for file in os.listdir('./data/players'):
+    file_name = file.split('.')[0]
+    file_parse = file_name.split('-')
+    country = file_parse[0]
+    dates = [int(x) for x in file_parse if x.isdigit() and len(x) == 4]
+    print(country, sorted(dates))
+
+    #rename file
+    new_file = country + '-' + '-'.join([str(x) for x in sorted(dates)]) + '.csv'
+    os.rename('./data/players/' + file, './data/players/' + new_file)
