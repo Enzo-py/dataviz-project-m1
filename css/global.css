@@ -1,0 +1,20 @@
+:root {
+    --secondary-color: #392e83;
+    --background-color: #fff;
+    --shadow-color: #878787;
+    --sea-background: linear-gradient(90deg, rgb(36 55 101) 10%, #30679f 100%);
+    --earth-color: #fff;
+
+    --danger-color: #af2c35;
+    --success-color: #2c9f2c;
+    --toggle-background: #f0f0f0;
+    --toggle-border: #ccc;
+    --toggle-active: #fdfdfd;
+}
+
+body, body * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}

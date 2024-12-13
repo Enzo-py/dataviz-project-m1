@@ -278,7 +278,7 @@ function render_map() {
             .attr("class", "club-logo")
             .style("cursor", "pointer")
             .on("click", () => {
-                window.location.href = `/stat_page.html?club=${d.Club}`;
+                window.location.href = `/team_page.html?club=${d.Club}`;
             });
     })
 
