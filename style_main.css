@@ -125,6 +125,10 @@ menu.right > button span:hover {
     transform: scale(1.1);
 }
 
+#cities > *[active="false"] {
+    display: none;
+}
+
 /* Villes manuellement posée (hors map) */
 div.las-palmas {
     position: absolute;
