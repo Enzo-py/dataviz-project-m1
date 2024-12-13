@@ -2,7 +2,7 @@ const ctx = {
     MAP_W: window.innerWidth,
     MAP_H: window.innerHeight + 40,
     proj: null,
-    showLogos: false, // Changed to false to load circles initially
+    showLogos: true, // Changed to false to load circles initially
 }
 
 const countryWallpapers = {
@@ -75,6 +75,11 @@ function load_data() {
         ctx.data = mapped_data
         render_map()
     }).catch(error => console.error("Error loading the data:", error))
+}
+
+function city_to_country(city_name) {
+    const city = ctx.data["clubs_cities"].find(d => city_name_to_id(d.City) === city_name);
+    return city ? city.Country : undefined;
 }
 
 function city_event(event, city_name) {
@@ -375,10 +380,4 @@ function search(event, input) {
     // animation input not found
     input.classList.add("not-found")
     setTimeout(() => input.classList.remove("not-found"), 500)
-}
-
-// Helper functions
-function city_to_country(city_name) {
-    const city = ctx.data["clubs_cities"].find(d => city_name_to_id(d.City) === city_name);
-    return city ? city.Country : undefined;
 }

@@ -77,6 +77,7 @@ function load_data() {
     }).catch(error => console.error("Error loading the data:", error))
 }
 
+
 function city_event(event, city_name) {
     city_name = city_name_to_id(city_name)
     let logo = d3.select(".logo-city#" + city_name)

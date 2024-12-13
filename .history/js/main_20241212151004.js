@@ -77,6 +77,11 @@ function load_data() {
     }).catch(error => console.error("Error loading the data:", error))
 }
 
+function city_to_country(city_name) {
+    const city = ctx.data["clubs_cities"].find(d => city_name_to_id(d.City) === city_name);
+    return city ? city.Country : undefined;
+}
+
 function city_event(event, city_name) {
     city_name = city_name_to_id(city_name)
     let logo = d3.select(".logo-city#" + city_name)
@@ -209,8 +214,8 @@ function render_map() {
                         .attr("height", 20)
                         .style("cursor", "pointer")
                         .on("click", (event) => city_event(event, d.properties.NAME))
-                        .on("mouseenter", (event, d) => city_event(event, d.properties.NAME))
-                        .on("mouseleave", (event, d) => city_event(event, d.properties.NAME))
+                        .on("mouseenter", (event) => city_event(event, d.properties.NAME))
+                        .on("mouseleave", (event) => city_event(event, d.properties.NAME))
                         .append("title")
                         .text(d => d.properties.NAME.slice(0, 1).toUpperCase() + d.properties.NAME.toLowerCase().slice(1));
                 }
@@ -375,10 +380,4 @@ function search(event, input) {
     // animation input not found
     input.classList.add("not-found")
     setTimeout(() => input.classList.remove("not-found"), 500)
-}
-
-// Helper functions
-function city_to_country(city_name) {
-    const city = ctx.data["clubs_cities"].find(d => city_name_to_id(d.City) === city_name);
-    return city ? city.Country : undefined;
 }

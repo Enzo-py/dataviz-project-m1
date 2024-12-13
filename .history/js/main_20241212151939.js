@@ -77,6 +77,7 @@ function load_data() {
     }).catch(error => console.error("Error loading the data:", error))
 }
 
+
 function city_event(event, city_name) {
     city_name = city_name_to_id(city_name)
     let logo = d3.select(".logo-city#" + city_name)
@@ -377,8 +378,3 @@ function search(event, input) {
     setTimeout(() => input.classList.remove("not-found"), 500)
 }
 
-// Helper functions
-function city_to_country(city_name) {
-    const city = ctx.data["clubs_cities"].find(d => city_name_to_id(d.City) === city_name);
-    return city ? city.Country : undefined;
-}

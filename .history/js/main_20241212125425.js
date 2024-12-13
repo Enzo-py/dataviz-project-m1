@@ -13,6 +13,7 @@ const countryWallpapers = {
     "UK": "/data/img/wallpaper/uk.png"
 };
 
+
 function create_graph_layout() {
     const map = d3.select(".map")
         .append("svg")
@@ -95,50 +96,33 @@ function city_event(event, city_name) {
         if (d3.selectAll(".logo-city.force-active").nodes().length != 0) return
         logo.node().classList.remove("active")
     }
-    // map all cities to their country code
-    const countriesWithGlow = ["FR", "ES", "DE", "IT", "UK"];
-    let countryCode;
-    countryCode = city_to_country(city_name);
-    console.log("City:", city_name, "Country:", countryCode);
-    let countryPath = d3.select(`#countries-area path[data-country-code="${countryCode}"]`);
-
-    if (event.type === "mouseenter") {
-        countryPath.classed("glow", true);
-    } else if (event.type === "mouseleave") {
-        countryPath.classed("glow", false);
-    }
 }
-
 function render_map() {
-    wanted_cities_names = ctx.data["clubs_cities"].map(d => d.City.toLowerCase())
+    wanted_cities_names = ctx.data["clubs_cities"].map(d => d.City.toLowerCase());
 
-    // create new attr: NAME
+    // Link cities to their countries and process cities
     ctx.data["cities"].features.forEach(d => {
-        d.properties.NAME = d.properties.NUTS_NAME ? d.properties.NUTS_NAME : d.properties.COMM_NAME
+        d.properties.NAME = d.properties.NUTS_NAME ? d.properties.NUTS_NAME : d.properties.COMM_NAME;
+
+        // Link city to the country ID
         const countryFeature = ctx.data["nutsrg"].features.find(country =>
             d3.geoContains(country, d.geometry.coordinates)
         );
-        if (countryFeature && countryFeature.properties.CNTR_ID) {
+        if (countryFeature) {
             d.properties.COUNTRY_ID = countryFeature.properties.CNTR_ID.slice(0, 2);
         }
     });
 
-    ctx.data["cities"].features = ctx.data["cities"].features.filter(d => wanted_cities_names.includes(d.properties.NAME.toLowerCase()))
-    finded_cities = ctx.data["cities"].features.map(d => d.properties.NAME.toLowerCase())
-    wanted_cities_names = wanted_cities_names.filter(d => !finded_cities.includes(d))
-    wanted_cities_names = new Set(wanted_cities_names.sort())
-    if (wanted_cities_names.size > 0) console.warn("Not found cities:", wanted_cities_names)
-
-    wanted_countries = ["ES", "PT", "FR", "IT", "DE", "BE", "UK", "NL", "IE", "LU", "CH"]
-    ctx.data["map-focus"] = JSON.parse(JSON.stringify(ctx.data["nutsrg"]))
-    ctx.data["map-focus"].features = ctx.data["nutsrg"].features.filter(d => wanted_countries.includes(d.properties.id.slice(0, 2)))
-
-    ctx.proj = d3.geoIdentity()
-        .reflectY(true)
-        .fitSize([ctx.MAP_W, ctx.MAP_H], ctx.data["map-focus"])
+    ctx.data["cities"].features = ctx.data["cities"].features.filter(d => wanted_cities_names.includes(d.properties.NAME.toLowerCase()));
+    finded_cities = ctx.data["cities"].features.map(d => d.properties.NAME.toLowerCase());
+    wanted_cities_names = wanted_cities_names.filter(d => !finded_cities.includes(d));
+    wanted_cities_names = new Set(wanted_cities_names.sort());
+    if (wanted_cities_names.size > 0) console.warn("Not found cities:", wanted_cities_names);
 
     const countriesWithGlow = ["FR", "ES", "DE", "IT", "UK"];
     ctx.path = d3.geoPath(ctx.proj);
+
+    // Country hover logic
     d3.select(".map svg").append("g")
         .attr("id", "countries-area")
         .selectAll("path")
@@ -146,7 +130,6 @@ function render_map() {
         .enter()
         .append("path")
         .attr("d", ctx.path)
-        .attr("data-country-code", d => d.properties.CNTR_ID.slice(0, 2))
         .attr("fill", "var(--earth-color)")
         .attr("stroke", "#000")
         .attr("stroke-width", 0.5)
@@ -154,25 +137,63 @@ function render_map() {
             if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
                 d3.select(this).classed("glow", true);
             }
-            // const countryCode = d.properties.CNTR_ID.slice(0, 2);
-            // if (countryWallpapers[countryCode]) {
-            //     document.body.style.backgroundImage = `url(${countryWallpapers[countryCode]})`;
-            // }
         })
         .on("mouseout", function(event, d) {
             if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
                 d3.select(this).classed("glow", false);
             }
-            document.body.style.backgroundImage = "";
         });
 
+    // City rendering with country hover integration
+    d3.select(".map svg").append("g")
+        .attr("id", "cities")
+        .selectAll("g")
+        .data(ctx.data["cities"].features)
+        .enter()
+        .append("g")
+        .attr("transform", d => {
+            const [x, y] = ctx.proj([d.geometry.coordinates[0], d.geometry.coordinates[1]]);
+            return `translate(${x}, ${y})`;
+        })
+        .each(function(d) {
+            const cityGroup = d3.select(this);
+            const clubs = ctx.data["clubs_cities"].filter(c => c.City.toLowerCase() === d.properties.NAME.toLowerCase());
+
+            cityGroup.append("circle")
+                .attr("cx", 0)
+                .attr("cy", 0)
+                .attr("r", 6)
+                .attr("fill", "green")
+                .style("cursor", "pointer")
+                .on("click", event => city_event(event, d.properties.NAME))
+                .on("mouseenter", function(event) {
+                    city_event(event, d.properties.NAME);
+                    // Highlight associated country
+                    const countryID = d.properties.COUNTRY_ID;
+                    if (countryID && countriesWithGlow.includes(countryID)) {
+                        d3.select(`#countries-area path`)
+                            .filter(country => country.properties.CNTR_ID.slice(0, 2) === countryID)
+                            .classed("glow", true);
+                    }
+                })
+                .on("mouseleave", function(event) {
+                    city_event(event, d.properties.NAME);
+                    // Remove highlight for the associated country
+                    const countryID = d.properties.COUNTRY_ID;
+                    if (countryID && countriesWithGlow.includes(countryID)) {
+                        d3.select(`#countries-area path`)
+                            .filter(country => country.properties.CNTR_ID.slice(0, 2) === countryID)
+                            .classed("glow", false);
+                    }
+                });
+        });
+}
     d3.select("#cities").remove();
 
     if (ctx.showLogos) {
         d3.select(".map svg").append("g")
             .attr("id", "cities")
             .selectAll("g")
-            .attr("data-country-code", d => d.properties.CNTR_ID.slice(0, 2))
             .data(ctx.data["cities"].features)
             .enter()
             .append("g")
@@ -273,10 +294,6 @@ function render_map() {
             .attr("alt", d.Club)
             .attr("title", d.Club)
             .attr("class", "club-logo")
-            .style("cursor", "pointer")
-            .on("click", () => {
-                window.location.href = `/stat_page.html?club=${d.Club}`;
-            });
     })
 
     // populate datalist for search
@@ -375,10 +392,4 @@ function search(event, input) {
     // animation input not found
     input.classList.add("not-found")
     setTimeout(() => input.classList.remove("not-found"), 500)
-}
-
-// Helper functions
-function city_to_country(city_name) {
-    const city = ctx.data["clubs_cities"].find(d => city_name_to_id(d.City) === city_name);
-    return city ? city.Country : undefined;
 }

@@ -77,6 +77,11 @@ function load_data() {
     }).catch(error => console.error("Error loading the data:", error))
 }
 
+function city_to_country(city_name) {
+    const city = ctx.data["clubs_cities"].find(d => d.City.toLowerCase() === city_name.toLowerCase());
+    return city ? city.Country : undefined;
+}
+
 function city_event(event, city_name) {
     city_name = city_name_to_id(city_name)
     let logo = d3.select(".logo-city#" + city_name)
@@ -96,19 +101,20 @@ function city_event(event, city_name) {
         logo.node().classList.remove("active")
     }
     // map all cities to their country code
-    const countriesWithGlow = ["FR", "ES", "DE", "IT", "UK"];
     let countryCode;
     countryCode = city_to_country(city_name);
     console.log("City:", city_name, "Country:", countryCode);
-    let countryPath = d3.select(`#countries-area path[data-country-code="${countryCode}"]`);
+
+    const countryPath = d3.select(`#countries-area path[data-country="${countryCode}"]`);
 
     if (event.type === "mouseenter") {
         countryPath.classed("glow", true);
     } else if (event.type === "mouseleave") {
         countryPath.classed("glow", false);
     }
+    
 }
-
+    
 function render_map() {
     wanted_cities_names = ctx.data["clubs_cities"].map(d => d.City.toLowerCase())
 
@@ -146,7 +152,6 @@ function render_map() {
         .enter()
         .append("path")
         .attr("d", ctx.path)
-        .attr("data-country-code", d => d.properties.CNTR_ID.slice(0, 2))
         .attr("fill", "var(--earth-color)")
         .attr("stroke", "#000")
         .attr("stroke-width", 0.5)
@@ -172,7 +177,6 @@ function render_map() {
         d3.select(".map svg").append("g")
             .attr("id", "cities")
             .selectAll("g")
-            .attr("data-country-code", d => d.properties.CNTR_ID.slice(0, 2))
             .data(ctx.data["cities"].features)
             .enter()
             .append("g")
@@ -273,10 +277,6 @@ function render_map() {
             .attr("alt", d.Club)
             .attr("title", d.Club)
             .attr("class", "club-logo")
-            .style("cursor", "pointer")
-            .on("click", () => {
-                window.location.href = `/stat_page.html?club=${d.Club}`;
-            });
     })
 
     // populate datalist for search
@@ -375,10 +375,4 @@ function search(event, input) {
     // animation input not found
     input.classList.add("not-found")
     setTimeout(() => input.classList.remove("not-found"), 500)
-}
-
-// Helper functions
-function city_to_country(city_name) {
-    const city = ctx.data["clubs_cities"].find(d => city_name_to_id(d.City) === city_name);
-    return city ? city.Country : undefined;
 }
