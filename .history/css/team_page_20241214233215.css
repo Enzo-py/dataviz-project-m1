@@ -1,0 +1,239 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+main {
+    padding: 2rem;
+}
+
+/* Remove or comment out the styles for menu.team-selection */
+menu.team-selection {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+    background-color: var(--background-color);
+    border: solid 2px var(--secondary-color);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 3px 3px 0 var(--shadow-color);
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team label {
+    margin-bottom: 0.5rem;
+}
+
+.team input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 200px;
+    border: solid 2px var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 3px 3px 0 var(--shadow-color);
+}
+
+.team-title {
+    padding: 0.5rem;
+
+}
+.actions {
+    background-color: #fff;
+
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 445px;
+    margin-left: 2rem;
+    margin-top: 1rem;
+}
+
+.matches {
+    background-color: #fff;
+
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 445px;
+    margin-left: 2rem; 
+    margin-top: 1rem;
+}
+
+.team-stats h2 {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+
+.season {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+}
+
+.season label {
+    margin-bottom: 0.5rem;
+}
+
+.season select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 150px;
+    border: solid 2px var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 3px 3px 0 var(--shadow-color);
+}
+
+/* Style the team-selection div */
+.team-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.team-selection label {
+    margin-bottom: 0.5rem;
+}
+
+.team-selection input {
+    width: 300px;
+}
+
+.team-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+#team-logo {
+    width: 150px;
+    height: auto;
+    margin-right: 1rem;
+}
+
+#team-name {
+    margin: 0;
+    font-size: 3em;
+}
+
+#team-league {
+    margin-top: 0.5rem; 
+    font-size: 1.2em;
+    color: #000000;
+}
+
+#team-rank {
+    margin-top: 0rem; 
+    font-size: 1.2em;
+    color: #000000;
+}
+.top-controls {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+    background-color: transparent;
+    border: none;
+}
+
+#view-players {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#view-players:hover {
+    background-color: #555;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+#compare-teams {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#compare-teams:hover {
+    background-color: #555;
+}
+
+#matches-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9em;
+}
+
+#matches-table th,
+#matches-table td {
+    padding: 12px 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#matches-table th {
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+}
+
+#matches-table tr:hover {
+    background-color: #f5f5f5;
+    cursor: default;
+}
+
+#matches-table td.win {
+    color: #28a745;
+    font-weight: bold;
+}
+
+#matches-table td.loss {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+#matches-table td.draw {
+    color: #6c757d;
+    font-weight: bold;
+}
