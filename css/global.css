@@ -2,6 +2,14 @@
     --secondary-color: #392e83;
     --background-color: #fff;
     --shadow-color: #878787;
+    --shadow-light-color: #d3e2e8;
+
+    --background-color: rgb(206, 210, 214);
+
+    --text-light-color: #737373;
+    --table-color: #36304A;
+    --table-background-color: #F5F5F5;
+
     --sea-background: linear-gradient(90deg, rgb(36 55 101) 10%, #30679f 100%);
     --earth-color: #fff;
 
@@ -10,6 +18,9 @@
     --toggle-background: #f0f0f0;
     --toggle-border: #ccc;
     --toggle-active: #fdfdfd;
+
+    --selected-color: #56b150;
+    --selected-text-color: #2e7229;
 }
 
 body, body * {
@@ -17,4 +28,17 @@ body, body * {
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+}
+
+.toast {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: var(--background-color);
+    box-shadow: 0 0 10px var(--shadow-color);
+    color: var(--text-light-color);
 }

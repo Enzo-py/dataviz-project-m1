@@ -1,0 +1,230 @@
+body {
+    /* background: rgb(5,30,55); */
+    background-color: var(--background-color);
+/* background: linear-gradient(54deg, rgba(5,30,55,1) 0%, rgba(44,96,147,1) 41%, rgba(254,250,246,1) 100%); */
+}
+
+.players-view table {
+    width: 90%;
+    min-width: 320px;
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+.players-view table th {
+    background-color: var(--table-color);
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.players-view table th:first-child {
+    border-top-left-radius: 6px;
+}
+
+.players-view table th:last-child {
+    border-top-right-radius: 6px;
+}
+
+.players-view table tr[is-visible="true"]:last-child td:first-child {
+    border-bottom-left-radius: 6px;
+}
+
+.players-view table tr[is-visible="true"]:last-child td:last-child {
+    border-bottom-right-radius: 6px;
+}
+
+.players-view table tbody tr[is-visible="true"] {
+    background-color: #ffffff75;
+    transition: all 0.3s;
+    font-weight: 400;
+    color: #333;
+}
+
+.players-view table tr[is-visible="true"].selected {
+    background-color: var(--selected-color);
+    color: var(--selected-text-color);
+}
+
+.players-view table tbody tr:hover {
+    filter: brightness(0.9);
+    transform: scale(1.01);
+    cursor: pointer;
+}
+
+.players-view table td {
+    padding: 6px 12px;
+    border: none;
+}
+
+.players-view table td img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+#pagination {
+    display: flex;
+    margin: 10px 5%;
+    width: 100%;
+    column-gap: 4px;
+}
+
+#pagination span {
+    padding: 4px 8px;
+    border-radius: 3px;
+    background-color: #ffffff75; 
+    color: var(--table-color);
+    cursor: pointer;
+}
+
+#pagination span.selected {
+    background-color: var(--selected-color);
+}
+
+#pagination span.dots_page {
+    padding: 4px 8px;
+    border-radius: 3px;
+    background-color: #ddd;
+    color: #fff;
+    cursor: auto;
+}
+
+.players-tags {
+    display: flex;
+    margin: 20px 5%;
+    flex-direction: row;
+    height: 30px;
+}
+
+.players-tags span {
+    padding: 4px 8px;
+    border-radius: 3px;
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+.spider-charts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 5%;
+    background-color: #ffffff75;
+    border-radius: 6px;
+}
+
+.players-card {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 20px 5%;
+    gap: 20px;
+}
+
+.players-card .player-card {
+    display: flex;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #ffffff75;
+    box-shadow: 0 0 4px var(--shadow-color);
+    transition: all 0.3s;
+    width: calc(50% - 10px);
+    border: solid 4px;
+
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 30px;
+    justify-content: center;
+    column-count: 2;
+}
+
+.players-card .player-card .head-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.players-card .player-card .head-card .player-identity {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.players-card .player-card .head-card .player-identity h2 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.players-card .player-card .head-card .player-number {
+    font-weight: 700;
+    font-size: 4.5rem;
+    text-shadow: 0 0 1px var(--shadow-color);
+}
+
+.players-card .player-card .head-card .player-identity .player-identity-data {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+}
+
+.players-card .player-card .head-card span {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 10px;
+}
+
+.players-card .player-card .head-card span img {
+    width: 30px;
+}
+
+.players-card .player-card img {
+    width: 100px;
+    /* border-radius: 50%; */
+    /* margin-bottom: 10px; */
+}
+
+.players-card .player-card .category {
+    width: calc(50% - 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+progress {
+    height: 16px;
+    appearance: none;
+    border-radius: 5px;
+}
+
+/* Styling the inner part of the progress bar (progress fill) */
+progress::-webkit-progress-bar {
+    background-color: #bcbcbc; /* Light grey background */
+}
+/* seuils: very-low, low, medium, high, very-high */
+progress[seuil='very-low']::-webkit-progress-value {
+    background-color: #9f2c2c;
+}
+
+progress[seuil='low']::-webkit-progress-value {
+    background-color: #e64100;
+}
+
+progress[seuil='medium']::-webkit-progress-value {
+    background-color: #ffcc00;
+}
+
+progress[seuil='high']::-webkit-progress-value {
+    background-color: #93db1e;
+}
+
+progress[seuil='very-high']::-webkit-progress-value {
+    background-color: #2c9f2c;
+}
