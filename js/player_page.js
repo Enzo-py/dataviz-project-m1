@@ -9,22 +9,22 @@ RADAR_CATEGORIES = ['DEFENDING', 'DISCIPLINE', 'SCORING', 'ASSISTS', 'ATTACKING'
 
 
 const cols_categories = {
-    "PLAYER_INFORMATION": ['full_name', 'age', 'birthday', 'birthday_GMT', 'position', 'Current Club', 'nationality', 'additional_info', 'games_subbed_out', 'games_subbed_in', 'games_started', 'market_value', 'market_value_percentile', 'annual_salary_eur', 'annual_salary_eur_percentile', 'shirt_number', 'annual_salary_gbp', 'annual_salary_usd'],
+    "PLAYER_INFORMATION": ['full_name', 'age', 'birthday', 'birthday_GMT', 'position', 'Current_Club', 'nationality', 'additional_info', 'games_subbed_out', 'games_subbed_in', 'games_started', 'market_value', 'market_value_percentile', 'annual_salary_eur', 'annual_salary_eur_percentile', 'shirt_number', 'annual_salary_gbp', 'annual_salary_usd'],
     "COMPETITION": ['league'],
     "SEASON": ['season', 'sm_matches_recorded_total_overall'],
     "POSITION": ['position'],
-    "TEAM_INFORMATION": ['Current Club'],
+    "TEAM_INFORMATION": ['Current_Club'],
     "PLAYING_TIME": ['minutes_played_overall', 'minutes_played_home', 'minutes_played_away', 'min_per_match', 'games_subbed_out', 'games_subbed_in', 'games_started', 'sm_minutes_played_per90_percentile_overall', 'sm_minutes_played_recorded_overall', 'minutes_played_percentile_overall', 'matches_played_percentile_overall', 'games_started_percentile_overall', 'games_subbed_in_percentile_overall', 'games_subbed_out_percentile_overall'],
     "STATS": ['minutes_played_overall', 'minutes_played_home', 'minutes_played_away', 'appearances_overall', 'appearances_home', 'appearances_away', 'goals_overall', 'goals_home', 'goals_away', 'assists_overall', 'assists_home', 'assists_away', 'penalty_goals', 'penalty_misses', 'clean_sheets_overall', 'clean_sheets_home', 'clean_sheets_away', 'conceded_overall', 'conceded_home', 'conceded_away', 'yellow_cards_overall', 'red_cards_overall', 'key_passes_per_game_overall', 'key_passes_total_overall', 'crosses_per_game_overall', 'tackles_per_game_overall', 'dispossesed_per_game_overall', 'possession_regained_per_game_overall', 'pressures_per_game_overall', 'saves_per_game_overall', 'interceptions_per_game_overall', 'shots_faced_per_game_overall', 'dribbles_per_game_overall', 'xg_per_game_overall', 'chances_created_per_game_overall', 'aerial_duels_won_per_game_overall', 'aerial_duels_per_game_overall', 'possession_regained_total_overall', 'man_of_the_match_total_overall'],
     "SCORING": ['goals_overall', 'goals_home', 'goals_away', 'penalty_goals', 'goals_involved_per_90_overall', 'goals_per_90_overall', 'goals_per_90_home', 'goals_per_90_away', 'min_per_goal_overall', 'shots_per_goal_scored_overall', 'shots_per_90_overall', 'shots_off_target_per_game_overall', 'shots_on_target_per_game_overall', 'xg_per_game_overall', 'shots_total_overall', 'shots_per_game_overall', 'shots_per90_percentile_overall', 'shots_on_target_total_overall', 'shots_on_target_per_90_overall', 'shots_on_target_per90_percentile_overall', 'shots_off_target_total_overall', 'shots_off_target_per_90_overall', 'shots_off_target_per90_percentile_overall', 'xg_total_overall', 'shot_accuraccy_percentage_overall', 'shot_accuraccy_percentage_percentile_overall', 'sm_goals_scored_total_overall', 'pen_scored_total_overall', 'pen_missed_total_overall', 'pens_taken_total_overall', 'hit_woodwork_total_overall', 'hit_woodwork_per_game_overall', 'hit_woodwork_per_90_overall', 'penalties_won_total_overall', 'shot_conversion_rate_overall', 'shot_conversion_rate_percentile_overall', 'min_per_goal_percentile_overall', 'npxg_total_overall', 'npxg_per90_percentile_overall', 'npxg_per_game_overall', 'npxg_per_90_overall', 'xg_per_90_overall', 'xg_per90_percentile_overall', 'hit_woodwork_per90_percentile_overall', 'hattricks_total_overall', 'two_goals_in_a_game_total_overall', 'three_goals_in_a_game_total_overall', 'two_goals_in_a_game_percentage_overall', 'three_goals_in_a_game_percentage_overall', 'goals_involved_per90_percentile_overall', 'goals_per90_percentile_overall', 'goals_per90_percentile_away', 'goals_per90_percentile_home'],
     "ASSISTS": ['assists_overall', 'assists_home', 'assists_away', 'assists_per_90_overall', 'min_per_assist_overall', 'assists_per_game_overall', 'sm_assists_total_overall', 'assists_per90_percentile_overall', 'xa_total_overall', 'xa_per90_percentile_overall', 'xa_per_game_overall', 'xa_per_90_overall', 'goals_involved_per90_percentile_overall'],
-    "DEFENDING": ["rank_in_league_top_defenders", "rank_in_league_top_defenders", "duels_per_game_overall",'clean_sheets_overall', 'conceded_overall', 'tackles_per_90_overall', 'tackles_per_game_overall', 'tackles_per_game_overall', 'tackles_total_overall', 'tackles_successful_per_game_overall', 'dispossesed_per_game_overall', 'possession_regained_per_game_overall', 'pressures_per_game_overall', 'interceptions_per_game_overall', 'interceptions_per_game_overall', 'aerial_duels_won_per_game_overall', 'aerial_duels_per_game_overall', 'possession_regained_per_90_overall', 'possession_regained_total_overall', 'possession_regained_per90_percentile_overall', 'tackles_per90_percentile_overall', 'tackles_successful_per_90_overall', 'tackles_successful_per90_percentile_overall', 'tackles_successful_total_overall', 'interceptions_total_overall', 'interceptions_per_90_overall', 'interceptions_per90_percentile_overall', 'conceded_per90_percentile_overall', 'pressures_total_overall', 'pressures_per_90_overall', 'pressures_per90_percentile_overall', 'dribbled_past_per90_percentile_overall', 'clearances_per_90_overall', 'clearances_total_overall', 'inside_box_saves_total_overall', 'blocks_per_game_overall', 'blocks_per_90_overall', 'blocks_total_overall', 'blocks_per90_percentile_overall', 'clearances_per_game_overall', 'pen_committed_total_overall', 'pen_committed_per_90_overall', 'pen_committed_per90_percentile_overall', 'pen_committed_per_game_overall', 'punches_total_overall', 'punches_per_game_overall', 'punches_per_90_overall', 'clearances_per90_percentile_overall', 'punches_per90_percentile_overall', 'dispossesed_total_overall', 'dispossesed_per_90_overall', 'dispossesed_per90_percentile_overall'],
+    "DEFENDING": ["is_defender", "rank_in_league_top_defenders", "rank_in_league_top_defenders", "duels_per_game_overall",'clean_sheets_overall', 'conceded_overall', 'tackles_per_90_overall', 'tackles_per_game_overall', 'tackles_per_game_overall', 'tackles_total_overall', 'tackles_successful_per_game_overall', 'dispossesed_per_game_overall', 'possession_regained_per_game_overall', 'pressures_per_game_overall', 'interceptions_per_game_overall', 'interceptions_per_game_overall', 'aerial_duels_won_per_game_overall', 'aerial_duels_per_game_overall', 'possession_regained_per_90_overall', 'possession_regained_total_overall', 'possession_regained_per90_percentile_overall', 'tackles_per90_percentile_overall', 'tackles_successful_per_90_overall', 'tackles_successful_per90_percentile_overall', 'tackles_successful_total_overall', 'interceptions_total_overall', 'interceptions_per_90_overall', 'interceptions_per90_percentile_overall', 'conceded_per90_percentile_overall', 'pressures_total_overall', 'pressures_per_90_overall', 'pressures_per90_percentile_overall', 'dribbled_past_per90_percentile_overall', 'clearances_per_90_overall', 'clearances_total_overall', 'inside_box_saves_total_overall', 'blocks_per_game_overall', 'blocks_per_90_overall', 'blocks_total_overall', 'blocks_per90_percentile_overall', 'clearances_per_game_overall', 'pen_committed_total_overall', 'pen_committed_per_90_overall', 'pen_committed_per90_percentile_overall', 'pen_committed_per_game_overall', 'punches_total_overall', 'punches_per_game_overall', 'punches_per_90_overall', 'clearances_per90_percentile_overall', 'punches_per90_percentile_overall', 'dispossesed_total_overall', 'dispossesed_per_90_overall', 'dispossesed_per90_percentile_overall'],
     "DISCIPLINE": ['yellow_cards_overall', 'red_cards_overall', 'min_per_card_overall', 'cards_per_90_overall', 'pen_committed_total_overall', 'pen_committed_per_90_overall', 'pen_committed_per90_percentile_overall', 'pen_committed_per_game_overall', 'offsides_per_90_overall', 'offsides_per_game_overall', 'offsides_total_overall', 'fouls_drawn_per90_percentile_overall', 'fouls_drawn_total_overall', 'fouls_drawn_per_game_overall', 'fouls_drawn_per_90_overall', 'fouls_committed_per_90_overall', 'fouls_committed_per_game_overall', 'fouls_committed_per90_percentile_overall', 'fouls_committed_total_overall', 'offsides_per90_percentile_overall', 'min_per_card_percentile_overall', 'cards_per90_percentile_overall', 'booked_over05_overall', 'booked_over05_percentage_overall', 'booked_over05_percentage_percentile_overall'],
     "EFFICIENCY": ['conceded_per_90_overall', 'min_per_conceded_overall', 'min_per_card_overall', 'min_per_assist_overall', 'cards_per_90_overall', 'assists_per_game_overall', 'assists_per90_percentile_overall', 'passes_per_90_overall', 'passes_per_game_overall', 'passes_per90_percentile_overall', 'passes_completed_per_game_overall', 'pass_completion_rate_percentile_overall', 'passes_completed_per_90_overall', 'passes_completed_per90_percentile_overall', 'tackles_per_90_overall', 'tackles_successful_per_game_overall', 'dribbles_successful_per_game_overall', 'shots_per_goal_scored_overall', 'shots_per_90_overall', 'shots_off_target_per_game_overall', 'shots_on_target_per_game_overall', 'possession_regained_per_90_overall', 'possession_regained_per90_percentile_overall', 'shots_per90_percentile_overall', 'shots_on_target_per_90_overall', 'shots_on_target_per90_percentile_overall', 'shots_off_target_per_90_overall', 'shots_off_target_per90_percentile_overall', 'tackles_per90_percentile_overall', 'tackles_successful_per_90_overall', 'tackles_successful_per90_percentile_overall', 'interceptions_per_90_overall', 'interceptions_per90_percentile_overall', 'cross_completion_rate_percentile_overall', 'crosses_per90_percentile_overall', 'through_passes_per90_percentile_overall', 'long_passes_per90_percentile_overall', 'short_passes_per90_percentile_overall', 'key_passes_per90_percentile_overall', 'dribbles_per_90_overall', 'dribbles_per90_percentile_overall', 'dribbles_successful_per_90_overall', 'dribbles_successful_percentage_overall', 'chances_created_per_90_overall', 'chances_created_per90_percentile_overall', 'save_percentage_percentile_overall', 'saves_per_90_overall', 'saves_per90_percentile_overall', 'shots_per_goal_conceded_overall', 'conceded_per90_percentile_overall', 'shots_faced_per_90_overall', 'shots_faced_per90_percentile_overall', 'xg_faced_per_90_overall', 'xg_faced_per90_percentile_overall', 'save_percentage_overall', 'pressures_per_90_overall', 'pressures_per90_percentile_overall', 'pass_completion_rate_overall', 'shot_accuraccy_percentage_overall', 'shot_accuraccy_percentage_percentile_overall', 'dribbled_past_per90_percentile_overall', 'pen_scored_total_overall', 'pen_missed_total_overall', 'blocks_per_game_overall', 'blocks_per_90_overall', 'blocks_total_overall', 'blocks_per90_percentile_overall', 'clearances_per_game_overall', 'pen_save_percentage_overall', 'pens_saved_total_overall', 'pens_taken_total_overall', 'hit_woodwork_total_overall', 'hit_woodwork_per_game_overall', 'hit_woodwork_per_90_overall', 'penalties_won_total_overall', 'shot_conversion_rate_overall', 'shot_conversion_rate_percentile_overall', 'min_per_goal_percentile_overall', 'min_per_conceded_percentile_overall', 'npxg_total_overall', 'npxg_per90_percentile_overall', 'npxg_per_game_overall', 'npxg_per_90_overall', 'xg_per_90_overall', 'xg_per90_percentile_overall', 'clearances_per90_percentile_overall', 'hit_woodwork_per90_percentile_overall', 'aerial_duels_won_per90_percentile_overall', 'aerial_duels_total_overall', 'aerial_duels_per_90_overall', 'aerial_duels_per90_percentile_overall', 'aerial_duels_won_total_overall', 'aerial_duels_won_percentage_overall', 'aerial_duels_won_per_90_overall', 'duels_per_90_overall', 'duels_per_game_overall', 'duels_total_overall', 'duels_won_total_overall', 'duels_won_per90_percentile_overall', 'duels_per90_percentile_overall', 'duels_won_per_90_overall', 'duels_won_per_game_overall', 'duels_won_percentage_overall', 'dispossesed_total_overall', 'dispossesed_per_90_overall', 'dispossesed_per90_percentile_overall', 'progressive_passes_total_overall', 'cross_completion_rate_overall', 'accurate_crosses_total_overall', 'accurate_crosses_per_game_overall', 'accurate_crosses_per_90_overall', 'accurate_crosses_per90_percentile_overall', 'hattricks_total_overall', 'two_goals_in_a_game_total_overall', 'three_goals_in_a_game_total_overall', 'two_goals_in_a_game_percentage_overall', 'three_goals_in_a_game_percentage_overall', 'goals_per90_percentile_overall', 'goals_per90_percentile_away', 'goals_per90_percentile_home', 'man_of_the_match_total_overall', 'clean_sheets_percentage_percentile_overall'],
     "RANKING": ['rank_in_league_top_attackers', 'rank_in_league_top_midfielders', 'rank_in_league_top_defenders', 'rank_in_club_top_scorer'],
     "PLAYER_RATING": ['average_rating_overall', 'ratings_total_overall', 'average_rating_percentile_overall'],
     "PASSING": ['passes_per_90_overall', 'passes_per_game_overall', 'passes_per90_percentile_overall', 'passes_total_overall', 'passes_completed_per_game_overall', 'passes_completed_total_overall', 'pass_completion_rate_percentile_overall', 'passes_completed_per_90_overall', 'passes_completed_per90_percentile_overall', 'short_passes_per_game_overall', 'long_passes_per_game_overall', 'key_passes_per_game_overall', 'key_passes_total_overall', 'through_passes_per_game_overall', 'crosses_per_game_overall', 'crosses_total_overall', 'cross_completion_rate_percentile_overall', 'crosses_per_90_overall', 'crosses_per90_percentile_overall', 'through_passes_total_overall', 'through_passes_per_90_overall', 'through_passes_per90_percentile_overall', 'long_passes_total_overall', 'long_passes_per_90_overall', 'long_passes_per90_percentile_overall', 'short_passes_total_overall', 'short_passes_per_90_overall', 'short_passes_per90_percentile_overall', 'key_passes_per_90_overall', 'key_passes_per90_percentile_overall', 'pass_completion_rate_overall', 'xa_total_overall', 'xa_per90_percentile_overall', 'xa_per_game_overall', 'xa_per_90_overall', 'progressive_passes_total_overall', 'cross_completion_rate_overall', 'accurate_crosses_total_overall', 'accurate_crosses_per_game_overall', 'accurate_crosses_per_90_overall', 'accurate_crosses_per90_percentile_overall'],
-    "GOALKEEPER": ['is_goalkeeper', 'inside_box_saves_total_overall', 'is_shooter', 'saves_per_game_overall', 'shots_faced_per_game_overall', 'saves_total_overall', 'save_percentage_percentile_overall', 'saves_per_90_overall', 'saves_per90_percentile_overall', 'shots_faced_total_overall', 'shots_per_goal_conceded_overall', 'sm_goals_conceded_total_overall', 'shots_faced_per_90_overall', 'shots_faced_per90_percentile_overall', 'xg_faced_per_90_overall', 'xg_faced_per90_percentile_overall', 'xg_faced_per_game_overall', 'xg_faced_total_overall', 'save_percentage_overall', 'inside_box_saves_total_overall', 'pen_save_percentage_overall', 'pens_saved_total_overall', 'punches_total_overall', 'punches_per_game_overall', 'punches_per_90_overall', 'min_per_conceded_percentile_overall', 'punches_per90_percentile_overall', 'clean_sheets_percentage_percentile_overall'],
+    "GOALKEEPER": ['is_goalkeeper', 'is_goalkeeper', 'is_goalkeeper', 'inside_box_saves_total_overall', 'inside_box_saves_total_overall', 'is_shooter', 'saves_per_game_overall', 'shots_faced_per_game_overall', 'saves_total_overall', 'save_percentage_percentile_overall', 'saves_per_90_overall', 'saves_per90_percentile_overall', 'shots_faced_total_overall', 'shots_per_goal_conceded_overall', 'sm_goals_conceded_total_overall', 'sm_goals_conceded_total_overall', 'shots_faced_per_90_overall', 'shots_faced_per90_percentile_overall', 'xg_faced_per_90_overall', 'xg_faced_per90_percentile_overall', 'xg_faced_per_game_overall', 'xg_faced_total_overall', 'save_percentage_overall', 'inside_box_saves_total_overall', 'pen_save_percentage_overall', 'pens_saved_total_overall', 'pens_saved_total_overall', 'punches_total_overall', 'punches_total_overall', 'punches_per_game_overall', 'punches_per_90_overall', 'min_per_conceded_percentile_overall', 'punches_per90_percentile_overall', 'clean_sheets_percentage_percentile_overall'],
     "ATTACKING": ["rank_in_league_top_attackers", 'goals_involved_per_90_overall', 'assists_per_90_overall', 'goals_per_90_overall', 'goals_per_90_home', 'goals_per_90_away', 'min_per_goal_overall', 'dribbles_successful_per_game_overall', 'dribbles_per_game_overall', 'chances_created_per_game_overall', 'dribbles_total_overall', 'dribbles_per_90_overall', 'dribbles_per90_percentile_overall', 'dribbles_successful_total_overall', 'dribbles_successful_per_90_overall', 'dribbles_successful_percentage_overall', 'chances_created_total_overall', 'chances_created_per_90_overall', 'chances_created_per90_percentile_overall', 'dribbled_past_per_game_overall', 'dribbled_past_per_90_overall', 'dribbled_past_total_overall', 'dribbles_successful_per90_percentile_overall', 'dribbles_successful_percentage_percentile_overall', 'offsides_per_90_overall', 'offsides_per_game_overall', 'offsides_total_overall', 'offsides_per90_percentile_overall'],
     "PHYSICAL_STATS": ['distance_travelled_per_game_overall', 'aerial_duels_won_per90_percentile_overall', 'aerial_duels_total_overall', 'aerial_duels_per_90_overall', 'aerial_duels_per90_percentile_overall', 'aerial_duels_won_total_overall', 'aerial_duels_won_percentage_overall', 'aerial_duels_won_per_90_overall', 'duels_per_90_overall', 'duels_per_game_overall', 'duels_total_overall', 'duels_won_total_overall', 'duels_won_per90_percentile_overall', 'duels_per90_percentile_overall', 'duels_won_per_90_overall', 'duels_won_per_game_overall', 'duels_won_percentage_overall', 'distance_travelled_total_overall', 'distance_travelled_per_90_overall', 'distance_travelled_per90_percentile_overall'],
     "POSSESION_BALL_CONTROL": ["rank_in_league_top_midfielders", 'dribbled_past_per_game_overall', 'dribbled_past_per_90_overall', 'dribbled_past_total_overall', 'dribbles_successful_per90_percentile_overall', 'dribbles_successful_percentage_percentile_overall'],
@@ -83,7 +83,7 @@ const PLAYER_CARD = {
         "rank_in_club_top_scorer",
         "rank_in_league_top_attackers"
         ],
-        "Passes courtes": [
+        "Ouvre le jeu": [
         "passes_completed_per_game_overall",
         "pass_completion_rate_overall",
         "key_passes_per_90_overall",
@@ -149,18 +149,21 @@ const PLAYER_CARD = {
         "interceptions_per_90_overall",
         "duels_per_game_overall",
         "rank_in_league_top_defenders",
+        "is_defender"
         ],
         "Tacles": [
         "tackles_per_game_overall",
         "interceptions_total_overall",
-        "tackles_per_90_overall"
+        "tackles_per_90_overall",
+        "is_defender"
         ],
         "Marquage": [
         "blocks_per_game_overall",
         "clearances_per_game_overall",
         "duels_won_per_game_overall",
         "interceptions_per_game_overall",
-        "rank_in_league_top_defenders"
+        "rank_in_league_top_defenders",
+        "is_defender"
         ]
     },
     "Physique": {
@@ -303,6 +306,13 @@ function agg_players_data() {
                 } else {
                     player["is_shooter"] = 0
                 }
+
+                // is_defender because not enough stats for defenders
+                if (player["position"] == "Defender") {
+                    player["is_defender"] = 1
+                } else {
+                    player["is_defender"] = 0
+                } 
             })
         }
     })
@@ -350,8 +360,6 @@ function agg_players_data() {
         }
     })
 
-    console.log("Minmax:", minmax)
-
     // 2. normalize the data by category
 
     Object.keys(ctx.data["players_agg"]).forEach(playerId => {
@@ -363,14 +371,17 @@ function agg_players_data() {
                 category_values = {}
                 cols.forEach(col => {
                     // normalize the data
-                    category_values[col] = (player_data[col] - minmax[col].min) / (minmax[col].max - minmax[col].min)
+                    if (typeof player_data[col] == "string") {
+                        category_values[col] = player_data[col]
+                    } else {
+                        category_values[col] = (player_data[col] - minmax[col].min) / (minmax[col].max - minmax[col].min)
 
-                    // if NaN, set to the value
-                    if (isNaN(category_values[col])) category_values[col] = player_data[col]
-                    if (COLS_TO_REVERSE.includes(col)) category_values[col] = 1 - category_values[col]
+                        // if NaN, set to the value
+                        if (isNaN(category_values[col])) category_values[col] = player_data[col]
+                        if (COLS_TO_REVERSE.includes(col)) category_values[col] = 1 - category_values[col]
+                    }
                 })
 
-                
                 ctx.data["players_agg"][playerId][season][category] = category_values
             })
         });
@@ -433,7 +444,7 @@ function populate_players() {
         player = ctx.data["players_agg"][player_id]
         table_row = table_body.append("tr")
         years = Object.keys(player).sort()
-        current_club = player[years[years.length - 1]]["Current Club"]
+        current_club = player[years[years.length - 1]]["Current_Club"]
         player_name = player[years[years.length - 1]]["full_name"]
 
         table_row.append("td").text(current_club)
@@ -805,7 +816,7 @@ function create_player_card(player_id) {
     player = ctx.data["players_agg"][player_id]
     player_name = player[Object.keys(player)[0]]["full_name"]
     player_position = player[Object.keys(player)[0]]["position"]
-    player_club = player[Object.keys(player)[0]]["Current Club"]
+    player_club = player[Object.keys(player)[0]]["Current_Club"]
     player_nationality = player[Object.keys(player)[0]]["nationality"]
     player_number = parseInt(player[Object.keys(player)[0]]["shirt_number"])
 

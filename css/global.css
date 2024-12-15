@@ -42,3 +42,69 @@ body, body * {
     box-shadow: 0 0 10px var(--shadow-color);
     color: var(--text-light-color);
 }
+
+.search-blob {
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: solid 2px var(--secondary-color);
+    background-color: #fff;
+    padding: 6px;
+    border-radius: 8px;
+    color: var(--secondary-color);
+    box-shadow: 0 3px 3px 0 var(--shadow-color);
+    margin: 10px;
+}
+
+.search-blob input {
+    border: none !important;
+    background: none !important;
+    width: 100%;
+    font-size: 1rem;
+    padding: 2px;
+    margin: 0;
+    outline: none !important;
+}
+
+/* shake animation */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-10px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(10px);
+    }
+}
+
+.search-blob:has(input.not-found) {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+    animation: shake 0.5s;
+}
+
+.search-blob input.not-found {
+    color: var(--danger-color);
+}
+
+.search-blob:has(input.found) {
+    color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.search-blob input.found {
+    color: var(--success-color);
+}
+
+.search-blob span {
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.search-blob span:hover {
+    transform: scale(1.1);
+}

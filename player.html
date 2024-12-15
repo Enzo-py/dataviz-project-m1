@@ -16,6 +16,11 @@
 <body onload="load_data()">
     <div class="page-wrapper players-view">
         <div class="choose-players">
+            <div class="search-blob">
+                <input type="text" id="search" placeholder="Search player...">
+                <span class="material-symbols-outlined" onclick="search(event, this.parentNode.querySelector('input'))">search</span>
+                <datalist id="search-list"></datalist>
+            </div>
             <table class="players-table">
                 <thead>
                     <tr>
