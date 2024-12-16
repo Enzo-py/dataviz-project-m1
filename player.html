@@ -16,11 +16,41 @@
 <body onload="load_data()">
     <div class="page-wrapper players-view">
         <div class="choose-players">
-            <div class="search-blob">
-                <input type="text" id="search" placeholder="Search player...">
-                <span class="material-symbols-outlined" onclick="search(event, this.parentNode.querySelector('input'))">search</span>
-                <datalist id="search-list"></datalist>
-            </div>
+            <menu>
+                <div class="search-blob">
+                    <div class="switch-search-mode">
+                        <span class="material-symbols-outlined" onclick="switch_search_mode(this)">person</span>
+                    </div>
+                    <input type="text" id="search" placeholder="Search player...">
+                    <span class="material-symbols-outlined" onclick="filter_search(this.parentNode.querySelector('input').value)">search</span>
+                    <datalist id="search-list"></datalist>
+                </div>
+                <div class="filters">
+                    <span class="material-symbols-outlined" onclick="show_filter_page()">filter_alt</span>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <label for="position">Position</label>
+                            <select name="position" id="position" onchange="filter_position(this.value)">
+                                <option value="all">All</option>
+                                <option value="Goalkeeper">Goalkeeper</option>
+                                <option value="Defender">Defender</option>
+                                <option value="Midfielder">Midfielder</option>
+                                <option value="Forward">Forward</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-option">
+                            <label for="nationality">Nationality</label>
+                            <select name="nationality" id="nationality-select" onchange="filter_national(this.value)">
+                                <option value="all">All</option>
+                                <!--  -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </menu>
+            
+
             <table class="players-table">
                 <thead>
                     <tr>
@@ -50,6 +80,69 @@
                 <!-- populates by js -->
             </div>
         </div>
+
+        <div class="distribution-charts"></div>
     </div>
+
+    <script>
+        const filter_page = document.querySelector('.filter-options');
+        const filters = {
+            position: null,
+            nationality: null,
+            player: null,
+            club: null,
+        }
+
+        let search_mode = 'player'
+
+        function show_filter_page() {
+            filter_page.classList.toggle('active');
+        }
+
+        // if we click out of filters, close it
+        window.addEventListener('click', function(event) {
+            if (!filter_page.contains(event.target) && !event.target.classList.contains('material-symbols-outlined')) {
+                filter_page.classList.remove('active');
+            }
+        });
+
+        function switch_search_mode(element) {
+            // shield
+            // emoji_events
+            // group
+            // sports
+            // sports_soccer
+            search_mode = element.textContent === 'person' ? 'club' : 'player'
+            element.textContent = search_mode === 'player' ? 'person' : 'sports'
+            document.querySelector('input#search').placeholder = `Search ${search_mode}...`
+        }
+
+        function filter_position(value) {
+            filters.position = value
+            filter()
+        }
+
+        function filter_national(value) {
+            filters.nationality = value == 'all' ? null : value
+            filter()
+        }
+
+        function filter_search(value) {
+            value = value.trim()
+            value = value.length > 0 ? value.toLowerCase() : null
+            if (search_mode === 'player') {
+                filters.player = value
+            } else {
+                filters.club = value
+            }
+            filter()
+        }
+
+        function filter() {
+            console.log(filters)
+            // table_filter(search, positions, clubs, nationaly)
+            table_filter(filters.player, filters.position, filters.club, filters.nationality)
+        }
+    </script>
 </body>
 </html>

@@ -24,7 +24,7 @@ const cols_categories = {
     "RANKING": ['rank_in_league_top_attackers', 'rank_in_league_top_midfielders', 'rank_in_league_top_defenders', 'rank_in_club_top_scorer'],
     "PLAYER_RATING": ['average_rating_overall', 'ratings_total_overall', 'average_rating_percentile_overall'],
     "PASSING": ['passes_per_90_overall', 'passes_per_game_overall', 'passes_per90_percentile_overall', 'passes_total_overall', 'passes_completed_per_game_overall', 'passes_completed_total_overall', 'pass_completion_rate_percentile_overall', 'passes_completed_per_90_overall', 'passes_completed_per90_percentile_overall', 'short_passes_per_game_overall', 'long_passes_per_game_overall', 'key_passes_per_game_overall', 'key_passes_total_overall', 'through_passes_per_game_overall', 'crosses_per_game_overall', 'crosses_total_overall', 'cross_completion_rate_percentile_overall', 'crosses_per_90_overall', 'crosses_per90_percentile_overall', 'through_passes_total_overall', 'through_passes_per_90_overall', 'through_passes_per90_percentile_overall', 'long_passes_total_overall', 'long_passes_per_90_overall', 'long_passes_per90_percentile_overall', 'short_passes_total_overall', 'short_passes_per_90_overall', 'short_passes_per90_percentile_overall', 'key_passes_per_90_overall', 'key_passes_per90_percentile_overall', 'pass_completion_rate_overall', 'xa_total_overall', 'xa_per90_percentile_overall', 'xa_per_game_overall', 'xa_per_90_overall', 'progressive_passes_total_overall', 'cross_completion_rate_overall', 'accurate_crosses_total_overall', 'accurate_crosses_per_game_overall', 'accurate_crosses_per_90_overall', 'accurate_crosses_per90_percentile_overall'],
-    "GOALKEEPER": ['is_goalkeeper', 'is_goalkeeper', 'is_goalkeeper', 'inside_box_saves_total_overall', 'inside_box_saves_total_overall', 'is_shooter', 'saves_per_game_overall', 'shots_faced_per_game_overall', 'saves_total_overall', 'save_percentage_percentile_overall', 'saves_per_90_overall', 'saves_per90_percentile_overall', 'shots_faced_total_overall', 'shots_per_goal_conceded_overall', 'sm_goals_conceded_total_overall', 'sm_goals_conceded_total_overall', 'shots_faced_per_90_overall', 'shots_faced_per90_percentile_overall', 'xg_faced_per_90_overall', 'xg_faced_per90_percentile_overall', 'xg_faced_per_game_overall', 'xg_faced_total_overall', 'save_percentage_overall', 'inside_box_saves_total_overall', 'pen_save_percentage_overall', 'pens_saved_total_overall', 'pens_saved_total_overall', 'punches_total_overall', 'punches_total_overall', 'punches_per_game_overall', 'punches_per_90_overall', 'min_per_conceded_percentile_overall', 'punches_per90_percentile_overall', 'clean_sheets_percentage_percentile_overall'],
+    "GOALKEEPER": ["save_percentage_percentile_overall", "save_percentage_percentile_overall", "saves_total_overall", 'is_goalkeeper', 'is_goalkeeper', 'is_goalkeeper', 'inside_box_saves_total_overall', 'saves_per_game_overall', 'saves_per_game_overall', 'shots_faced_per_game_overall', 'saves_total_overall', 'save_percentage_percentile_overall', 'saves_per_90_overall', 'saves_per90_percentile_overall', 'shots_faced_total_overall', 'shots_per_goal_conceded_overall', 'sm_goals_conceded_total_overall', 'sm_goals_conceded_total_overall', 'shots_faced_per_90_overall', 'shots_faced_per90_percentile_overall', 'xg_faced_per_90_overall', 'xg_faced_per90_percentile_overall', 'save_percentage_overall', 'inside_box_saves_total_overall', 'pen_save_percentage_overall', 'pens_saved_total_overall', 'punches_total_overall', 'punches_per_90_overall', 'min_per_conceded_percentile_overall', 'punches_per90_percentile_overall', 'clean_sheets_percentage_percentile_overall'],
     "ATTACKING": ["rank_in_league_top_attackers", 'goals_involved_per_90_overall', 'assists_per_90_overall', 'goals_per_90_overall', 'goals_per_90_home', 'goals_per_90_away', 'min_per_goal_overall', 'dribbles_successful_per_game_overall', 'dribbles_per_game_overall', 'chances_created_per_game_overall', 'dribbles_total_overall', 'dribbles_per_90_overall', 'dribbles_per90_percentile_overall', 'dribbles_successful_total_overall', 'dribbles_successful_per_90_overall', 'dribbles_successful_percentage_overall', 'chances_created_total_overall', 'chances_created_per_90_overall', 'chances_created_per90_percentile_overall', 'dribbled_past_per_game_overall', 'dribbled_past_per_90_overall', 'dribbled_past_total_overall', 'dribbles_successful_per90_percentile_overall', 'dribbles_successful_percentage_percentile_overall', 'offsides_per_90_overall', 'offsides_per_game_overall', 'offsides_total_overall', 'offsides_per90_percentile_overall'],
     "PHYSICAL_STATS": ['distance_travelled_per_game_overall', 'aerial_duels_won_per90_percentile_overall', 'aerial_duels_total_overall', 'aerial_duels_per_90_overall', 'aerial_duels_per90_percentile_overall', 'aerial_duels_won_total_overall', 'aerial_duels_won_percentage_overall', 'aerial_duels_won_per_90_overall', 'duels_per_90_overall', 'duels_per_game_overall', 'duels_total_overall', 'duels_won_total_overall', 'duels_won_per90_percentile_overall', 'duels_per90_percentile_overall', 'duels_won_per_90_overall', 'duels_won_per_game_overall', 'duels_won_percentage_overall', 'distance_travelled_total_overall', 'distance_travelled_per_90_overall', 'distance_travelled_per90_percentile_overall'],
     "POSSESION_BALL_CONTROL": ["rank_in_league_top_midfielders", 'dribbled_past_per_game_overall', 'dribbled_past_per_90_overall', 'dribbled_past_total_overall', 'dribbles_successful_per90_percentile_overall', 'dribbles_successful_percentage_percentile_overall'],
@@ -52,7 +52,7 @@ COLS_TO_REVERSE = [
     'pen_committed_total_overall', 
     'pen_committed_per_90_overall', 
     'pen_committed_per90_percentile_overall', 
-    'pen_committed_per_game_overall', "is_shooter",
+    'pen_committed_per_game_overall',
     'dispossesed_total_overall', "rank_in_league_top_midfielders", "rank_in_league_top_attackers",
     'dispossesed_per_90_overall', "rank_in_league_top_defenders", "rank_in_club_top_scorer",
     'dispossesed_per90_percentile_overall', 'sm_goals_conceded_total_overall'
@@ -61,20 +61,22 @@ COLS_TO_REVERSE = [
 const PLAYER_CARD = {
     "Attaque": {
         "Centres": [
-        "crosses_per_game_overall",
-        "accurate_crosses_per_game_overall",
+        "crosses_per_game_overall", "crosses_per_game_overall",
+        "accurate_crosses_per_game_overall", "accurate_crosses_per_game_overall", "accurate_crosses_per_game_overall",
         "cross_completion_rate_overall",
         "key_passes_per_game_overall",
-        "rank_in_league_top_attackers"
+        "rank_in_league_top_attackers",
+        "sm_goals_scored_total_overall",
+        "is_shooter"
         ],
         "Finition": [
         "goals_overall",
-        "goals_per_90_overall",
-        "shots_on_target_per_90_overall",
-        "shot_conversion_rate_overall",
+        "shots_on_target_per_90_overall", "shots_on_target_per_90_overall",
+        "shot_conversion_rate_overall", "shot_conversion_rate_overall",
         "hit_woodwork_total_overall",
         "rank_in_club_top_scorer",
-        "rank_in_league_top_attackers"
+        "rank_in_league_top_attackers",
+        "is_shooter"
         ],
         "Jeu de tête": [
         "aerial_duels_won_per_game_overall",
@@ -84,38 +86,45 @@ const PLAYER_CARD = {
         "rank_in_league_top_attackers"
         ],
         "Ouvre le jeu": [
-        "passes_completed_per_game_overall",
+        "passes_completed_per_game_overall", "passes_completed_per_game_overall",
         "pass_completion_rate_overall",
         "key_passes_per_90_overall",
         "passes_per_90_overall",
+        "key_passes_per_game_overall",
         "rank_in_league_top_midfielders",
-        "rank_in_league_top_attackers"
+        "rank_in_league_top_attackers",
+        "sm_minutes_played_recorded_overall",
+        "goals_involved_per90_percentile_overall"
         ]
     },
     "Technique": {
         "Dribbles": [
-        "dribbles_per_game_overall",
-        "dribbles_successful_per_game_overall",
+        "dribbles_per_game_overall", "dribbles_per_game_overall",
+        "dribbles_successful_per_game_overall", "dribbles_successful_per_game_overall",
         "dribbles_successful_percentage_overall",
         "dribbles_per_90_overall",
         "rank_in_league_top_midfielders",
         "rank_in_club_top_scorer"
         ],
         "Contrôle du ballon": [
-        "dispossesed_per_game_overall",
-        "interceptions_per_game_overall",
+        "dispossesed_per_game_overall", "dispossesed_per_game_overall", "dispossesed_per_game_overall",
+        "interceptions_per_game_overall", "interceptions_per_game_overall",
         "passes_completed_per_game_overall",
         "fouls_drawn_per_game_overall",
-        "dribbles_successful_per_game_overall",
-        "offsides_total_overall",
-        "rank_in_league_top_midfielders"
+        "dribbles_successful_per_game_overall", "dribbles_successful_per_game_overall",
+        "offsides_total_overall", "offsides_total_overall",
+        "rank_in_league_top_midfielders",
+        "goals_involved_per90_percentile_overall",
         ],
         "Créativité": [
         "key_passes_per_game_overall",
-        "assists_overall",
-        "sm_assists_total_overall",
+        "assists_overall", "assists_overall",
+        "sm_assists_total_overall", "sm_goals_scored_total_overall",
+        "dribbled_past_per_game_overall",
+        "sm_minutes_played_recorded_overall",
         "passes_total_overall",
-        "offsides_total_overall"
+        "offsides_total_overall",
+        "goals_involved_per90_percentile_overall",
         ]
     },
     "Mouvement": {
@@ -168,16 +177,20 @@ const PLAYER_CARD = {
     },
     "Physique": {
         "Endurance": [
-        "minutes_played_overall",
-        "aerial_duels_won_total_overall",
-        "matches_played_percentile_overall",
-        "minutes_played_percentile_overall"
+        "minutes_played_overall", "minutes_played_overall",
+        "matches_played_percentile_overall", "matches_played_percentile_overall",
+        "min_per_match", "min_per_match", 
+        "games_subbed_out",
+        "clean_sheets_overall",
         ],
         "Force": [
         "duels_won_percentage_overall",
+        "duels_per_game_overall",
         "aerial_duels_won_total_overall",
-        "duels_won_per_game_overall",
-        "interceptions_per_game_overall"
+        "interceptions_per_game_overall", "interceptions_per_game_overall",
+        "saves_total_overall",
+        "clearances_per_game_overall", "clearances_per_game_overall",
+        "minutes_played_overall",
         ],
         "Sauts": [
         "aerial_duels_won_per90_percentile_overall",
@@ -188,28 +201,31 @@ const PLAYER_CARD = {
     "Gardien": {
         "Arrêts": [
         "shots_faced_per_game_overall",
+        "saves_total_overall", "saves_total_overall",
+        "save_percentage_percentile_overall", "save_percentage_percentile_overall", "save_percentage_percentile_overall",
         "punches_total_overall", "punches_total_overall", "punches_total_overall",
-        "sm_goals_conceded_total_overall", "sm_goals_conceded_total_overall",
-        'inside_box_saves_total_overall', 
-        'pens_saved_total_overall',
-        "is_goalkeeper", "is_goalkeeper", "is_goalkeeper"
+        "sm_goals_conceded_total_overall",
+        "conceded_overall",
+        'pens_saved_total_overall', 
+        "clean_sheets_overall",
+        "is_goalkeeper", "is_goalkeeper", "is_goalkeeper", "is_goalkeeper", "is_goalkeeper"
         ],
         "Réflexes": [
+        "save_percentage_percentile_overall",
         "saves_per_game_overall",
         "sm_goals_conceded_total_overall",
         "clearances_per_game_overall",
         "clean_sheets_overall",
-        'pens_saved_total_overall',
+        'pens_saved_total_overall', 'pens_saved_total_overall',
         'inside_box_saves_total_overall', 'inside_box_saves_total_overall',
-        "is_goalkeeper", "is_goalkeeper", "is_shooter"
+        "is_goalkeeper", "is_goalkeeper", "is_goalkeeper"
         ],
         "Sorties": [
-        "conceded_overall",
-        "clean_sheets_overall",
+        "save_percentage_percentile_overall",
         "clearances_per_game_overall",
         "interceptions_total_overall",
         "passes_total_overall",
-        "is_goalkeeper", "is_goalkeeper", "is_goalkeeper", "is_shooter"
+        "is_goalkeeper", "is_goalkeeper", "is_goalkeeper"
         ]
     }
 }
@@ -360,6 +376,12 @@ function agg_players_data() {
         }
     })
 
+    // 1. bis: remove category.cols if not in minmax
+    Object.keys(cols_categories).forEach(category => {
+        cols = cols_categories[category]
+        cols_categories[category] = cols.filter(col => minmax[col] != undefined)
+    })
+
     // 2. normalize the data by category
 
     Object.keys(ctx.data["players_agg"]).forEach(playerId => {
@@ -371,7 +393,8 @@ function agg_players_data() {
                 category_values = {}
                 cols.forEach(col => {
                     // normalize the data
-                    if (typeof player_data[col] == "string") {
+                    // if is not a number, set to the value
+                    if (isNaN(player_data[col])) {
                         category_values[col] = player_data[col]
                     } else {
                         category_values[col] = (player_data[col] - minmax[col].min) / (minmax[col].max - minmax[col].min)
@@ -418,13 +441,10 @@ function agg_players_data() {
         // ctx.data["players_agg"][playerId]["card_stats"] = cards_stats
         VALUES_CARD_STATS[playerId] = cards_stats
     })
-
-    console.log("cards stats:", VALUES_CARD_STATS)
 }    
 
 
 function populate_players() {
-    console.log(ctx.data["players_agg"])
     // transform the data to a object: nationality -> flag
     ctx.data["nationalities_flag"] = ctx.data["nationalities_flag"].reduce((acc, cur) => {
         acc[cur["Nationality"]] = cur["Flag_URL"]
@@ -452,9 +472,10 @@ function populate_players() {
         table_row.append("td").text(player[years[years.length - 1]]["position"])
         table_row.append("td").append("img").attr("src", ctx.data["nationalities_flag"][player[years[years.length - 1]]["nationality"]])
         table_row.attr("id", player_id)
-            .attr("player_name", player_name)
-            .attr("current_club", current_club)
+            .attr("player_name", player_name.toLowerCase())
+            .attr("current_club", current_club.toLowerCase())
             .attr("position", player[years[years.length - 1]]["position"])
+            .attr("nationality", player[years[years.length - 1]]["nationality"])
             .attr("is-visible", "true")
 
         table_row.on("click", function() {
@@ -479,11 +500,28 @@ function populate_players() {
     })
 
     pagination()
-    table_filter(null, null, ["PSG", "Paris Saint-Germain"])
 
     create_radar("#spider-chart-2021-2022", RADAR_CATEGORIES)
     create_radar("#spider-chart-2022-2023", RADAR_CATEGORIES)
     create_radar("#spider-chart-2023-2024", RADAR_CATEGORIES)
+
+    // add nationalities to the filter
+    nationalities = Object.keys(ctx.data["nationalities_flag"]).filter(n => n != "Flag_URL").sort()
+    nationality_select = d3.select("#nationality-select")
+    nationality_select.selectAll("option")
+        .data(nationalities)
+        .enter()
+        .append("option")
+        .text(d => d)
+
+
+    // pre draw distribution chart
+    Object.keys(PLAYER_CARD).forEach(category => {
+        indicators = PLAYER_CARD[category]
+        Object.keys(indicators).forEach(indicator => {
+            draw_distribution_chart(indicator, PLAYER_CARD[category][indicator])
+        })
+    })
 }
 
 function pagination() {
@@ -555,13 +593,15 @@ function pagination() {
             if (p < pageCount - 3) {
                 document.getElementById('dots_page_end').style.display = '';
                 document.getElementById('page' + pageCount).style.display = '';
-            } else {
+            } else if (pageCount > 6) {
                 document.getElementById('dots_page_end').style.display = 'none';
             }
             if (p > 4) {
                 document.getElementById('dots_page_start').style.display = '';
                 document.getElementById('page1').style.display = '';
-            } else {
+
+            // vérifier s'il y  a suffisamment de pages pour afficher les ...
+            } else if (pageCount > 6) {
                 document.getElementById('dots_page_start').style.display = 'none';
             }
         }
@@ -572,14 +612,15 @@ function pagination() {
     if (document.getElementById('page1') != null) document.getElementById('page1').click();
 }
 
-function table_filter(players, positions, clubs) {
+function table_filter(players, positions, clubs, nationality) {
     table = d3.select(".players-view table tbody")
     table.selectAll("tr").style("display", "none").attr("is-visible", "false")
 
     table.selectAll("tr").filter(function() {
-        return (players === null || players.includes(this.id)) &&
-            (positions === null || positions.includes(this.getAttribute("position"))) &&
-            (clubs === null || clubs.includes(this.getAttribute("current_club")))
+        return (players === null || players.toLowerCase().includes(this.getAttribute("player_name")) || this.getAttribute("player_name").includes(players.toLowerCase())) &&
+            (positions === null || positions == this.getAttribute("position")) &&
+            (clubs === null || clubs.toLowerCase().includes(this.getAttribute("current_club")) || this.getAttribute("current_club").includes(clubs.toLowerCase())) &&
+            (nationality === null || nationality.includes(this.getAttribute("nationality")) || this.getAttribute("nationality").includes(nationality))
     }).style("display", "").attr("is-visible", "true")
 
     pagination()
@@ -781,7 +822,6 @@ function update_players_charts() {
             })
         }
     })
-    console.log(data_2021_2022, data_2022_2023, data_2023_2024)
     d3.select("#spider-chart-2021-2022").selectAll(".radarWrapper").remove()
     d3.select("#spider-chart-2022-2023").selectAll(".radarWrapper").remove()
     d3.select("#spider-chart-2023-2024").selectAll(".radarWrapper").remove()
@@ -799,7 +839,10 @@ function update_players_charts() {
 }
 
 function sum_dict(dict) {
-    v = Object.values(dict).reduce((a, b) => a + b, 0)
+    v = 0
+    Object.keys(dict).forEach(key => {
+        v += parseFloat(dict[key])
+    })
     return v
 }
 
@@ -863,10 +906,95 @@ function create_player_card(player_id) {
             
             closest_seuil = Object.keys(seuils).reduce((a, b) => Math.abs(b - total_value) < Math.abs(a - total_value) ? b : a)
             closest_seuil = seuils[closest_seuil]
+
             sub_category_wrapper.append("progress")
                 .attr("value", total_value)
                 .attr("max", 1)
                 .attr("seuil", closest_seuil)
+                // on hover, display chart distribution
+                .on("mouseover", function() {
+                    // ...
+                })
         })
     })
+}
+
+function draw_distribution_chart(indicator, cols) {
+    wrapper = d3.select(".distribution-charts")
+    chart = wrapper.append("div").attr("class", "distribution-chart")
+    chart.append("h5").text(indicator)
+
+    // create the canvas
+    svg = chart.append("svg")
+        .attr("width", 300)
+        .attr("height", 200)
+        .append("g")
+        .attr("transform", "translate(50, 50)")
+
+    // get the data
+    data = []
+    Object.keys(VALUES_CARD_STATS).forEach(player_id => {
+        player = VALUES_CARD_STATS[player_id]
+        player_values = player[indicator]
+        total_value = 0
+        player_values.forEach(value => {
+            total_value += value
+        })
+        total_value = total_value / player_values.length
+        data.push(total_value)
+    })
+
+
+
+    // data = [v1, v2, v2, v3, ...] -> [v1: 1, v2: 2, v3: 1, ...]
+    // regroup data per tic of 0.05
+    tick = 0.05
+    data_by_tick = {}
+    data.forEach(value => {
+        tick_value = Math.round(value / tick) * tick
+        if (data_by_tick[tick_value] == undefined) {
+            data_by_tick[tick_value] = 1
+        } else {
+            data_by_tick[tick_value] += 1
+        }
+    })
+
+    // sort
+    data_by_tick = Object.keys(data_by_tick).sort().reduce((acc, key) => {
+        acc[key] = data_by_tick[key]
+        return acc
+    }, {})
+
+    console.log(data_by_tick)
+
+
+    // create the x scale
+    x = d3.scaleLinear()
+        .domain([0, 1])
+        .range([0, 200])
+
+    // create the y scale
+    y = d3.scaleLinear()
+        .domain([0, d3.max(Object.values(data_by_tick))])
+        .range([100, 0])
+
+    // create the x axis
+    svg.append("g")
+        .attr("transform", "translate(0, 100)")
+        .call(d3.axisBottom(x))
+
+    // // create the y axis
+    // svg.append("g")
+    //     .call(d3.axisLeft(y))
+
+    // create the bars
+    svg.selectAll("rect")
+        .data(Object.keys(data_by_tick))
+        .enter()
+        .append("rect")
+        .attr("x", d => x(d))
+        .attr("y", d => y(data_by_tick[d]))
+        .attr("width", 10)
+        .attr("height", d => 100 - y(data_by_tick[d]))
+        .style("fill", "steelblue")
 }
