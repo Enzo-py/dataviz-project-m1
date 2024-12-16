@@ -979,7 +979,7 @@ function createShotsDonutChart(data) {
     // d3.select("#donut-charts").html("");
 
     const width = 280; 
-    const height = 260;
+    const height = 20;
     const radius = Math.min(width, height) / 2;
 
     const svg = d3.select("#donut-charts")
