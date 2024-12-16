@@ -1,12 +1,13 @@
 :root {
-    --secondary-color: #392e83;
-    --background-color: #252322;
-    --shadow-color: #1b1b1b;
+    --secondary-color: #1a5396;
+    --background-color: #282727;
+    --shadow-color: #dcdcdc;
 
-    --transparent-white: #ffffff96;
+    --second-background-color: #181919;
 
     --text-light-color: #737373;
-    --table-color: #36304A;
+    --text-white-color: #d3d3d3;
+    --table-color: #1a5396;
     --table-background-color: #F5F5F5;
 
     --sea-background: linear-gradient(90deg, rgb(36 55 101) 10%, #30679f 100%);
@@ -49,11 +50,10 @@ body, body * {
     justify-content: space-between;
     align-items: center;
     border: solid 2px var(--secondary-color);
-    background-color: #fff;
+    background-color: var(--second-background-color);
     padding: 6px;
     border-radius: 8px;
     color: var(--secondary-color);
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
     margin: 10px;
 }
 
@@ -65,6 +65,7 @@ body, body * {
     padding: 2px;
     margin: 0;
     outline: none !important;
+    color: var(--text-white-color);
 }
 
 /* shake animation */
