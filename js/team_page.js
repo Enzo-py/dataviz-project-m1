@@ -793,13 +793,14 @@ function createGoalsDonutChart(data) {
     const width = 280; 
     const height = 280;
     const radius = Math.min(width, height) / 2;
+    const margin = 50;
 
     const svg = d3.select("#donut-charts")
         .append("svg")
-        .attr("width", width + 100)
-        .attr("height", height + 100)
+        .attr("width", width + margin)
+        .attr("height", height + margin)
         .append("g")
-        .attr("transform", `translate(${width / 2},${height / 2})`);
+        .attr("transform", `translate(${(width + margin) / 2},${(height + margin) / 2})`);
 
     const goalsData = [
         { label: "Goals Scored", value: parseInt(data.goals_scored) || 0, color: "#28a745" },
@@ -887,13 +888,14 @@ function createWinsDonutChart(data) {
     const width = 280;
     const height = 280;
     const radius = Math.min(width, height) / 2;
+    const margin = 50;
 
     const svg = d3.select("#donut-charts")
         .append("svg")
-        .attr("width", width + 100)
-        .attr("height", height + 100)
+        .attr("width", width + margin)
+        .attr("height", height + margin)
         .append("g")
-        .attr("transform", `translate(${width / 2},${height / 2})`);
+        .attr("transform", `translate(${(width + margin) / 2},${(height + margin) / 2})`);
 
     const winsData = [
         { label: "Wins", value: parseInt(data.wins) || 0, color: "#28a745" },
@@ -981,13 +983,14 @@ function createShotsDonutChart(data) {
     const width = 280; 
     const height = 280;
     const radius = Math.min(width, height) / 2;
+    const margin = 50;
 
     const svg = d3.select("#donut-charts")
         .append("svg")
-        .attr("width", width + 100)
-        .attr("height", height + 100)
+        .attr("width", width + margin)
+        .attr("height", height + margin)
         .append("g")
-        .attr("transform", `translate(${width / 2},${height / 2})`);
+        .attr("transform", `translate(${(width + margin) / 2},${(height + margin) / 2})`);
 
     const shotsData = [
         { label: "Shots On Target", value: parseInt(data.shots_on_target) || 0, color: "#28a745" },

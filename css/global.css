@@ -1,5 +1,5 @@
 :root {
-    --secondary-color: #1a6d96;
+    --secondary-color: #1a5396;
     --background-color: #282727;
     --shadow-color: #dcdcdc;
 
@@ -7,7 +7,7 @@
 
     --text-light-color: #737373;
     --text-white-color: #d3d3d3;
-    --table-color: #1a6d96;
+    --table-color: #1a5396;
     --table-background-color: #F5F5F5;
 
     --sea-background: linear-gradient(90deg, rgb(36 55 101) 10%, #30679f 100%);
