@@ -1,0 +1,271 @@
+{
+    "Attack": {
+      "Crosses": {
+        "stats": {
+          "crosses_per_game_overall": 2,
+          "cross_completion_rate_percentile_overall": 1,
+          "accurate_crosses_per_game_overall": 3,
+          "cross_completion_rate_overall": 1.5,
+          "key_passes_per_game_overall": 0.1,
+          "@bonus-rank_in_league_top_attackers": 0.2,
+          "sm_goals_scored_total_overall": 1
+        },
+        "position_filter": ["Forward"]
+      },
+      "Finishing": {
+        "stats": {
+          "shots_on_target_per_game_overall": 2.5,
+          "shot_conversion_rate_overall": 1.5,
+          "@inverse-hit_woodwork_per_game_overall": 0.4,
+          "@bonus-rank_in_club_top_scorer": 0.05,
+          "@bonus-rank_in_league_top_attackers": 0.2,
+          "@bonus-two_goals_in_a_game_total_overall": 0.05,
+          "@bonus-three_goals_in_a_game_percentage_overall": 0.1,
+          "key_passes_per_game_overall": 0.1,
+          "pen_scored_total_overall": 1,
+          "shot_accuraccy_percentage_overall": 2,
+          "@inverse-shots_off_target_per_game_overall": 0.8,
+          "@inverse-shots_per_goal_scored_overall": 0.4
+        },
+        "position_filter": ["Forward"]
+      },
+      "Heading": {
+        "stats": {
+          "aerial_duels_won_per_game_overall": 2,
+          "aerial_duels_won_per90_percentile_overall": 1,
+          "aerial_duels_won_total_overall": 1,
+          "@inverse-shots_per_goal_scored_overall": 0.01,
+          "@bonus-rank_in_club_top_scorer": 0.05,
+          "@bonus-rank_in_league_top_attackers": 0.2
+        },
+        "position_filter": null
+      },
+      "Playmaking": {
+        "stats": {
+          "passes_completed_per_game_overall": 2.5,
+          "pass_completion_rate_overall": 1.5,
+          "key_passes_per_90_overall": 0.5,
+          "passes_per_90_overall": 1,
+          "key_passes_per_game_overall": 1.1,
+          "@bonus-rank_in_league_top_midfielders": 0.2,
+          "@bonus-rank_in_league_top_attackers": 0.1,
+          "sm_minutes_played_recorded_overall": 0.1,
+          "duels_won_total_overall": 0.1,
+          "goals_involved_per90_percentile_overall": 0.1,
+          "assists_per_game_overall": 1,
+          "passes_per_game_overall": 1,
+          "cross_completion_rate_overall": 0.5
+        },
+        "position_filter": ["Midfielder", "Forward"]
+      }
+    },
+    "Technique": {
+      "Dribbles": {
+        "stats": {
+          "dribbles_per_game_overall": 1.5,
+          "dribbles_successful_per_90_overall": 0.2,
+          "dribbles_successful_per_game_overall": 2.5,
+          "dribbles_successful_percentage_overall": 1.5,
+          "dribbles_per_90_overall": 0.1,
+          "@bonus-rank_in_league_top_midfielders": 0.1,
+          "@bonus-rank_in_club_top_scorer": 0.01
+        },
+        "position_filter": null
+      },
+      "Ball Control": {
+        "stats": {
+          "@inverse-dispossesed_per_game_overall": 2,
+          "interceptions_per_game_overall": 0.5,
+          "passes_completed_per_game_overall": 1.5,
+          "pass_completion_rate_percentile_overall": 2.5,
+          "fouls_drawn_per_game_overall": 0.3,
+          "dribbles_successful_per_game_overall": 1.5,
+          "@inverse-offsides_total_overall": 1.5,
+          "pass_completion_rate_overall": 0.5,
+          "@bonus-rank_in_league_top_midfielders": 0.2,
+          "passes_per_game_overall": 1.5,
+          "accurate_crosses_per_game_overall": 0.1,
+          "@inverse-dribbled_past_per_game_overall": 1.5
+        },
+        "position_filter": null
+      },
+      "Creativity": {
+        "stats": {
+          "key_passes_per_game_overall": 1,
+          "assists_overall": 1,
+          "sm_assists_total_overall": 1,
+          "sm_goals_scored_total_overall": 1,
+          "passes_total_overall": 0.2,
+          "clearances_per_game_overall": 0.1,
+          "@inverse-offsides_per_game_overall": 0.5,
+          "@bonus-cross_completion_rate_percentile_overall": 0.5,
+          "goals_involved_per90_percentile_overall": 0.5,
+          "assists_per_game_overall": 1,
+          "penalties_won_total_overall": 0.1
+        },
+        "position_filter": null
+      }
+    },
+    "Movement": {
+      "Acceleration and Speed": {
+        "stats": {
+          "aerial_duels_won_total_overall": 0.5,
+          "duels_per_game_overall": 1,
+          "interceptions_per_game_overall": 0.5,
+          "dribbles_per_game_overall": 0.2,
+          "@bonus-rank_in_club_top_scorer": 0.05,
+          "@bonus-rank_in_league_top_attackers": 0.2
+        },
+        "position_filter": null
+      },
+      "Agility": {
+        "stats": {
+          "dribbles_successful_percentage_overall": 0.5,
+          "fouls_drawn_per_game_overall": 1,
+          "dribbles_per_game_overall": 0.5,
+          "@bonus-saves_per_game_overall": 0.5,
+          "@bonus-shots_on_target_per_game_overall": 0.1,
+          "@bonus-aerial_duels_won_per_game_overall": 0.1,
+          "dribbles_successful_per_game_overall": 0.5,
+          "@inverse-dispossesed_per_game_overall": 1,
+          "@inverse-shots_off_target_per_game_overall": 0.1,
+          "@bonus-rank_in_league_top_midfielders": 0.2
+        },
+        "position_filter": null
+      },
+      "Balance": {
+        "stats": {
+          "duels_won_total_overall": 0.8,
+          "aerial_duels_won_total_overall": 0.8,
+          "interceptions_per_game_overall": 1,
+          "fouls_committed_per_game_overall": 0.1,
+          "fouls_drawn_per_game_overall": 0.5,
+          "pass_completion_rate_percentile_overall": 0.5,
+          "@inverse-shots_faced_per_game_overall": 0.1,
+          "@inverse-pen_committed_total_overall": 0.1,
+          "@bonus-rank_in_league_top_midfielders": 0.2
+        },
+        "position_filter": null
+      }
+    },
+    "Defense": {
+      "Interceptions": {
+        "stats": {
+          "interceptions_per_game_overall": 2,
+          "interceptions_per_90_overall": 0.5,
+          "duels_per_game_overall": 1.2,
+          "fouls_committed_per_game_overall": 0.1,
+          "duels_won_total_overall": 0.5,
+          "@inverse-shots_faced_per_game_overall": 0.5,
+          "@bonus-rank_in_league_top_defenders": 0.5,
+          "@bonus-is_defender": 0.2
+        },
+        "position_filter": ["Defender"]
+      },
+      "Tackles": {
+        "stats": {
+          "tackles_per_game_overall": 2,
+          "interceptions_per_game_overall": 0.5,
+          "tackles_per_90_overall": 1,
+          "fouls_committed_per_game_overall": 0.1,
+          "@bonus-rank_in_league_top_defenders": 0.5,
+          "@bonus-is_defender": 0.2
+        },
+        "position_filter": ["Defender"]
+      },
+      "Marking": {
+        "stats": {
+          "blocks_per_game_overall": 1.2,
+          "clearances_per_game_overall": 0.2,
+          "duels_won_per_game_overall": 1,
+          "interceptions_per_game_overall": 1,
+          "fouls_committed_per_game_overall": 0.05,
+          "min_per_conceded_percentile_overall": 0.5,
+          "@inverse-shots_faced_per_game_overall": 0.1,
+          "@bonus-rank_in_league_top_defenders": 0.5,
+          "@bonus-is_defender": 0.2
+        },
+        "position_filter": ["Defender"]
+      }
+    },
+    "Physical": {
+      "Stamina": {
+        "stats": {
+          "minutes_played_overall": 2,
+          "matches_played_percentile_overall": 2,
+          "min_per_match": 2,
+          "@inverse-games_subbed_out": 0.8,
+          "sm_minutes_played_recorded_overall": 1,
+          "sm_matches_recorded_total_overall": 1
+        },
+        "position_filter": null
+      },
+      "Strength": {
+        "stats": {
+          "duels_won_total_overall": 1,
+          "duels_per_game_overall": 1,
+          "aerial_duels_won_total_overall": 1,
+          "interceptions_per_game_overall": 1,
+          "saves_total_overall": 1,
+          "clearances_per_game_overall": 1,
+          "minutes_played_overall": 1,
+          "@bonus-pen_committed_total_overall": 0.05,
+          "@bonus-penalties_won_total_overall": 0.01
+        },
+        "position_filter": null
+      },
+      "Jumping": {
+        "stats": {
+          "aerial_duels_won_per90_percentile_overall": 1,
+          "aerial_duels_won_total_overall": 1,
+          "minutes_played_overall": 0.2
+        },
+        "position_filter": null
+      }
+    },
+    "Goalkeeper": {
+      "Saves": {
+        "stats": {
+          "saves_per_game_overall": 3,
+          "shots_faced_per_game_overall": 0.2,
+          "saves_total_overall": 1.5,
+          "save_percentage_overall": 2.5,
+          "punches_per_game_overall": 2,
+          "@inverse-sm_goals_conceded_total_overall": 0.5,
+          "conceded_overall": 1,
+          "pens_saved_total_overall": 1,
+          "@inverse-pens_taken_total_overall": 0.5,
+          "@bonus-clean_sheets_overall": 0.1,
+          "is_goalkeeper": 1.5
+        },
+        "position_filter": ["Goalkeeper"]
+      },
+      "Reflexes": {
+        "stats": {
+          "save_percentage_overall": 1.5,
+          "saves_per_game_overall": 1,
+          "punches_per_game_overall": 0.5,
+          "@inverse-sm_goals_conceded_total_overall": 0.2,
+          "clearances_per_game_overall": 0.2,
+          "clean_sheets_overall": 0.5,
+          "pens_saved_total_overall": 2.5,
+          "@inverse-pens_taken_total_overall": 1.5,
+          "inside_box_saves_total_overall": 0.5,
+          "is_goalkeeper": 1.5
+        },
+        "position_filter": ["Goalkeeper"]
+      },
+      "Sweeping": {
+        "stats": {
+          "save_percentage_overall": 0.5,
+          "clearances_per_game_overall": 0.5,
+          "passes_total_overall": 0.1,
+          "blocks_per_game_overall": 0.1,
+          "interceptions_per_game_overall": 0.5,
+          "inside_box_saves_total_overall": 3,
+          "is_goalkeeper": 1.5
+        },
+        "position_filter": ["Goalkeeper"]
+      }
+    }
+  }

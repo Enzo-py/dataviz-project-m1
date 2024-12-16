@@ -35,20 +35,18 @@ body {
     border-bottom-right-radius: 6px;
 }
 
-.players-view table tbody {
-    background-color: var(--transparent-white);
-}
-
 .players-view table tbody tr[is-visible="true"] {
     transition: all 0.3s;
     font-weight: 400;
-    color: #333;
-    background-color: #A5A4A4; /* transparent color on the background */
+    color: var(--text-white-color);
+    background-color: var(--second-background-color);
+    border: none;
 }
 
 .players-view table tr[is-visible="true"].selected {
     background-color: var(--selected-color);
     color: var(--selected-text-color);
+    border: none;
 }
 
 .players-view table tbody tr:hover {
@@ -79,20 +77,21 @@ body {
 #pagination span {
     padding: 4px 8px;
     border-radius: 3px;
-    background-color: var(--transparent-white); 
+    background-color: #555;
     color: var(--table-color);
     cursor: pointer;
 }
 
 #pagination span.selected {
     background-color: var(--selected-color);
+    color: var(--selected-text-color);
 }
 
 #pagination span.dots_page {
     padding: 4px 8px;
     border-radius: 3px;
-    background-color: #ddd;
-    color: #fff;
+    background-color: #333;
+    color: #9f9f9f;
     cursor: auto;
 }
 
@@ -115,15 +114,19 @@ body {
     justify-content: center;
     align-items: center;
     margin: 20px 5%;
-    background-color: var(--transparent-white);
+    background-color: var(--second-background-color);
     border-radius: 6px;
 }
+
+.spider-charts .legend {
+    fill: var(--text-white-color);
+} 
 
 .players-card {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: stretch;
     margin: 20px 5%;
     gap: 20px;
 }
@@ -132,8 +135,7 @@ body {
     display: flex;
     padding: 10px;
     border-radius: 6px;
-    background-color: var(--transparent-white);
-    box-shadow: 0 0 4px var(--shadow-color);
+    background-color: var(--second-background-color);
     transition: all 0.3s;
     width: calc(50% - 10px);
     border: solid 4px;
@@ -144,6 +146,8 @@ body {
     gap: 30px;
     justify-content: center;
     column-count: 2;
+
+    color: var(--text-white-color);
 }
 
 .players-card .player-card .head-card {
@@ -184,6 +188,10 @@ body {
     align-items: center;
     justify-content: flex-end;
     column-gap: 10px;
+}
+
+.players-card .player-card .sub-category {
+    margin-top: 10px;
 }
 
 .players-card .player-card .head-card span img {
@@ -249,11 +257,10 @@ menu .filters {
 menu .filters > span {
     display: block;
     border: solid 2px var(--secondary-color);
-    background-color: #fff;
+    background-color: var(--second-background-color);
     padding: 8px;
     border-radius: 8px;
     color: var(--secondary-color);
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
     width: fit-content;
     margin-top: 10px;
     cursor: pointer;
@@ -264,11 +271,10 @@ menu .filters .filter-options {
     display: none;
     flex-direction: column;
     gap: 10px;
-    background-color: #fff;
+    background-color: var(--second-background-color);
     border: solid 2px var(--secondary-color);
     border-radius: 8px;
     padding: 10px;
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
     z-index: 999;
     top: 20px;
     left: 10px;
@@ -280,6 +286,7 @@ menu .filters .filter-options .filter-option {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    color: var(--secondary-color);
 }
 
 menu .filters .filter-options select {
@@ -287,6 +294,9 @@ menu .filters .filter-options select {
     padding: 6px;
     border-radius: 6px;
     margin-bottom: 8px;
+    background-color: var(--second-background-color);
+    border: solid 2px var(--secondary-color);
+    color: var(--text-white-color);
 }
 
 .distribution-chart {
@@ -306,3 +316,5 @@ menu .filters .filter-options select {
     position: fixed;
     display: flex;
 }
+
+

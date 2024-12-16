@@ -259,7 +259,8 @@ function load_data() {
         './data/players/spain-2022-2023.csv',
         './data/players/spain-2023-2024.csv',
         './data/nationalities_flag.csv',
-        './data/clubs_logo.csv'
+        './data/clubs_logo.csv',
+        './data/player_card_stats.json',
     ]
 
     const promises = files.map(url => url.includes("json") ? d3.json(url) : d3.csv(url))
@@ -415,34 +416,84 @@ function agg_players_data() {
     // same but for player card
 
     // we want add to the players all the normalized data avg on the seasons
-    // player_data[player_id]['card_stats'] = {sub_category: avg_value}
-    Object.keys(ctx.data["players_agg"]).forEach(playerId => {
-        player_data = ctx.data["players_agg"][playerId]
+    // player_card_stats : {category: {indicator: {stats: {col: poids, ...}, position_filter: [positions], ...}, ...}, ...}
+    // Object.keys(ctx.data["players_agg"]).forEach(playerId => {
+    //     player_data = ctx.data["players_agg"][playerId]
+    //     cards_stats = {}
+
+    //     // chacune des categories
+    //     Object.keys(PLAYER_CARD).forEach(category => {
+    //         indicators = PLAYER_CARD[category] // liste des indicators
+
+    //         Object.keys(indicators).forEach(indicator => {
+    //             cols = indicators[indicator]
+                
+    //             avg_cols_over_seasons = cols.map(col => {
+    //                 return Object.keys(player_data).reduce((acc, season) => {
+    //                     if (minmax[col] == undefined) return acc
+    //                     minmax_value = (player_data[season][col] - minmax[col].min) / (minmax[col].max - minmax[col].min)
+    //                     if (COLS_TO_REVERSE.includes(col)) minmax_value = 1 - minmax_value
+    //                     return acc + minmax_value
+    //                 }, 0) / Object.keys(player_data).length
+    //             })
+
+    //             cards_stats[indicator] = avg_cols_over_seasons
+    //         })
+    //     })
+
+    //     // ctx.data["players_agg"][playerId]["card_stats"] = cards_stats
+    //     VALUES_CARD_STATS[playerId] = cards_stats
+    // })
+
+    // redo the same but for player card
+    VALUES_CARD_STATS = {}
+    Object.keys(ctx.data["players_agg"]).forEach(player_id => {
+        player = ctx.data["players_agg"][player_id]
         cards_stats = {}
 
-        // chacune des categories
-        Object.keys(PLAYER_CARD).forEach(category => {
-            indicators = PLAYER_CARD[category] // liste des indicators
-
+        Object.keys(ctx.data["player_card_stats"]).forEach(category => {
+            indicators = ctx.data["player_card_stats"][category]
             Object.keys(indicators).forEach(indicator => {
-                cols = indicators[indicator]
-                
-                avg_cols_over_seasons = cols.map(col => {
-                    return Object.keys(player_data).reduce((acc, season) => {
+                cols = indicators[indicator]['stats']
+
+                nb_values = 0
+                avg_cols_over_seasons = Object.keys(cols).map(col => {
+                    ponderation = parseFloat(cols[col])
+                    inversed = false
+                    bonus = false
+
+                    if (String(col).includes("@bonus-")) {
+                        col = col.split("@bonus-")[1]
+                        bonus = true
+                    } 
+                    if (String(col).includes("@inverse-")) {
+                        col = col.split("@inverse-")[1]
+                        inversed = true
+                    }
+                    
+                    return Object.keys(player).reduce((acc, season) => {
                         if (minmax[col] == undefined) return acc
-                        minmax_value = (player_data[season][col] - minmax[col].min) / (minmax[col].max - minmax[col].min)
-                        if (COLS_TO_REVERSE.includes(col)) minmax_value = 1 - minmax_value
-                        return acc + minmax_value
-                    }, 0) / Object.keys(player_data).length
+                        value = isNaN(player[season][col]) ? 0 : player[season][col]
+                        minmax_value = (value - minmax[col].min) / (minmax[col].max - minmax[col].min)
+                        if (inversed) minmax_value = 1 - minmax_value
+                        
+                        nb_values += bonus ? 0 : ponderation
+                        return acc + minmax_value * ponderation
+                    }, 0)
                 })
 
-                cards_stats[indicator] = avg_cols_over_seasons
+                final_value = avg_cols_over_seasons.reduce((acc, cur) => acc + cur, 0) / nb_values
+                focus_roles = indicators[indicator]['position_filter']
+                if (focus_roles === null) {}
+                else if (focus_roles.includes(player[Object.keys(player)[0]]["position"])) final_value *= 1.2
+                else final_value *= 0.8
+                cards_stats[indicator] = final_value
             })
         })
-
-        // ctx.data["players_agg"][playerId]["card_stats"] = cards_stats
-        VALUES_CARD_STATS[playerId] = cards_stats
+        VALUES_CARD_STATS[player_id] = cards_stats
     })
+
+    console.log("VALUES_CARD_STATS", VALUES_CARD_STATS)
 }    
 
 
@@ -518,10 +569,10 @@ function populate_players() {
 
 
     // pre draw distribution chart
-    Object.keys(PLAYER_CARD).forEach(category => {
-        indicators = PLAYER_CARD[category]
+    Object.keys(ctx.data["player_card_stats"]).forEach(category => {
+        indicators = ctx.data["player_card_stats"][category]
         Object.keys(indicators).forEach(indicator => {
-            draw_distribution_chart(indicator, PLAYER_CARD[category][indicator])
+            draw_distribution_chart(indicator)
         })
     })
 }
@@ -667,8 +718,8 @@ function create_radar(svg_id, categories) {
         .append("circle")
         .attr("class", "gridCircle")
         .attr("r", d => (radius / config.levels) * d)
-        .style("fill", "#CDCDCD")
-        .style("stroke", "#ccc")
+        .style("fill", "#999")
+        .style("stroke", "#999")
         .style("fill-opacity", 0.03);
 
     // Axes
@@ -683,7 +734,7 @@ function create_radar(svg_id, categories) {
         .attr("y1", 0)
         .attr("x2", (d, i) => rScale(config.maxValue * 1.1) * Math.cos(angleSlice * i - Math.PI / 2))
         .attr("y2", (d, i) => rScale(config.maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2))
-        .style("stroke", "#999")
+        .style("stroke", "#555")
         .style("stroke-width", "1.5px");
 
     axis.append("text")
@@ -691,7 +742,7 @@ function create_radar(svg_id, categories) {
         .attr("x", (d, i) => rScale(config.maxValue * 1.25) * Math.cos(angleSlice * i - Math.PI / 2))
         .attr("y", (d, i) => rScale(config.maxValue * 1.25) * Math.sin(angleSlice * i - Math.PI / 2))
         .attr("text-anchor", "middle")
-        .text(d => d)
+        .text(d => d.replaceAll("_", " "))
         .style("font-size", "11px");
 
 }
@@ -720,13 +771,23 @@ function drawRadarChart(svgId, data) {
     blobWrapper.append("path")
         .attr("class", "radarArea")
         .attr("d", d => radarLine(d.axes))
+        .attr("player-id", d => d.player_id)
         .style("fill", d => d.color)
-        .style("fill-opacity", 0.3)
+        .style("fill-opacity", 0.4)
         // hover effect: glow + display name
-        .on("mouseover", function(d) {
-            d3.select(this).style("fill-opacity", 0.7);
-            d3.select(this).style("stroke", d3.rgb(d.color).darker());
-            d3.select(this).style("stroke-width", "2px");
+        .on("mouseover", function(event, d) {
+            const area = d3.select(this);
+            console.log(area)
+            area.style("fill-opacity", 0.8);
+            area.style("stroke", d3.rgb(d.color).darker());
+            area.style("stroke-width", "2px");
+
+            console.log(area)
+            // raise area to the top
+            // get parentNode
+            parent = d3.select(this.parentNode)
+            parent.raise()
+
         })
         .on("mouseout", function() {
             d3.select(this).style("fill-opacity", 0.2);
@@ -771,6 +832,15 @@ function update_players_tags() {
             d3.select(this).remove()
             update_players_charts()
         })
+        // on over, over the player in the radar chart
+        .on("mouseover", function(event, player_id) {
+            radar_area = d3.selectAll(`path[player-id="${player_id}"]`)
+            radar_area.dispatch("mouseover")
+        })
+        .on("mouseout", function(event, player_id) {
+            radar_area = d3.selectAll(`path[player-id="${player_id}"]`)
+            radar_area.dispatch("mouseout")
+        })
         .style("cursor", "pointer")
         .style("color", "white")
 }
@@ -784,6 +854,7 @@ function update_players_charts() {
     const data_2021_2022 = current_player_2021_2022.map(player => {
         return {
             name: player["2021-2022"]["full_name"],
+            player_id: get_player_id(player["2021-2022"]),
             color: ctx.selected_players[get_player_id(player["2021-2022"])],
             axes: RADAR_CATEGORIES.map((category, i) => {
                 return {
@@ -799,6 +870,7 @@ function update_players_charts() {
     const data_2022_2023 = current_player_2022_2023.map(player => {
         return {
             name: player["2022-2023"]["full_name"],
+            player_id: get_player_id(player["2022-2023"]),
             color: ctx.selected_players[get_player_id(player["2022-2023"])],
             axes: RADAR_CATEGORIES.map((category, i) => {
                 return {
@@ -814,6 +886,7 @@ function update_players_charts() {
     const data_2023_2024 = current_player_2023_2024.map(player => {
         return {
             name: player["2023-2024"]["full_name"],
+            player_id: get_player_id(player["2023-2024"]),
             color: ctx.selected_players[get_player_id(player["2023-2024"])],
             axes: RADAR_CATEGORIES.map((category, i) => {
                 return {
@@ -892,31 +965,30 @@ function create_player_card(player_id) {
         .append("title").text(player_club)
 
     // add the categories
-    Object.keys(PLAYER_CARD).forEach(category => {
+    Object.keys(ctx.data["player_card_stats"]).forEach(category => {
         category_wrapper = player_card.append("div").attr("class", "category")
         category_wrapper.append("h5").text(category)
 
-        Object.keys(PLAYER_CARD[category]).forEach(sub_category => {
-            sub_category_wrapper = category_wrapper.append("div").attr("class", "sub-category")
-            sub_category_wrapper.append("h6").text(sub_category)
+        indicators = ctx.data["player_card_stats"][category]
 
-            total_value = 0
-            VALUES_CARD_STATS[player_id][sub_category].forEach(value => {
-                total_value += value
-            })
-            total_value = total_value / VALUES_CARD_STATS[player_id][sub_category].length
+        Object.keys(indicators).forEach(indicator => {
+            indicator_wrapper = category_wrapper.append("div").attr("class", "sub-category")
+            indicator_wrapper.append("h6").text(indicator)
+            total_value = VALUES_CARD_STATS[player_id][indicator]
             
             closest_seuil = Object.keys(seuils).reduce((a, b) => Math.abs(b - total_value) < Math.abs(a - total_value) ? b : a)
             closest_seuil = seuils[closest_seuil]
 
-            sub_category_wrapper.append("progress")
+            indicator_wrapper.append("progress")
                 .attr("value", total_value)
                 .attr("max", 1)
                 .attr("seuil", closest_seuil)
                 // on hover, display chart distribution
+            
+            indicator_wrapper
                 .on("mouseover", function(event) {
-                    console.log("mouseover", get_indicator_id(sub_category))
-                    distribution_chart = d3.select(`.distribution-charts #${get_indicator_id(sub_category)}`)
+                    console.log("mouseover", get_indicator_id(indicator))
+                    distribution_chart = d3.select(`.distribution-charts #${get_indicator_id(indicator)}`)
                     distribution_chart.classed("show", true)
                     
                     // position on top of the progress bar
@@ -926,7 +998,7 @@ function create_player_card(player_id) {
                     distribution_chart.style("left", `${progress_bar_x - 50}px`)
 
                     // color the bar where total_value is the closest
-                    value = d3.select(this).attr("value")
+                    value = d3.select(this).select("progress").attr("value")
                     value_on_tick = Math.round(value / 0.05) * 0.05
                     console.log("value_on_tick", value_on_tick, value)
                     distribution_chart.selectAll("rect").style("fill", "#668cd0")
@@ -936,7 +1008,7 @@ function create_player_card(player_id) {
                     ).style("fill", "#61d4c1")
                 })
                 .on("mouseout", function() {
-                    distribution_chart = d3.select(`.distribution-charts #${get_indicator_id(sub_category)}`)
+                    distribution_chart = d3.select(`.distribution-charts #${get_indicator_id(indicator)}`)
                     distribution_chart.classed("show", false)
                 })
         })
@@ -947,7 +1019,7 @@ function get_indicator_id(indicator) {
     return indicator.replaceAll(" ", "-").toLowerCase()
 }
 
-function draw_distribution_chart(indicator, cols) {
+function draw_distribution_chart(indicator) {
     wrapper = d3.select(".distribution-charts")
     chart = wrapper.append("div").attr("class", "distribution-chart")
     chart.attr("id", get_indicator_id(indicator))
@@ -963,16 +1035,8 @@ function draw_distribution_chart(indicator, cols) {
     // get the data
     data = []
     Object.keys(VALUES_CARD_STATS).forEach(player_id => {
-        player = VALUES_CARD_STATS[player_id]
-        player_values = player[indicator]
-        total_value = 0
-        player_values.forEach(value => {
-            total_value += value
-        })
-        total_value = total_value / player_values.length
-        data.push(total_value)
+        data.push(VALUES_CARD_STATS[player_id][indicator])
     })
-
 
 
     // data = [v1, v2, v2, v3, ...] -> [v1: 1, v2: 2, v3: 1, ...]
