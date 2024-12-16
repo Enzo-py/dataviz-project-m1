@@ -3,6 +3,8 @@ ctx = {
     selected_players: {},
     rScale: {},
     color_index: 0,
+    distribution_chart_height: 100,
+    distribution_chart_width: 300,
 }
 
 RADAR_CATEGORIES = ['DEFENDING', 'DISCIPLINE', 'SCORING', 'ASSISTS', 'ATTACKING', 'POSSESION_BALL_CONTROL', 'PHYSICAL_STATS', 'PASSING', 'PLAYING_TIME', 'GOALKEEPER']
@@ -912,24 +914,51 @@ function create_player_card(player_id) {
                 .attr("max", 1)
                 .attr("seuil", closest_seuil)
                 // on hover, display chart distribution
-                .on("mouseover", function() {
-                    // ...
+                .on("mouseover", function(event) {
+                    console.log("mouseover", get_indicator_id(sub_category))
+                    distribution_chart = d3.select(`.distribution-charts #${get_indicator_id(sub_category)}`)
+                    distribution_chart.classed("show", true)
+                    
+                    // position on top of the progress bar
+                    progress_bar_x = event.target.getBoundingClientRect().x
+                    progress_bar_y = event.target.getBoundingClientRect().y
+                    distribution_chart.style("top", `${progress_bar_y - 15 - ctx.distribution_chart_height}px`)
+                    distribution_chart.style("left", `${progress_bar_x - 50}px`)
+
+                    // color the bar where total_value is the closest
+                    value = d3.select(this).attr("value")
+                    value_on_tick = Math.round(value / 0.05) * 0.05
+                    console.log("value_on_tick", value_on_tick, value)
+                    distribution_chart.selectAll("rect").style("fill", "#668cd0")
+                    distribution_chart.selectAll("rect").filter(function(d) {
+                        return d == value_on_tick
+                    }
+                    ).style("fill", "#61d4c1")
+                })
+                .on("mouseout", function() {
+                    distribution_chart = d3.select(`.distribution-charts #${get_indicator_id(sub_category)}`)
+                    distribution_chart.classed("show", false)
                 })
         })
     })
 }
 
+function get_indicator_id(indicator) {
+    return indicator.replaceAll(" ", "-").toLowerCase()
+}
+
 function draw_distribution_chart(indicator, cols) {
     wrapper = d3.select(".distribution-charts")
     chart = wrapper.append("div").attr("class", "distribution-chart")
+    chart.attr("id", get_indicator_id(indicator))
     chart.append("h5").text(indicator)
 
     // create the canvas
     svg = chart.append("svg")
-        .attr("width", 300)
-        .attr("height", 200)
+        .attr("width", ctx.distribution_chart_width)
+        .attr("height", ctx.distribution_chart_height)
         .append("g")
-        .attr("transform", "translate(50, 50)")
+        .attr("transform", "translate(50, 15)")
 
     // get the data
     data = []
@@ -971,16 +1000,16 @@ function draw_distribution_chart(indicator, cols) {
     // create the x scale
     x = d3.scaleLinear()
         .domain([0, 1])
-        .range([0, 200])
+        .range([0, ctx.distribution_chart_width - 100])
 
     // create the y scale
     y = d3.scaleLinear()
         .domain([0, d3.max(Object.values(data_by_tick))])
-        .range([100, 0])
+        .range([ctx.distribution_chart_height - 40, 0])
 
     // create the x axis
     svg.append("g")
-        .attr("transform", "translate(0, 100)")
+        .attr("transform", "translate(0, " + (ctx.distribution_chart_height - 40) + ")")
         .call(d3.axisBottom(x))
 
     // // create the y axis
@@ -995,6 +1024,6 @@ function draw_distribution_chart(indicator, cols) {
         .attr("x", d => x(d))
         .attr("y", d => y(data_by_tick[d]))
         .attr("width", 10)
-        .attr("height", d => 100 - y(data_by_tick[d]))
+        .attr("height", d => ctx.distribution_chart_height - 40 - y(data_by_tick[d]))
         .style("fill", "steelblue")
 }

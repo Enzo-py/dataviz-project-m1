@@ -282,3 +282,21 @@ menu .filters .filter-options select {
     border-radius: 6px;
     margin-bottom: 8px;
 }
+
+.distribution-chart {
+    position: relative;
+    display: none;
+    position: fixed;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: #ffffff96;
+    border-radius: 6px;
+    backdrop-filter: blur(2px);
+    padding: 4px;
+}
+
+.distribution-chart.show {
+    position: fixed;
+    display: flex;
+}
