@@ -28,7 +28,7 @@ menu.right > * {
     padding: 6px;
     border-radius: 8px;
     color: var(--secondary-color);
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
+    box-shadow: none !important;
 }
 
 menu.right > button {
@@ -163,7 +163,7 @@ div.las-palmas span {
     flex-direction: column;
     align-items: center;
     padding: 10px;
-    background-color: var(--background-color);
+    background-color: var(--earth-color);
     border: solid 2px var(--secondary-color);
     border-radius: 8px;
     row-gap: 8px;

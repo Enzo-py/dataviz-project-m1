@@ -1,10 +1,9 @@
 :root {
     --secondary-color: #392e83;
-    --background-color: #fff;
-    --shadow-color: #878787;
-    --shadow-light-color: #d3e2e8;
+    --background-color: #252322;
+    --shadow-color: #1b1b1b;
 
-    --background-color: rgb(206, 210, 214);
+    --transparent-white: #ffffff96;
 
     --text-light-color: #737373;
     --table-color: #36304A;

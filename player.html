@@ -113,12 +113,12 @@
             // sports
             // sports_soccer
             search_mode = element.textContent === 'person' ? 'club' : 'player'
-            element.textContent = search_mode === 'player' ? 'person' : 'sports'
+            element.textContent = search_mode === 'player' ? 'person' : 'shield'
             document.querySelector('input#search').placeholder = `Search ${search_mode}...`
         }
 
         function filter_position(value) {
-            filters.position = value
+            filters.position = value == 'all' ? null : value
             filter()
         }
 

@@ -35,11 +35,15 @@ body {
     border-bottom-right-radius: 6px;
 }
 
+.players-view table tbody {
+    background-color: var(--transparent-white);
+}
+
 .players-view table tbody tr[is-visible="true"] {
-    background-color: #ffffff75;
     transition: all 0.3s;
     font-weight: 400;
     color: #333;
+    background-color: #A5A4A4; /* transparent color on the background */
 }
 
 .players-view table tr[is-visible="true"].selected {
@@ -62,19 +66,20 @@ body {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 #pagination {
     display: flex;
     margin: 10px 5%;
-    width: 100%;
+    width: 90%;
     column-gap: 4px;
 }
 
 #pagination span {
     padding: 4px 8px;
     border-radius: 3px;
-    background-color: #ffffff75; 
+    background-color: var(--transparent-white); 
     color: var(--table-color);
     cursor: pointer;
 }
@@ -110,7 +115,7 @@ body {
     justify-content: center;
     align-items: center;
     margin: 20px 5%;
-    background-color: #ffffff75;
+    background-color: var(--transparent-white);
     border-radius: 6px;
 }
 
@@ -127,7 +132,7 @@ body {
     display: flex;
     padding: 10px;
     border-radius: 6px;
-    background-color: #ffffff75;
+    background-color: var(--transparent-white);
     box-shadow: 0 0 4px var(--shadow-color);
     transition: all 0.3s;
     width: calc(50% - 10px);
@@ -186,7 +191,8 @@ body {
 }
 
 .players-card .player-card img {
-    width: 100px;
+    max-width: 100px;
+    max-height: 150px;
     /* border-radius: 50%; */
     /* margin-bottom: 10px; */
 }
