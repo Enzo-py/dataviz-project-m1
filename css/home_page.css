@@ -2,7 +2,7 @@
 
 body:has(.map) {
     overflow: hidden;
-    background: var(--sea-background);
+    background: var(--background-color);
 }
 
 main:has(.map) {
@@ -63,6 +63,7 @@ menu.right > button span:hover {
     padding: 2px;
     margin: 0;
     outline: none !important;
+    color: var(--text-color);
 }
 
 /* shake animation */
@@ -110,20 +111,75 @@ menu.right > button span:hover {
     display: none;
 }
 
+div.las-palmas::before {
+    /* content: " ";
+    background-color: var(--earth-color);
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    z-index: -1; */
+    content: " ";
+
+    position: absolute;
+    
+    background-color: var(--country-border-color);
+    width: 26.5px;
+    height: 26.5px;
+    
+    clip-path: polygon(48% 10%, 92% 30%, 50% 85%, 0% 48%);
+    cursor: pointer;
+    z-index: -1;
+}
+
 /* Villes manuellement posée (hors map) */
 div.las-palmas {
-    position: absolute;
+    /* position: absolute;
     left: 50px;
     bottom: 10px;
-    background-color: var(--earth-color);
-    width: 25px;
-    height: 25px;
+    background-color: var(--country-border-color);
+    width: 26.5px;
+    height: 26.5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     clip-path: polygon(48% 10%, 92% 30%, 50% 85%, 0% 48%);
-    cursor: pointer;
+    cursor: pointer; */
+    left: 50px;
+    bottom: 10px;
+    background-color: transparent;
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div.las-palmas::after {
+    content: " ";
+    background-color: var(--earth-color);
+    clip-path: polygon(48% 10%, 92% 30%, 50% 85%, 0% 48%);
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    z-index: -1;
+}
+
+/* glow las palmas */
+body:has( path[data-country-code="ES"].glow ) div.las-palmas::before {
+    background-color: #FFD700;
+    height: 30px;
+    width: 30px;
+    margin-bottom: -1px;
+}
+
+
+body:has( path[data-country-code="ES"].glow ) div.las-palmas {
+    animation: glow-animation 2s infinite;
+    filter: drop-shadow(0 0 5px #FFD700);
 }
 
 /* Villes trouvées */
@@ -138,6 +194,13 @@ div.las-palmas {
     }
 }
 
+.extra-cities {
+    z-index: 100;
+    position: absolute;
+    left: 0;
+    bottom: 0
+}
+
 .extra-cities .found span {
     animation: found-city 1s infinite;
 }
@@ -149,6 +212,7 @@ div.las-palmas span {
     background-color: transparent;
     border: solid 1.5px green;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .logo-wrapper {
@@ -259,4 +323,18 @@ img.club-logo {
 
 .toggle-button span {
     margin-left: 8px;
+}
+
+@keyframes movre_from_r_to_l {
+    0% {
+        transform: translateX(500px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+    
+}
+
+menu {
+    animation: movre_from_r_to_l 1s ease-in-out 1;
 }

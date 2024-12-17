@@ -12,7 +12,10 @@
     --table-background-color: #F5F5F5;
 
     --sea-background: linear-gradient(90deg, rgb(36 55 101) 10%, #30679f 100%);
-    --earth-color: #fff;
+    --earth-color: #131313;
+    --secondary-earth-color: #191919;
+    --country-border-color: #d0d0d0;
+    --secondary-country-border-color: #767676;
 
     --danger-color: #af2c35;
     --success-color: #2c9f2c;
