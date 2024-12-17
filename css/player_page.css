@@ -4,6 +4,21 @@ body {
 /* background: linear-gradient(54deg, rgba(5,30,55,1) 0%, rgba(44,96,147,1) 41%, rgba(254,250,246,1) 100%); */
 }
 
+body:not([ready]) table tr {
+    transform: translateY(-10px);
+    opacity: 0;
+}
+
+table tr {
+    transition: all 1s;
+}
+
+body:not([ready]) menu {
+    transform: translateX(-500px);
+}
+
+body menu { transition: transform 0.8s ease-in-out; }
+
 .players-view table {
     width: 90%;
     min-width: 320px;
@@ -79,13 +94,13 @@ body {
     padding: 4px 8px;
     border-radius: 3px;
     background-color: #555;
-    color: var(--table-color);
+    color: var(--text-white-color);
     cursor: pointer;
 }
 
 #pagination span.selected {
     background-color: var(--selected-color);
-    color: var(--text-white-color);
+    color: var(--selected-text-color);
 }
 
 #pagination span.dots_page {
@@ -284,6 +299,16 @@ menu .filters > span {
     width: fit-content;
     margin-top: 10px;
     cursor: pointer;
+}
+
+menu .filters > span.found {
+    color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+menu .filters > span.not-found {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
 }
 
 menu .filters .filter-options {

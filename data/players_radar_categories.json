@@ -61,7 +61,6 @@
       "cols": {
         "saves_per90_percentile_overall": 3,
         "@inverse-sm_goals_conceded_total_overall": 0.5,
-        "clean_sheets_overall": 0.1,
         "shots_faced_per_game_overall": 0.2,
         "save_percentage_percentile_overall": 2.5,
         "@bonus-pens_saved_total_overall": 1
