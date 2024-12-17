@@ -17,30 +17,15 @@
         <div class="spinner"></div>
         <p>Loading data, please wait...</p>
     </div>
-    <div class="top-controls">
-        <div class="season">
-            <label for="season"></label>
-            <select id="season">
-                <option value="All Seasons">All Seasons</option>
-                <option value="2021-2022">2021-2022</option>
-                <option value="2022-2023">2022-2023</option>
-                <option value="2023-2024"selected>2023-2024</option>
-            </select>
-        </div>
-        <div class="team-selection">
-            <div class="team">
-                <label for="team1"></label>
-                <input type="text" id="team1" list="teams" placeholder="Select a team">
-            </div>
-            <datalist id="teams">
-                
-            </datalist>
-        </div>
-        <button id="back-to-map" onclick="window.location.href='index.html'">Back to map</button>
-    </div>
-    <header>
-        <h1>Team view</h1>
-    </header>
+
+    <menu>
+        <!-- <button id="view-players" onclick="window.location.href='player.html'">View Players</button> -->
+        <a href="index.html" class="material-symbols-outlined back-to-map">explore</a>
+        <a href="team_comparison.html" class="material-symbols-outlined compare-teams">compare</a>
+        <a href="player.html" class="material-symbols-outlined view-players">person</a>
+    </menu>
+
+    
     <main>
         <section class="dashboard">
             <div class="left-panel">
@@ -48,21 +33,36 @@
                     <div class="team-info">
                         <img id="team-logo" src="" alt="Team Logo">
                         <div class="team-details">
-                            <h2 id="team-name">Team Name</h2>
+                            <div class="team-name-group">
+                                <h2 id="team-name">Team Name</h2>
+                                <div class="team-selection">
+                                    <div class="team">
+                                        <label for="team1"></label>
+                                        <input type="text" id="team1" list="teams" placeholder="Select a team">
+                                    </div>
+                                    <datalist id="teams">
+                                        
+                                    </datalist>
+                                </div>
+                            </div>
+
+                            <div class="season">
+                                <label for="season"></label>
+                                <select id="season">
+                                    <option value="All Seasons">All Seasons</option>
+                                    <option value="2021-2022">2021-2022</option>
+                                    <option value="2022-2023">2022-2023</option>
+                                    <option value="2023-2024"selected>2023-2024</option>
+                                </select>
+                            </div>
+                            
                             <h3 id="team-league">League</h3> 
                             <h3 id="team-rank">Rank</h3> 
                             <h3 id="team-ratio">Win ratio</h3>
                         </div>
                     </div>
                 </div>
-                <div class="actions">
-                    <h2>Team Actions</h2>
-                    <div class="action-buttons">
-                        <button id="view-players" onclick="window.location.href='player.html'">View Players</button>
-                        <button id="compare-teams" onclick="window.location.href='team_comparison.html'">Compare</button>
-                        <button id="toggle-league-average">Show League Average</button>
-                    </div>
-                </div>
+
                 <div class="matches">
                     <h2>Matches Record</h2>
                     <table id="matches-table">
@@ -81,12 +81,20 @@
                 </div>
             </div>
             <div class="right-panel">
-                <div class="charts-grid">
-                    <div class="chart-container">
-                        <h2></h2>
-                        <div class="donut-charts", id = "donut-charts">
-                        </div>
+                <div class="head-pages">
+                    <div class="page-switcher">
+                        <span class="switcher" data-page="p1" onclick="switch_page(this)">Donut Charts</span>
+                        <span class="switcher" data-page="p2" onclick="switch_page(this)">Performance</span>
                     </div>
+    
+                    <span class="material-symbols-outlined" id="toggle-league-average">info</span>
+                </div>
+
+                <div class="page p1 active">
+                    <div class="chart-container" id="donut-charts">
+                    </div>
+                </div>
+                <div class="page p2">
                     <div class="chart-container">
                         <h2>Home vs Away Performance</h2>
                         <div id="performance-chart"></div>
@@ -96,8 +104,22 @@
                         <div id="goals-timeline-chart"></div>
                     </div>
                 </div>
+                <div class="charts-grid">
+                    
+                    
+                </div>
             </div>
         </section>
     </main>
+
+    <script>
+        function switch_page(btn) {
+            page_number = btn.getAttribute("data-page");
+            document.querySelectorAll(".page").forEach(page => {
+                page.classList.remove("active");
+            });
+            document.querySelector(".page." + page_number).classList.add("active");
+        }
+    </script>
 </body>
 </html>
