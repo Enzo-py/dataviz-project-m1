@@ -352,6 +352,7 @@ function agg_players_data() {
     Object.keys(ctx.data["players_agg"]).forEach(playerId => {
         Object.keys(ctx.data["players_agg"][playerId]).forEach(season => {
             player_data = ctx.data["players_agg"][playerId][season]
+            
             Object.keys(player_data).forEach(key => {
                 if (minmax[key] == undefined) {
                     minmax[key] = {
@@ -450,6 +451,7 @@ function agg_players_data() {
     Object.keys(ctx.data["players_agg"]).forEach(player_id => {
         player = ctx.data["players_agg"][player_id]
         cards_stats = {}
+        nb_player_seasons = Object.keys(player).length
 
         Object.keys(ctx.data["player_card_stats"]).forEach(category => {
             indicators = ctx.data["player_card_stats"][category]
@@ -485,9 +487,12 @@ function agg_players_data() {
                 final_value = avg_cols_over_seasons.reduce((acc, cur) => acc + cur, 0) / nb_values
                 focus_roles = indicators[indicator]['position_filter']
                 if (focus_roles === null) {}
-                else if (focus_roles.includes(player[Object.keys(player)[0]]["position"])) final_value *= 1.2
-                else final_value *= 0.8
-                cards_stats[indicator] = final_value
+                else if (focus_roles.includes(player[Object.keys(player)[0]]["position"])) final_value *= 1.1
+                else final_value *= 0.9
+
+
+                
+                cards_stats[indicator] = final_value - (3 - nb_player_seasons) * final_value * 0.1
             })
         })
         VALUES_CARD_STATS[player_id] = cards_stats
@@ -515,20 +520,29 @@ function populate_players() {
 
     Object.keys(ctx.data["players_agg"]).forEach(player_id => {
         player = ctx.data["players_agg"][player_id]
+        last_year = Object.keys(player).sort()[Object.keys(player).length - 1]
         table_row = table_body.append("tr")
         years = Object.keys(player).sort()
-        current_club = player[years[years.length - 1]]["Current_Club"]
-        player_name = player[years[years.length - 1]]["full_name"]
+        current_club = player[last_year]["Current_Club"]
+        player_name = player[last_year]["full_name"]
+        nationality = player[last_year]["nationality"]
+        age = player[last_year]["age"]
+        position = player[last_year]["position"]
+        score = get_player_score(player_id, position)
 
         table_row.append("td").text(current_club)
         table_row.append("td").text(player_name)
-        table_row.append("td").text(player[years[years.length - 1]]["position"])
-        table_row.append("td").append("img").attr("src", ctx.data["nationalities_flag"][player[years[years.length - 1]]["nationality"]])
+        table_row.append("td").text(age)
+        table_row.append("td").text(score)
+        table_row.append("td").text(position)
+        table_row.append("td").append("img").attr("src", ctx.data["nationalities_flag"][nationality])
         table_row.attr("id", player_id)
             .attr("player_name", player_name.toLowerCase())
             .attr("current_club", current_club.toLowerCase())
-            .attr("position", player[years[years.length - 1]]["position"])
-            .attr("nationality", player[years[years.length - 1]]["nationality"])
+            .attr("position", position)
+            .attr("nationality", nationality)
+            .attr("age", age)
+            .attr("score", score)
             .attr("is-visible", "true")
 
         table_row.on("click", function() {
@@ -552,7 +566,8 @@ function populate_players() {
         })
     })
 
-    pagination()
+    // Inform the document that the page is ready
+    document.dispatchEvent(new Event('ready'))
 
     create_radar("#spider-chart-2021-2022", RADAR_CATEGORIES)
     create_radar("#spider-chart-2022-2023", RADAR_CATEGORIES)
@@ -583,7 +598,7 @@ function pagination() {
     var rpp = 15 - 1; // rows per page
     var rows_length = rows.length;
 
-    for (var i = 1; i < rows_length; i++) {
+    for (var i = 0; i < rows_length; i++) {
         if (i > rpp) {
             rows[i].style.display = 'none';
         }
@@ -634,8 +649,8 @@ function pagination() {
             }
             this.classList.add('selected');
             
-            for (var j = 1; j < rows_length; j++) {
-                if (j > rpp * (p - 1) && j <= rpp * p) {
+            for (var j = 0; j < rows_length; j++) {
+                if (j >= rpp * (p - 1) && j < rpp * p) {
                     rows[j].style.display = '';
                 } else {
                     rows[j].style.display = 'none';
@@ -664,6 +679,55 @@ function pagination() {
     // select the first page
     if (document.getElementById('page1') != null) document.getElementById('page1').click();
 }
+
+function sort_player_table(club, player_name, age, score, position, nationality) {
+    params_by_reverse_order = [
+        {param: club, attr_name: "current_club"},
+        {param: player_name, attr_name: "player_name"},
+        {param: age, attr_name: "age"},
+        {param: score, attr_name: "score"},
+        {param: position, attr_name: "position"},
+        {param: nationality, attr_name: "nationality"}
+    ]
+
+    params_by_reverse_order = params_by_reverse_order.filter(param => param.param != null)
+    params_by_reverse_order = params_by_reverse_order.sort((a, b) => d3.ascending(a.param.index, b.param.index))
+    tbody = d3.select(".players-view table tbody");
+
+    let trs = Array.from(tbody.selectAll("tr").nodes());
+    // Fonction de tri des trs selon les params fournies
+    trs.sort(function(a, b) {
+        for (let key in params_by_reverse_order) {
+            const param = params_by_reverse_order[key];
+            const aValue = a.getAttribute(param.attr_name);
+            const bValue = b.getAttribute(param.attr_name);
+            
+            // Conversion en nombres si possible
+            const aNum = parseFloat(aValue);
+            const bNum = parseFloat(bValue);
+
+            if (!isNaN(aNum) && !isNaN(bNum)) {
+                if (aNum < bNum) return param.param.order === "asc" ? -1 : 1;
+                if (aNum > bNum) return param.param.order === "asc" ? 1 : -1;
+            } else {
+                if (aValue < bValue) return param.param.order === "asc" ? -1 : 1;
+                if (aValue > bValue) return param.param.order === "asc" ? 1 : -1;
+            }
+            // Si les valeurs sont égales, passer au paramètre suivant
+        }
+        return 0;
+    });
+    
+    // Réinsérer les lignes triées dans le <tbody>
+    tbody.selectAll("tr").remove();
+    console.log("trs", trs)
+    const tbodyNode = tbody.node();
+    trs.forEach(node => tbodyNode.appendChild(node));
+    pagination()
+}
+
+
+
 
 function table_filter(players, positions, clubs, nationality) {
     table = d3.select(".players-view table tbody")
@@ -818,31 +882,66 @@ function drawRadarChart(svgId, data) {
 
 function update_players_tags() {
     tags_wrapper = d3.select(".players-tags")
-    tags_wrapper.selectAll("span").remove()
+    // tags_wrapper.selectAll("span").remove()
+    // tags_wrapper.selectAll("span")
+    //     .data(Object.keys(ctx.selected_players))
+    //     .enter()
+    //     .append("span")
+    //     .text(player_id => ctx.data["players_agg"][player_id][Object.keys(ctx.data["players_agg"][player_id])[0]]["full_name"])
+    //     .style("background-color", player_id => ctx.selected_players[player_id])
+    //     .on("click", function(event, player_id) {
+    //         delete ctx.selected_players[player_id]
+    //         // unselect the player
+    //         d3.select(`tr#${player_id}`).classed("selected", false)
+    //         d3.select(this).remove()
+    //         update_players_charts()
+    //     })
+    //     // on over, over the player in the radar chart
+    //     .on("mouseover", function(event, player_id) {
+    //         radar_area = d3.selectAll(`path[player-id="${player_id}"]`)
+    //         radar_area.dispatch("mouseover")
+    //     })
+    //     .on("mouseout", function(event, player_id) {
+    //         radar_area = d3.selectAll(`path[player-id="${player_id}"]`)
+    //         radar_area.dispatch("mouseout")
+    //     })
+    //     .style("cursor", "pointer")
+    //     .style("color", "white")
+
+    // join data: remove the tags that are not in the selected players; add the new tags; don't touch the existing tags
     tags_wrapper.selectAll("span")
-        .data(Object.keys(ctx.selected_players))
-        .enter()
-        .append("span")
-        .text(player_id => ctx.data["players_agg"][player_id][Object.keys(ctx.data["players_agg"][player_id])[0]]["full_name"])
-        .style("background-color", player_id => ctx.selected_players[player_id])
-        .on("click", function(event, player_id) {
-            delete ctx.selected_players[player_id]
-            // unselect the player
-            d3.select(`tr#${player_id}`).classed("selected", false)
-            d3.select(this).remove()
-            update_players_charts()
-        })
-        // on over, over the player in the radar chart
-        .on("mouseover", function(event, player_id) {
-            radar_area = d3.selectAll(`path[player-id="${player_id}"]`)
-            radar_area.dispatch("mouseover")
-        })
-        .on("mouseout", function(event, player_id) {
-            radar_area = d3.selectAll(`path[player-id="${player_id}"]`)
-            radar_area.dispatch("mouseout")
-        })
-        .style("cursor", "pointer")
-        .style("color", "white")
+        .data(Object.keys(ctx.selected_players), d => d)
+        .join(
+            enter => enter.append("span")
+                .text(player_id => ctx.data["players_agg"][player_id][Object.keys(ctx.data["players_agg"][player_id])[0]]["full_name"])
+                .style("background-color", player_id => ctx.selected_players[player_id])
+                .on("click", function(event, player_id) {
+                    delete ctx.selected_players[player_id]
+                    // unselect the player
+                    d3.select(`tr#${player_id}`).classed("selected", false)
+                    d3.select(this).remove()
+                    update_players_charts()
+                })
+                // on over, over the player in the radar chart
+                .on("mouseover", function(event, player_id) {
+                    radar_area = d3.selectAll(`path[player-id="${player_id}"]`)
+                    radar_area.dispatch("mouseover")
+                })
+                .on("mouseout", function(event, player_id) {
+                    radar_area = d3.selectAll(`path[player-id="${player_id}"]`)
+                    radar_area.dispatch("mouseout")
+                })
+                .style("cursor", "pointer")
+                .style("color", "white"),
+            update => update,
+            exit => {
+                // 1 animation scale down
+                exit.transition()
+                    .duration(400)
+                    .style("transform", "scale(0)")
+                    .remove()
+            }
+        )
 }
 
 function update_players_charts() {
@@ -1000,12 +1099,21 @@ function create_player_card(player_id) {
                     // color the bar where total_value is the closest
                     value = d3.select(this).select("progress").attr("value")
                     value_on_tick = Math.round(value / 0.05) * 0.05
-                    console.log("value_on_tick", value_on_tick, value)
+                    // add a line to the distribution chart
+                    distribution_chart.select("g").selectAll("line").remove()
+                    distribution_chart.select("g").append("line")
+                        .attr("x1", ctx.X_DISTRIBUTION_SCALE(value_on_tick + 0.025))
+                        .attr("x2", ctx.X_DISTRIBUTION_SCALE(value_on_tick + 0.025))
+                        .attr("y1", ctx.distribution_chart_height - 40)
+                        .attr("y2", 0)
+                        .style("stroke", "#d00434")
+                        .style("stroke-width", 2)
+
                     distribution_chart.selectAll("rect").style("fill", "#668cd0")
                     distribution_chart.selectAll("rect").filter(function(d) {
                         return d == value_on_tick
                     }
-                    ).style("fill", "#61d4c1")
+                    ).style("fill", "#71d35b")
                 })
                 .on("mouseout", function() {
                     distribution_chart = d3.select(`.distribution-charts #${get_indicator_id(indicator)}`)
@@ -1066,6 +1174,8 @@ function draw_distribution_chart(indicator) {
         .domain([0, 1])
         .range([0, ctx.distribution_chart_width - 100])
 
+    ctx.X_DISTRIBUTION_SCALE = x
+
     // create the y scale
     y = d3.scaleLinear()
         .domain([0, d3.max(Object.values(data_by_tick))])
@@ -1090,4 +1200,66 @@ function draw_distribution_chart(indicator) {
         .attr("width", 10)
         .attr("height", d => ctx.distribution_chart_height - 40 - y(data_by_tick[d]))
         .style("fill", "steelblue")
+}
+
+function get_player_score(player_id, position) {
+    // score = 
+    const scorification = {
+        "Goalkeeper": {
+            "Saves": 0.40,
+            "Reflexes": 0.34,
+            "Sweeping": 0.28,
+        },
+        "Defender": {
+            "Tackles": 0.20,
+            "Interceptions": 0.20,
+            "Marking": 0.20,
+            "Strength": 0.15,
+            "Balance": 0.10,
+            "Acceleration and Speed": 0.05,
+            "Ball Control": 0.05
+        },
+        "Midfielder": {
+            "Ball Control": 0.20,
+            "Playmaking": 0.20,
+            "Acceleration and Speed": 0.20,
+            "Balance": 0.10,
+            "Stamina": 0.10,
+            "Interception": 0.10,
+            "Tackles": 0.10
+        },
+        "Forward": {
+            "Finishing": 0.43,
+            "Dribbling": 0.20,
+            "Acceleration and Speed": 0.15,
+            "Crosses": 0.10,
+            "Heading": 0.08,
+            "Agility": 0.10,
+            "Ball Control": 0.05
+        }
+    }
+
+    // all other indicators are use to do a bonus/malus indicator with a 0.1 weight
+    other_indicators = []
+
+    // get the player data
+    player = VALUES_CARD_STATS[player_id]
+    score = 0
+    Object.keys(player).forEach(indicator => {
+        if (scorification[position] != undefined && scorification[position][indicator] != undefined) {
+            score += scorification[position][indicator] * player[indicator]
+        } else {
+            // except goalkeeper indicators
+            if (ctx.data["player_card_stats"]["Goalkeeper"][indicator] != undefined) {}
+            
+            // if player is goal keeper we don't take into account attack and defense indicators
+            
+            else other_indicators.push(player[indicator])
+        }
+    })
+
+    // bonus/malus avg
+    other_indicators = other_indicators.reduce((acc, cur) => acc + cur, 0) / other_indicators.length
+
+    return Math.min(Math.max(parseInt((score + other_indicators * 0.25) * 100), 0), 100)
 }

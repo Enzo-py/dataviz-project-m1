@@ -50,9 +50,10 @@ body {
 }
 
 .players-view table tbody tr:hover {
-    filter: brightness(0.9);
+    filter: brightness(1.6);
     transform: scale(1.01);
     cursor: pointer;
+    border: none;
 }
 
 .players-view table td {
@@ -84,7 +85,7 @@ body {
 
 #pagination span.selected {
     background-color: var(--selected-color);
-    color: var(--selected-text-color);
+    color: var(--text-white-color);
 }
 
 #pagination span.dots_page {
@@ -102,11 +103,30 @@ body {
     height: 30px;
 }
 
+@keyframes zoom-spawn {
+    0% {
+        transform: scale(0);
+    }
+    65% {
+        transform: scale(1.1);
+    }
+    80% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+    
+}
+
 .players-tags span {
     padding: 4px 8px;
     border-radius: 3px;
     margin-right: 4px;
     cursor: pointer;
+    overflow: hidden;
+    transform-origin: 0 0;
+    animation: zoom-spawn 0.5s ease-in-out 1;
 }
 
 .spider-charts {
@@ -317,4 +337,25 @@ menu .filters .filter-options select {
     display: flex;
 }
 
+.th-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    min-width: 100px;
+}
 
+.sorting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    margin-top: -10px;
+    margin-left: 4px;
+}
+.sorting > span { 
+    display: none; 
+    width: 10px;
+    height: 10px;
+}
+.sorting > span.active { display: block; }
