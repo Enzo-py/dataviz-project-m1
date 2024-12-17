@@ -54,12 +54,66 @@
             <table class="players-table">
                 <thead>
                     <tr>
-                        <th width="38%">Club</th>
-                        <th width="43%">Player</th>
-                        <th width="5%">Age</th>
-                        <th width="12%">Note</th>
-                        <th width="12%">Position</th>
-                        <th width="2%">Nationality</th>
+                        <th width="38%" onclick="sort_table('club', this)" sort="club">
+                            <div class="th-content">
+                                Club 
+                                <div class="sorting">
+                                    <span class="material-symbols-outlined active">arrow_drop_up</span>
+                                    <span class="material-symbols-outlined">arrow_drop_down</span>
+                                </div>
+                                <span>1</span>
+                            </div>
+                        </th>
+                        <th width="43%" onclick="sort_table('player_name', this)" sort="player_name">
+                            <div class="th-content">
+                                Player
+                                <div class="sorting">
+                                    <span class="material-symbols-outlined active">arrow_drop_up</span>
+                                    <span class="material-symbols-outlined active">arrow_drop_down</span>
+                                </div>
+                                <span></span>
+                            </div>
+                        </th>
+                        <th width="5%" onclick="sort_table('age', this)" sort="age">
+                            <div class="th-content">
+                                Age
+                                <div class="sorting">
+                                    <span class="material-symbols-outlined active">arrow_drop_up</span>
+                                    <span class="material-symbols-outlined active">arrow_drop_down</span>
+                                </div>
+                                <span></span>
+                            </div>
+                        </th>
+                        <th width="12%" onclick="sort_table('score', this)" sort="score">
+                            <div class="th-content">
+                                Note
+                                <div class="sorting">
+                                    <span class="material-symbols-outlined">arrow_drop_up</span>
+                                    <span class="material-symbols-outlined active">arrow_drop_down</span>
+                                </div>
+                                <span>3</span>
+                            </div>
+                        </th>
+                        <th width="12%" onclick="sort_table('position', this)" sort="position">
+                            <div class="th-content">
+                                Position
+                                <div class="sorting">
+                                    <span class="material-symbols-outlined active">arrow_drop_up</span>
+                                    <span class="material-symbols-outlined">arrow_drop_down</span>
+                                </div>
+                                <span>2</span>
+                            </div>
+                        </th>
+                        <th width="2%" onclick="sort_table('nationality', this)" sort="nationality">
+                            <div class="th-content">
+                                Nationality
+                                <div class="sorting">
+                                    <span class="material-symbols-outlined active">arrow_drop_up</span>
+                                    <span class="material-symbols-outlined active">arrow_drop_down</span>
+                                </div>
+                                <span></span>
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -94,6 +148,17 @@
             player: null,
             club: null,
         }
+
+        const sorts = {
+            club: {index: 0, order: 'asc'},
+            player_name: null,
+            age: null,
+            score: {index: 2, order: 'desc'},
+            position: {index: 1, order: 'asc'},
+            nationality: null,
+        }
+
+        let sort_index = 0
 
         let search_mode = 'player'
 
@@ -145,6 +210,41 @@
             // table_filter(search, positions, clubs, nationaly)
             table_filter(filters.player, filters.position, filters.club, filters.nationality)
         }
+
+        function sort_table(key, th) {
+            if (sorts[key] === null) {
+                sorts[key] = {index: sort_index, order: 'asc'}
+                sort_index++
+                th.querySelector('.sorting').children[0].classList.add('active')
+                th.querySelector('.sorting').children[1].classList.remove('active')
+                th.querySelector(' .th-content > span').textContent = sort_index
+            } else if (sorts[key].order === 'asc') {
+                sorts[key].order = 'desc'
+                th.querySelector('.sorting').children[0].classList.remove('active')
+                th.querySelector('.sorting').children[1].classList.add('active')
+            } else {
+                remove_index = sorts[key].index
+                sorts[key] = null
+                if (remove_index != sort_index) {
+                    Object.keys(sorts).forEach(k => {
+                        if (sorts[k] !== null && sorts[k].index > remove_index) {
+                            sorts[k].index -= 1
+                            th.parentNode.querySelector(`th[sort='${k}'] .th-content > span`).textContent = sorts[k].index + 1
+                        }
+                    })
+                }
+                sort_index--
+                th.querySelector('.sorting').children[0].classList.add('active')
+                th.querySelector('.sorting').children[1].classList.add('active')
+                th.querySelector(' .th-content > span').textContent = ''
+            }
+            sort_player_table(sorts['club'], sorts['player_name'], sorts['age'], sorts['score'], sorts['position'], sorts['nationality'])
+        }
+
+        // when document has attribute 'ready'
+        document.addEventListener('ready', function() {
+            sort_player_table(sorts['club'], sorts['player_name'], sorts['age'], sorts['score'], sorts['position'], sorts['nationality'])
+        })
     </script>
 </body>
 </html>

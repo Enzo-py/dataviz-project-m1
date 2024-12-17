@@ -1,0 +1,111 @@
+{
+    "PLAYING_TIME": {
+      "cols": {
+        "minutes_played_overall": 1,
+        "matches_played_percentile_overall": 1,
+        "@inverse-games_subbed_out": 0.5,
+        "minutes_played_percentile_overall": 1.5,
+        "sm_matches_recorded_total_overall": 0.5
+      }
+    },
+    "SCORING": {
+      "cols": {
+        "goals_involved_per90_percentile_overall": 0.5,
+        "shot_conversion_rate_percentile_overall": 0.4,
+        "shots_on_target_per90_percentile_overall": 2.5,
+        "@inverse-shots_off_target_per_game_overall": 0.5,
+        "pen_scored_total_overall": 1,
+        "@bonus-rank_in_club_top_scorer": 0.1
+      }
+    },
+    "ASSISTS": {
+      "cols": {
+        "assists_per90_percentile_overall": 2,
+        "key_passes_per90_percentile_overall": 1.5,
+        "assists_per_game_overall": 0.5,
+        "passes_completed_per_game_overall": 1,
+        "goals_involved_per90_percentile_overall": 0.3,
+        "@bonus-rank_in_league_top_midfielders": 0.1
+      }
+    },
+    "DEFENDING": {
+      "cols": {
+        "interceptions_per90_percentile_overall": 2,
+        "tackles_per90_percentile_overall": 2.5,
+        "blocks_per_game_overall": 1,
+        "clearances_per_game_overall": 0.2,
+        "@inverse-fouls_committed_per_game_overall": 0.3,
+        "@bonus-rank_in_league_top_defenders": 0.2
+      }
+    },
+    "DISCIPLINE": {
+      "cols": {
+        "@inverse-fouls_committed_per_game_overall": 0.6,
+        "@inverse-pen_committed_total_overall": 0.6,
+        "yellow_cards_total_overall": 0.3,
+        "@inverse-red_cards_total_overall": 0.4,
+        "@bonus-clean_sheets_overall": 0.1
+      }
+    },
+    "PASSING": {
+      "cols": {
+        "passes_completed_per_game_overall": 1.5,
+        "pass_completion_rate_overall": 0.4,
+        "passes_per90_percentile_overall": 1,
+        "@inverse-dispossesed_per90_percentile_overall": 1.5,
+        "key_passes_per90_percentile_overall": 0.5,
+        "@bonus-assists_per_game_overall": 0.1
+      }
+    },
+    "GOALKEEPER": {
+      "cols": {
+        "saves_per90_percentile_overall": 3,
+        "@inverse-sm_goals_conceded_total_overall": 0.5,
+        "clean_sheets_overall": 0.1,
+        "shots_faced_per_game_overall": 0.2,
+        "save_percentage_percentile_overall": 2.5,
+        "@bonus-pens_saved_total_overall": 1
+      }
+    },
+    "ATTACKING": {
+      "cols": {
+        "shots_on_target_per90_percentile_overall": 2.5,
+        "cross_completion_rate_overall": 0.5,
+        "@inverse-shots_off_target_per_game_overall": 0.5,
+        "dribbles_per90_percentile_overall": 2.5,
+        "passes_per_game_overall": 0.5,
+        "@bonus-rank_in_league_top_attackers": 0.2
+      }
+    },
+    "PHYSICAL_STATS": {
+      "cols": {
+        "duels_won_total_overall": 0.8,
+        "aerial_duels_won_per90_percentile_overall": 1,
+        "minutes_played_overall": 1,
+        "dribbles_successful_per_game_overall": 0.5,
+        "@inverse-is_defender": 0.3,
+        "matches_played_percentile_overall": 0.5
+      }
+    },
+    "POSSESION_BALL_CONTROL": {
+      "cols": {
+        "passes_per90_percentile_overall": 1,
+        "dribbles_per90_percentile_overall": 2.5,
+        "@inverse-dribbled_past_per_game_overall": 1.5,
+        "fouls_drawn_per_game_overall": 0.5,
+        "pass_completion_rate_percentile_overall": 2,
+        "@bonus-rank_in_league_top_midfielders": 0.1
+      }
+    },
+    "VISION": {
+      "cols": {
+        "key_passes_per90_percentile_overall": 2,
+        "assists_per90_percentile_overall": 2.1,
+        "sm_assists_total_overall": 1,
+        "goals_involved_per90_percentile_overall": 0.3,
+        "@bonus-cross_completion_rate_percentile_overall": 0.5,
+        "passes_completed_per_game_overall": 0.8
+      }
+    }
+  }
+  
