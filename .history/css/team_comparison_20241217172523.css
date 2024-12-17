@@ -1,0 +1,307 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;  
+}
+
+main {
+    padding-left: 3rem;
+    padding-top: 0.5rem; 
+    padding-right: 3rem;
+}
+
+.team-comparison-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+.team-container {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team label {
+    margin-bottom: 0.5rem;
+}
+
+.team input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 200px;
+    border: solid 2px var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 3px 3px 0 var(--shadow-color);
+}
+
+.team-title {
+    padding: 0.5rem;
+
+}
+
+.team-logo-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1rem;
+}
+
+.team-logo-name img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 0.5rem;
+}
+
+.team-logo-name h2 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.team-logo-name p {
+    margin: 0.2rem 0;
+}
+
+.comparison-results {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+.team-stats {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.team-stats h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.team-stats table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.team-stats th, .team-stats td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+/* Position the season selector in the top left corner */
+.season {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+}
+
+.season label {
+    margin-bottom: 0.5rem;
+}
+
+.season select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 150px;
+    border: solid 2px var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 3px 3px 0 var(--shadow-color);
+}
+
+.team-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.team-selection label {
+    margin-bottom: 0.5rem;
+}
+
+.team-selection input {
+    width: 300px;
+}
+
+/* Highlight styles for best stats */
+.highlight-team1 {
+    background-color: #d4edda; /* Light green */
+}
+
+.highlight-team2 {
+    background-color: #f8d7da; /* Light red */
+}
+
+.highlight-team1 td {
+    background-color: #d4edda; /* Light green */
+}
+
+.highlight-team2 td {
+    background-color: #f8d7da; /* Light red */
+}
+
+#team1-ratio, #team2-ratio {
+    font-weight: bold;
+}
+
+#team-logo {
+    width: 150px;
+    height: auto;
+    margin-right: 1rem;
+}
+
+#team-name {
+    margin: 0;
+    font-size: 3em;
+}
+
+#team-league {
+    margin-top: 0.5rem; 
+    font-size: 1.2em;
+    color: #000000;
+}
+
+#team-rank {
+    margin-top: 0rem; 
+    font-size: 1.2em;
+    color: #000000;
+}
+.top-controls {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+    background-color: transparent;
+    border: none;
+}
+
+
+#back-to-map {
+    position: fixed;
+    top: 15px;
+    right: 10px;
+    align-items: center;
+    display: flex   ;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 110px;
+    border: solid 2px var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 3px 3px 0 var(--shadow-color);
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+}
+
+#back-to-map:hover {
+    background-color: #f0f0f0;
+}
+
+
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3; /* Light gray */
+    border-top: 8px solid #333; /* Dark gray */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1.5s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* Matches table */
+#matches-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9em;
+}
+
+#matches-table th,
+#matches-table td {
+    padding: 12px 8px;
+    text-align: center;
+    align-content: ;
+    border-bottom: 1px solid #ddd;
+}
+
+#matches-table th {
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+}
+
+#matches-table thead {
+    position: sticky;
+    top: 0;
+    background-color: #333;
+    color: white;
+    z-index: 1;
+}
+
+#matches-table tr:hover {
+    background-color: #f5f5f5;
+    cursor: default;
+}
+
+#matches-table td.win {
+    color: #28a745;
+    font-weight: bold;
+}
+
+#matches-table td.loss {
+    color: #dc3545;
+    font-weight: bold;
+}
