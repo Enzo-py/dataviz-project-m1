@@ -2,6 +2,7 @@
     --secondary-color: #1a5396;
     --background-color: #282727;
     --shadow-color: #dcdcdc;
+    --accent-color: #59b59b;
 
     --second-background-color: #181919;
 
@@ -68,6 +69,11 @@ body, body * {
     color: var(--text-white-color);
 }
 
+.search-blob input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--second-background-color) inset;
+    -webkit-text-fill-color: var(--text-white-color);
+}
+
 /* shake animation */
 @keyframes shake {
     0%, 100% {
@@ -108,3 +114,18 @@ body, body * {
 .search-blob span:hover {
     transform: scale(1.1);
 }
+
+.loader {
+    width: 90%;
+    margin: 20px 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--second-background-color);
+    border-radius: 6px;
+    padding: 20px;
+    color: var(--text-white-color);
+    position: absolute;
+}
+
+.material-symbols-outlined { user-select: none; }

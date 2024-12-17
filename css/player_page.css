@@ -24,6 +24,8 @@ body menu { transition: transform 0.8s ease-in-out; }
     min-width: 320px;
     border-collapse: collapse;
     margin: 20px auto;
+    height: fit-content;
+    user-select: none;
 }
 
 .players-view table th {
@@ -32,6 +34,7 @@ body menu { transition: transform 0.8s ease-in-out; }
     font-weight: 600;
     padding: 10px 12px;
     text-align: left;
+    cursor: pointer;
 }
 
 .players-view table th:first-child {
@@ -88,6 +91,7 @@ body menu { transition: transform 0.8s ease-in-out; }
     margin: 10px 5%;
     width: 90%;
     column-gap: 4px;
+    user-select: none;
 }
 
 #pagination span {
@@ -151,6 +155,8 @@ body menu { transition: transform 0.8s ease-in-out; }
     margin: 20px 5%;
     background-color: var(--second-background-color);
     border-radius: 6px;
+    flex-wrap: wrap;
+    user-select: none;
 }
 
 .spider-charts .legend {
@@ -384,3 +390,27 @@ menu .filters .filter-options select {
     height: 10px;
 }
 .sorting > span.active { display: block; }
+
+.choose-players {
+    height: fit-content;
+}
+
+@keyframes highlight-zoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+    
+}
+
+.switcher { transition: all 0.3s; }
+
+.switcher:hover {
+    color: var(--accent-color);
+    animation: highlight-zoom 0.3s ease-in-out 1;
+}

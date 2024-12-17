@@ -186,14 +186,14 @@
       "Marking": {
         "stats": {
           "blocks_per_game_overall": 1,
-          "blocks_per90_percentile_overall": 2.5,
+          "blocks_per90_percentile_overall": 3,
           "clearances_per_game_overall": 0.2,
           "duels_won_per90_percentile_overall": 0.5,
           "interceptions_per90_percentile_overall": 0.5,
           "@inverse-fouls_committed_per_game_overall": 0.6,
           "min_per_conceded_percentile_overall": 0.1,
           "@inverse-shots_faced_per_game_overall": 0.8,
-          "@bonus-rank_in_league_top_defenders": 0.1
+          "@bonus-rank_in_league_top_defenders": 0.15
         },
         "position_filter": null
       }

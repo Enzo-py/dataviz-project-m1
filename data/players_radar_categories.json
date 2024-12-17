@@ -32,29 +32,34 @@
   },
   "DEFENDING": {
     "cols": {
+      "blocks_per90_percentile_overall": 2.5,
+      "tackles_per90_percentile_overall": 2.5,
       "interceptions_per90_percentile_overall": 2,
-      "aerial_duels_won_total_overall": 0.8,
-      "@bonus-duels_won_per90_percentile_overall": 1,
-      "@inverse-shots_faced_per_game_overall": 1,
-      "tackles_per90_percentile_overall": 2,
-      "blocks_per90_percentile_overall": 2,
-      "@bonus-blocks_per90_percentile_overall": 1,
-      "@bonus-tackles_per90_percentile_overall": 0.8,
-      "@bonus-clearances_per_game_overall": 0.3,
-      "@inverse-fouls_committed_per_game_overall": 0.4,
-      "@inverse-pen_committed_total_overall": 0.2,
-      "@bonus-rank_in_league_top_defenders": 0.3,
-      "@bonus-inside_box_saves_total_overall": 0.8,
-      "@bonus-interceptions_per90_percentile_overall": 0.4
+
+      "@inverse-cross_completion_rate_overall": 2.5,
+      "@inverse-key_passes_per90_percentile_overall": 2,
+      "@inverse-assists_per90_percentile_overall": 2,
+      "@inverse-dribbles_per90_percentile_overall": 2,
+      "@inverse-shots_on_target_per90_percentile_overall": 2.5,
+
+      "@inverse-shots_faced_per_game_overall": 0.8,
+      "clearances_per_game_overall": 0.1,
+      "min_per_conceded_percentile_overall": 0.3,
+
+      "aerial_duels_won_per90_percentile_overall": 0.5,
+      "@bonus-blocks_per90_percentile_overall": 2.5,
+      "@bonus-interceptions_per90_percentile_overall": 1.5,
+      "@bonus-rank_in_league_top_defenders": 2.5,
+      "@bonus-tackles_per90_percentile_overall": 2
     }
   },
   "DISCIPLINE": {
     "cols": {
-      "@bonus-@inverse-fouls_committed_per_game_overall": 0.4,
+      "@bonus-@inverse-fouls_committed_per90_percentile_overall": 0.8,
       "@inverse-pen_committed_total_overall": 1,
       "@inverse-yellow_cards_overall": 0.3,
       "@inverse-red_cards_overall": 1,
-      "@bonus-clean_sheets_overall": 0.4
+      "@bonus-clean_sheets_overall": 0.6
     }
   },
   "PASSING": {
@@ -102,14 +107,13 @@
       "aerial_duels_won_per90_percentile_overall": 1,
       "minutes_played_overall": 1,
       "dribbles_successful_per_game_overall": 0.5,
-      "@inverse-is_defender": 0.3,
       "matches_played_percentile_overall": 0.5,
       "@bonus-fouls_drawn_per90_percentile_overall": 0.3,
       "@bonus-penalties_won_total_overall": 0.4,
       "@bonus-inside_box_saves_total_overall": 0.4
     }
   },
-  "POSSESION_BALL_CONTROL": {
+  "POSSESION_&_CONTROL": {
     "cols": {
       "passes_per90_percentile_overall": 0.5,
       "dribbles_per90_percentile_overall": 1.5,

@@ -7,7 +7,7 @@ ctx = {
     distribution_chart_width: 300,
 }
 
-RADAR_CATEGORIES = ['DEFENDING', 'DISCIPLINE', 'VISION', 'ASSISTS', 'SCORING', 'ATTACKING', 'POSSESION_BALL_CONTROL', 'PHYSICAL_STATS', 'PASSING', 'PLAYING_TIME', 'GOALKEEPER']
+RADAR_CATEGORIES = ['DISCIPLINE', 'DEFENDING', 'VISION', 'ASSISTS', 'SCORING', 'ATTACKING', 'POSSESION_&_CONTROL', 'PHYSICAL_STATS', 'PASSING', 'PLAYING_TIME', 'GOALKEEPER']
 // changer aussi dans le fichier JSON (pour permettre load et display async)
 
 let VALUES_CARD_STATS = {}
@@ -19,14 +19,13 @@ function get_color() {
     return available_colors[0]
 }
 
-function setup_radar() {
+async function setup_radar() {
     create_radar("#spider-chart-2021-2022", RADAR_CATEGORIES)
     create_radar("#spider-chart-2022-2023", RADAR_CATEGORIES)
     create_radar("#spider-chart-2023-2024", RADAR_CATEGORIES)
 }
 
 function load_data() {
-    setup_radar() // to make some animations in order to wait for the data to load
     const files = [
         './data/players/england-2021-2022.csv',
         './data/players/england-2022-2023.csv',
@@ -48,7 +47,14 @@ function load_data() {
         './data/player_card_stats.json',
         './data/players_radar_categories.json'
     ]
-    
+
+    d3.select("body .players-view")
+            .insert("div", ":first-child")
+            .attr("class", "loader")
+            .text("Loading data...")
+
+    setup_radar() // to make some animations in order to wait for the data to load
+
     const promises = files.map(url => url.includes("json") ? d3.json(url) : d3.csv(url))
 
     Promise.all(promises).then(data => {
@@ -65,9 +71,29 @@ function load_data() {
         })
         ctx.data = mapped_data
 
-        agg_players_data()
-        populate_players()
-    }).catch(error => console.error("Error loading the data:", error))
+        setTimeout(() => {
+            agg_players_data()
+        }, 1200)
+
+        const intervalId = setInterval(() => {
+            if (ctx.ready) {
+                // remove the loader
+                d3.select(".loader").transition()
+                    .duration(500)
+                    .style("transform", "translateY(-200px)")
+                    .remove()
+
+                populate_players()
+
+                clearInterval(intervalId)
+            }
+        }, 500)
+    }).catch(error => {
+        d3.select(".loader").text("Python server error, please reload").style("color", "red")
+        setTimeout(() => {
+            load_data()
+        }, 1000)
+    })
 }
 
 function get_player_id(player) {
@@ -98,27 +124,6 @@ function agg_players_data() {
                         player[key] = 999
                     }
                 })
-
-                // if player position is Goalkeeper set is_goalkeeper to 1 else 0
-                if (player["position"] == "Goalkeeper") {
-                    player["is_goalkeeper"] = 1
-                } else {
-                    player["is_goalkeeper"] = 0
-                }
-
-                // if is forward set is_shooter to 1 else 0 (because shooting can merge with goalkeeping)
-                if (player["position"] == "Forward") {
-                    player["is_shooter"] = 1
-                } else {
-                    player["is_shooter"] = 0
-                }
-
-                // is_defender because not enough stats for defenders
-                if (player["position"] == "Defender") {
-                    player["is_defender"] = 1
-                } else {
-                    player["is_defender"] = 0
-                } 
             })
         }
     })
@@ -154,28 +159,7 @@ function agg_players_data() {
         });
     });
 
-    // if min == max, remove the column from categories
-    // Object.keys(minmax).forEach(key => {
-    //     if (minmax[key].min == minmax[key].max) {
-    //         Object.keys(ctx.data["players_radar_categories"]).forEach(category => {
-    //             cols = ctx.data["players_radar_categories"][category]
-    //             if (cols.includes(key)) {
-    //                 ctx.data["players_radar_categories"][category] = cols.filter(col => col != key)
-    //                 console.log("Removed column <", key, "> from category <", category, ">")
-    //             }
-    //         })
-    //     }
-    // })
-
-    // 1. bis: remove category.cols if not in minmax
-    // Object.keys(cols_categories).forEach(category => {
-    //     cols = cols_categories[category]
-    //     cols_categories[category] = cols.filter(col => minmax[col] != undefined)
-    // })
-
     // 2. normalize the data by category
-    console.log(ctx.data["players_radar_categories"])
-
     Object.keys(ctx.data["players_agg"]).forEach(playerId => {
         Object.keys(ctx.data["players_agg"][playerId]).forEach(season => {
             player_data = ctx.data["players_agg"][playerId][season]
@@ -195,11 +179,11 @@ function agg_players_data() {
                     }
                     if (String(col).includes("@inverse-")) {
                         col = col.split("@inverse-")[1]
-                        reverse = true
+                        inverse = true
                     }
                     // normalize the data
                     // category_values[col] = (player_data[col] - minmax[col].min) / (minmax[col].max - minmax[col].min)
-                    value = (player_data[col] - minmax[col].min) / (minmax[col].max - minmax[col].min)
+                    value = (player_data[col] - minmax[col].min) / (minmax[col].max - minmax[col].min) * ponderation
                     total_values += inverse ? 1 - value : value
                     nb_values += bonus ? 0 : ponderation
                 })
@@ -261,7 +245,7 @@ function agg_players_data() {
         VALUES_CARD_STATS[player_id] = cards_stats
     })
 
-    console.log("VALUES_CARD_STATS", VALUES_CARD_STATS)
+    ctx.ready = true
 }    
 
 
@@ -304,8 +288,9 @@ function populate_players() {
             .attr("position", position)
             .attr("nationality", nationality)
             .attr("age", age)
-            .attr("score", score)
+            .attr("score", score + "%")
             .attr("is-visible", "true")
+            .style("display", "none")
             
 
         table_row.on("click", function() {
@@ -330,8 +315,10 @@ function populate_players() {
     })
 
     // Inform the document that the page is ready
-    document.dispatchEvent(new Event('ready'))
-    d3.select("body").attr("ready", "true")
+    setTimeout(() => {
+        document.dispatchEvent(new Event('ready'));
+        d3.select("body").attr("ready", "true");
+    }, 800);
 
     // add nationalities to the filter
     nationalities = Object.keys(ctx.data["nationalities_flag"]).filter(n => n != "Flag_URL").sort()
@@ -412,7 +399,6 @@ function pagination(animation) {
             for (var j = 0; j < rows_length; j++) {
                 if (j >= rpp * (p - 1) && j < rpp * p) {
                     rows[j].style.display = '';
-                    console.log("rows[j]", rows[j])
                 } else {
                     rows[j].style.display = 'none';
                 }
@@ -448,16 +434,16 @@ function pagination(animation) {
         current_page_tr.each(function(d, i) {
             var tr = d3.select(this);
             delay = i;
-            tr.style("transition", "none").style("transform", "scale(0)").style("transform-origin", "top")
+            tr.style("transition", "none").style("transform", "scale(0)").style("transform-origin", "top").style("display", "none")
                 .transition()
-                .duration(400)
-                .delay(delay * 100)
-                .style("transform", "scale(1.01)")
+                .duration(500)
+                .delay(delay * 40)
+                .style("display", "")
+                .style("transform", "scale(1.02)")
                 .transition()
-                .duration(100)
+                .duration(200)
                 .style("transform", "scale(1)")
                 .style("transition", "all 0.3s")
-
         });
 
         pagination = d3.select("#pagination")
@@ -513,7 +499,6 @@ function sort_player_table(club, player_name, age, score, position, nationality,
     
     // Réinsérer les lignes triées dans le <tbody>
     tbody.selectAll("tr").remove();
-    console.log("trs", trs)
     const tbodyNode = tbody.node();
     trs.forEach(node => tbodyNode.appendChild(node));
     pagination(animation_pagination)
@@ -535,8 +520,8 @@ function table_filter(players, positions, clubs, nationality) {
 
 function create_radar(svg_id, categories) {
     // Dimensions du graphique
-    const width = 350;
-    const height = 350;
+    const width = 325;
+    const height = 325;
 
     // Configuration du radar chart
     const config = {
@@ -549,10 +534,10 @@ function create_radar(svg_id, categories) {
 
     // Sélection du conteneur SVG
     const svg = d3.select(svg_id)
-        .attr("width", config.w + 200)
-        .attr("height", config.h + 200)
+        .attr("width", config.w + 150)
+        .attr("height", config.h + 150)
         .append("g")
-        .attr("transform", `translate(${config.w / 2 + 100}, ${config.h / 2 + 100})`);
+        .attr("transform", `translate(${config.w / 2 + 75}, ${config.h / 2 + 75})`);
 
     const totalAxes = categories.length;
     const radius = Math.min(config.w / 2, config.h / 2);
@@ -574,7 +559,15 @@ function create_radar(svg_id, categories) {
         .attr("r", d => (radius / config.levels) * d)
         .style("fill", "#999")
         .style("stroke", "#999")
-        .style("fill-opacity", 0.03);
+        .style("fill-opacity", 0.03)
+        .style("transform", "scale(0)")
+        .transition()
+        .duration(500)
+        .delay((d, i) => i * 100)
+        .style("transform", "scale(1.1)")
+        .transition()
+        .duration(200)
+        .style("transform", "scale(1)")
 
     // Axes
     const axis = svg.selectAll(".axis")
@@ -589,7 +582,15 @@ function create_radar(svg_id, categories) {
         .attr("x2", (d, i) => rScale(config.maxValue * 1.1) * Math.cos(angleSlice * i - Math.PI / 2))
         .attr("y2", (d, i) => rScale(config.maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2))
         .style("stroke", "#555")
-        .style("stroke-width", "1.5px");
+        .style("stroke-width", "1.5px")
+        .style("transform", (d, i) => `rotate(${i * 180 / totalAxes}deg)`)
+        .style("transform-origin", "0 0")
+        .style("opacity", "0")
+        .transition()
+        .duration(500)
+        .delay((d, i) => i * 15 + 700)
+        .style("opacity", "1")
+        .style("transform", "rotate(0deg)")
 
     axis.append("text")
         .attr("class", "legend")
@@ -597,7 +598,11 @@ function create_radar(svg_id, categories) {
         .attr("y", (d, i) => rScale(config.maxValue * 1.25) * Math.sin(angleSlice * i - Math.PI / 2))
         .attr("text-anchor", "middle")
         .text(d => d.replaceAll("_", " "))
-        .style("font-size", "11px");
+        .style("font-size", "11px")
+        .style("opacity", "0")
+        .transition()
+        .delay((d, i) => i * 60 + 500)
+        .style("opacity", "1")
 
 }
 
@@ -627,16 +632,16 @@ function drawRadarChart(svgId, data) {
         .attr("d", d => radarLine(d.axes))
         .attr("player-id", d => d.player_id)
         .style("fill", d => d.color)
-        .style("fill-opacity", 0.4)
+        .style("fill-opacity", 0.2)
+        .style("stroke", d => d.color)
+        .style("stroke-width", "2px")
         // hover effect: glow + display name
         .on("mouseover", function(event, d) {
             const area = d3.select(this);
-            console.log(area)
             area.style("fill-opacity", 0.8);
             area.style("stroke", d3.rgb(d.color).darker());
             area.style("stroke-width", "2px");
 
-            console.log(area)
             // raise area to the top
             // get parentNode
             parent = d3.select(this.parentNode)
@@ -648,7 +653,7 @@ function drawRadarChart(svgId, data) {
             d3.select(this).style("stroke", "none");
         })
         .append("title")
-        .text(d => d.name);
+        .text(d => d.name)
 
     // Contours des zones
     // blobWrapper.append("path")
@@ -804,10 +809,30 @@ function update_players_charts() {
     d3.select("#spider-chart-2023-2024").selectAll(".radarWrapper").remove()
 
     // create player card
-    d3.select(".players-card").selectAll(".player-card").remove()
-    Object.keys(ctx.selected_players).forEach(player_id => {
-        create_player_card(player_id)
-    })
+    // d3.select(".players-card").selectAll(".player-card").remove()
+    // Object.keys(ctx.selected_players).forEach(player_id => {
+    //     create_player_card(player_id)
+    // })
+    // use un select all join update exit
+    d3.select(".players-card").selectAll(".player-card")
+        .data(Object.keys(ctx.selected_players), d => d)
+        .join(
+            enter => enter.append('div')
+                .attr("class", "player-card")
+                .attr("id", player_id)
+                .each((d, i, nodes) => create_player_card(d, d3.select(nodes[i]))),
+            update => update,
+            exit => exit.style("transform-origin", "0 0").style("overflow", "hidden").transition()
+                .duration(200)
+                .style("transform", "scale(1.03)")
+                .transition()
+                .duration(700)
+                .style("transform", "scale(0)")
+                .style("opacity", 0)
+                .style("height", "0px")
+                .transition()
+                .remove()
+        )
 
     // plot category  for the selected players
     if (current_player_2021_2022.length > 0) drawRadarChart("#spider-chart-2021-2022", data_2021_2022)
@@ -823,7 +848,7 @@ function sum_dict(dict) {
     return v
 }
 
-function create_player_card(player_id) {
+function create_player_card(player_id, player_card) {
     const seuils = {
         0.1: "very-low",
         0.2: "low",
@@ -840,12 +865,8 @@ function create_player_card(player_id) {
     player_nationality = player[Object.keys(player)[0]]["nationality"]
     player_number = parseInt(player[Object.keys(player)[0]]["shirt_number"])
 
-    cards_wrapper = d3.select(".players-card")
-
-    player_card = cards_wrapper.append("div")
-        .attr("class", "player-card")
-        .attr("id", player_id)
-        .style("border-color", ctx.selected_players[player_id])
+    // player_card = d3.select(`.players-card .player-card#${player_id}`)
+    player_card.style("border-color", ctx.selected_players[player_id])
 
     head_card = player_card.append("div").attr("class", "head-card")
     player_identity = head_card.append("div").attr("class", "player-identity")
@@ -859,7 +880,7 @@ function create_player_card(player_id) {
         .text(player_position)
     
     player_identity_data.select("span").append("img").attr("src", ctx.data["nationalities_flag"][player_nationality]).attr("class", "flag")
-    
+    player_identity_data.append("span").text(`Note: ${get_player_score(player_id, player_position)}%`)
     
     // happen club logo
     head_card.append("img").attr("src", ctx.data["clubs_logo"][player_club])
@@ -889,7 +910,6 @@ function create_player_card(player_id) {
             
             indicator_wrapper
                 .on("mouseover", function(event) {
-                    console.log("mouseover", get_indicator_id(indicator))
                     distribution_chart = d3.select(`.distribution-charts #${get_indicator_id(indicator)}`)
                     distribution_chart.classed("show", true)
                     
@@ -969,9 +989,6 @@ function draw_distribution_chart(indicator) {
         return acc
     }, {})
 
-    console.log(data_by_tick)
-
-
     // create the x scale
     x = d3.scaleLinear()
         .domain([0, 1])
@@ -1016,11 +1033,9 @@ function get_player_score(player_id, position) {
         "Defender": {
             "Tackles": 0.20,
             "Interceptions": 0.20,
-            "Marking": 0.20,
-            "Strength": 0.15,
-            "Balance": 0.10,
-            "Acceleration and Speed": 0.05,
-            "Ball Control": 0.05
+            "Marking": 0.25,
+            "Jumping": 0.08,
+            "Balance": 0.13,
         },
         "Midfielder": {
             "Ball Control": 0.20,

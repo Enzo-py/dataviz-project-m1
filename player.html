@@ -19,7 +19,7 @@
             <menu>
                 <div class="search-blob">
                     <div class="switch-search-mode">
-                        <span class="material-symbols-outlined" onclick="switch_search_mode(this)">person</span>
+                        <span class="material-symbols-outlined switcher" onclick="switch_search_mode(this)">person</span>
                     </div>
                     <input type="text" id="search" placeholder="Search player..." onkeydown="if (event.key === 'Enter') filter_search(this.value)">
                     <span class="material-symbols-outlined" onclick="filter_search(this.parentNode.querySelector('input').value)">search</span>
