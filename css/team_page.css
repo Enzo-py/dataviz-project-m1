@@ -2,23 +2,14 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-}
-
-header {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem;  
+    background-color: var(--background-color);
+    overflow-x: hidden;
 }
 
 main {
-    padding-left: 3rem;
-    padding-top: 0.5rem; 
-    padding-right: 3rem;
+    padding: 14px;
+    max-width: 100vw;
 }
-
-
 
 .team {
     display: flex;
@@ -26,59 +17,45 @@ main {
     align-items: center;
 }
 
-.team label {
-    margin-bottom: 0.5rem;
-}
-
 .team input {
-    padding: 0.5rem;
-    font-size: 1rem;
-    width: 200px;
-    border: solid 2px var(--secondary-color);
+    font-size: 1.5rem;
+    font-weight: 300 !important;
+    height: 100%;
+    width: 100%;
+    background-color: var(--second-background-color) !important;
+    color: var(--text-white-color);
+    border: none;
+    border-bottom: solid 2px var(--secondary-color);
+    padding: 6px;
+    outline: none !important;
+}
+
+.team-info {
+    background-color: var(--second-background-color);
+    padding: 14px;
     border-radius: 8px;
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
+    color: var(--text-white-color);
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
-.team-title {
-    padding: 0.5rem;
-
-}
 .actions {
-    background-color: #fff;
-    padding: 1rem;
+    background-color: var(--second-background-color);
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 490px;
-    margin-left: 2rem;
-    margin-top: 1rem;
+    width: 100%;
+    padding: 14px;
+    color: var(--text-white-color);
 }
 
 .matches {
-    background-color: #fff;
-    position: sticky;
-    padding: 1rem;
+    background-color: var(--second-background-color);
+    color: var(--text-white-color);
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 490px;
-    margin-left: 2rem; 
-    margin-top: 1rem;
-    max-height: 530px;
+    padding: 14px;
+    width: 100%;
+    max-height: calc(100svh - (14px * 9) - 25svh);
     overflow-y: auto;
-}
-
-.stats {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 660px;
-    margin-left: 2.5rem;
-    margin-top: 1rem;
-}
-
-.team-stats h2 {
-    text-align: left;
-    margin-bottom: 1rem;
 }
 
 
@@ -88,20 +65,19 @@ main {
     align-items: flex-start;
     margin: 0;
     padding: 0;
-    border-radius: 8px;
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
 }
-
-.season label {
-    margin-bottom: 0.5rem;
-}
-
 .season select {
     padding: 0.5rem;
     font-size: 1rem;
     width: 150px;
-    border: solid 2px var(--secondary-color);
-    border-radius: 8px;
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
+    border: solid 2px var(--text-white-color);
+    color: var(--text-white-color);
+    background-color: var(--second-background-color) !important;
+    border-radius: 6px;
+    outline: none !important;
 }
 
 .team-selection {
@@ -117,20 +93,6 @@ main {
     box-shadow: none;
 }
 
-.team-selection label {
-    margin-bottom: 0.5rem;
-}
-
-.team-selection input {
-    width: 300px;
-}
-
-.team-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
 #team-logo {
     width: auto;
     height: 155px;
@@ -139,7 +101,8 @@ main {
 
 #team-name {
     margin: 0;
-    font-size: 3em;
+    font-size: 2rem;
+    font-weight: 300;
 }
 
 #team-league {
@@ -201,18 +164,15 @@ main {
 }
 
 #toggle-league-average {
-    padding: 10px 7px;
-    font-size: 1.1em;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    background-color: var(--second-background-color);
+    color: var(--secondary-color);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#toggle-league-average{
-    background-color: #555;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #matches-table {
@@ -227,25 +187,30 @@ main {
 #matches-table td {
     padding: 12px 8px;
     text-align: center;
-    border-bottom: 1px solid #ddd;
 }
 
 #matches-table th {
-    background-color: #333;
-    color: white;
+    background-color: var(--secondary-color);
+    color: var(--text-white-color);
+    font-size: 1rem;
     font-weight: bold;
 }
 
 #matches-table thead {
     position: sticky;
     top: 0;
-    background-color: #333;
     color: white;
     z-index: 1;
 }
+#matches-table tbody tr {
+    transition: all 0.3s;
+    background-color: var(--second-background-color);
+    border-bottom: 1px solid #c0c0c0;
+}
 
-#matches-table tr:hover {
-    background-color: #f5f5f5;
+#matches-table tbody tr:hover {
+    filter: brightness(1.4);
+    transform: scale(1.01);
     cursor: default;
 }
 
@@ -265,15 +230,7 @@ main {
 }
 
 #performance-chart {
-    width: 100%;
-    height: auto;
-    min-height: 500px;
-    margin-top: 2rem;
-    padding: 1rem;
-}
-
-.bar-chart-container {
-    font-size: 0.8em;
+    width: fit-content;
 }
 
 .bar-label {
@@ -292,7 +249,7 @@ main {
 }
 
 .bar-away {
-    fill: #dc3545;
+    fill: #ffd644;
 }
 
 .axis-label {
@@ -374,22 +331,18 @@ main {
 
 .dashboard {
     display: flex;
-    gap: 2rem;
-    margin-top: 0.25rem;  
+    flex-direction: row;
+    column-gap: 14px;
+    height: fit-content;
 }
 
 .left-panel {
-    flex: 0 0 500px;
     display: flex;
     flex-direction: column;
-    gap: rem;
+    gap: 14px;
+    width: 35%;
+    height: fit-content;
 }
-
-.right-panel {
-    flex: 1;
-}
-
-
 
 .charts-grid {
     display: grid;
@@ -415,42 +368,22 @@ main {
     gap: 0rem;
 }
 
-.chart-container {
-    background-color: #fff;
-    padding: 1rem 1rem 1rem 1.5rem; 
+menu {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    gap: 14px;
+}
+
+menu > a {
+    color: var(--secondary-color) !important;
+    text-decoration: none !important;
+    background-color: var(--second-background-color);
     border-radius: 8px;
-    margin-bottom: 0rem; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-
-.actions, .matches {
-    margin-left: 0;
-}
-
-
-
-#back-to-map {
-    position: fixed;
-    top: 15px;
-    right: 10px;
-    align-items: center;
-    display: flex   ;
-    padding: 0.5rem;
-    font-size: 1rem;
-    width: 110px;
     border: solid 2px var(--secondary-color);
-    border-radius: 8px;
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
-    background-color: #fff;
-    color: #000;
-    cursor: pointer;
+    padding: 8px;
 }
-
-#back-to-map:hover {
-    background-color: #f0f0f0;
-}
-
 
 #loading-screen {
     position: fixed;
@@ -458,7 +391,8 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(25, 25, 25, 0.8);
+    color: var(--text-white-color);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -467,8 +401,8 @@ main {
 }
 
 .spinner {
-    border: 8px solid #f3f3f3; /* Light gray */
-    border-top: 8px solid #333; /* Dark gray */
+    border: 8px solid #333; /* Light gray */
+    border-top: 8px solid #f3f3f3; /* Dark gray */
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -482,3 +416,152 @@ main {
 }
 
 
+
+.page {
+    width: 100%;
+    background-color: var(--second-background-color);
+    padding: 14px;
+    border-radius: 8px;
+    height: 100%;
+    display: none;
+    position: relative;
+}
+
+.page::before {
+    content: " ";
+    display: block;
+    transition: all 0.3s ease-in-out; 
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    background-color: var(--secondary-color);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    max-width: 0;
+    max-height: 0;
+    z-index: -1;
+    border-radius: 10px;
+}
+
+.page.active {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.p2 .chart-container { flex-direction: column; align-items: center; }
+
+.head-pages {
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    margin-bottom: 14px;
+}
+
+.page-switcher {
+    width: fit-content;
+    height: fit-content;
+    padding: 14px;
+    background-color: var(--second-background-color);
+    border-radius: 8px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    display: flex;
+    gap: 14px;
+    flex-direction: row;
+}
+
+.page-switcher span {
+    color: var(--text-white-color);
+    border: 2px solid var(--secondary-color);
+    border-radius: 6px;
+    padding: 8px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.page-switcher span::before { 
+    content: " ";
+    display: block;
+    transition: all 0.3s ease-in-out; 
+    width: 100%;
+    height: 100%;
+    background-color: var(--secondary-color);
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 0;
+    z-index: -1;
+}
+
+.page-switcher span:hover::before {
+    max-width: 100%;
+}
+
+.right-panel { 
+    width: 65%;
+}
+
+.right-panel h2 {
+    color: var(--text-white-color);
+    font-weight: 300;
+    margin-bottom: -22px;
+}
+
+.right-panel:has(.page-switcher span[data-page="p1"]:hover) .page.p2::before {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.right-panel:has(.page-switcher span[data-page="p2"]:hover) .page.p1::before {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.team-name-group {
+    height: 2.5rem;
+}
+
+.team-name-group .team-selection {
+    display: none;
+}
+
+.team-name-group:hover h2, .team-name-group:has(input:focus) h2 {
+    display: none;
+}
+
+.team-name-group:hover .team-selection, .team-selection:has(input:focus) {
+    display: flex;
+}
+
+@keyframes highlight-zoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+menu > * { transition: all 0.3s; }
+
+menu > *:hover {
+    color: var(--accent-color) !important;
+    animation: highlight-zoom 0.3s ease-in-out 2;
+}

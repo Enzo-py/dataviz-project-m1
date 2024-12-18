@@ -98,16 +98,15 @@ function city_event(event, city_name) {
         logo.node().classList.remove("active")
     }
     // map all cities to their country code
-    const countriesWithGlow = ["FR", "ES", "DE", "IT", "UK"];
     let countryCode;
     countryCode = city_to_country(city_name);
     console.log("City:", city_name, "Country:", countryCode);
     let countryPath = d3.select(`#countries-area path[data-country-code="${countryCode}"]`);
-
+    
     if (event.type === "mouseenter") {
-        countryPath.classed("glow", true);
+        countryPath.classed("glow", true).raise();
     } else if (event.type === "mouseleave") {
-        countryPath.classed("glow", false);
+        countryPath.classed("glow", false).raise();
     }
 }
 
@@ -149,12 +148,13 @@ function render_map() {
         .append("path")
         .attr("d", ctx.path)
         .attr("data-country-code", d => d.properties.CNTR_ID.slice(0, 2))
-        .attr("fill", "var(--earth-color)")
-        .attr("stroke", "#000")
+        .attr("fill", d => (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) ? "var(--earth-color)" : "var(--secondary-earth-color)")
+        .attr("stroke", d => (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) ? "var(--country-border-color)" : "var(--secondary-country-border-color)")
         .attr("stroke-width", 0.5)
+        .attr("class", d => (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) ? "focus" : "")
         .on("mouseover", function(event, d) {
             if (d.properties.CNTR_ID && countriesWithGlow.includes(d.properties.CNTR_ID.slice(0, 2))) {
-                d3.select(this).classed("glow", true);
+                d3.select(this).classed("glow", true).raise();
             }
             // const countryCode = d.properties.CNTR_ID.slice(0, 2);
             // if (countryWallpapers[countryCode]) {
@@ -166,7 +166,10 @@ function render_map() {
                 d3.select(this).classed("glow", false);
             }
             document.body.style.backgroundImage = "";
-        });
+        })
+
+    // raise countries with glow
+    d3.selectAll(".map svg #countries-area .focus").raise()
 
     d3.select("#cities").remove();
 

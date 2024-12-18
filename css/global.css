@@ -2,6 +2,7 @@
     --secondary-color: #1a5396;
     --background-color: #282727;
     --shadow-color: #dcdcdc;
+    --accent-color: #59b59b;
 
     --second-background-color: #181919;
 
@@ -11,7 +12,10 @@
     --table-background-color: #F5F5F5;
 
     --sea-background: linear-gradient(90deg, rgb(36 55 101) 10%, #30679f 100%);
-    --earth-color: #fff;
+    --earth-color: #131313;
+    --secondary-earth-color: #191919;
+    --country-border-color: #d0d0d0;
+    --secondary-country-border-color: #767676;
 
     --danger-color: #af2c35;
     --success-color: #2c9f2c;
@@ -30,6 +34,15 @@ body, body * {
     font-family: 'Roboto', sans-serif;
 }
 
+@keyframes GoIn {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
 .toast {
     position: fixed;
     bottom: 0;
@@ -39,8 +52,35 @@ body, body * {
     margin: 10px;
     border-radius: 5px;
     background-color: var(--background-color);
-    box-shadow: 0 0 10px var(--shadow-color);
+    box-shadow: 0 0 4px var(--second-background-color);
     color: var(--text-light-color);
+    animation: GoIn 0.5s 1;
+    
+}
+
+.toast.success {
+    border-left: solid 15px var(--success-color);
+    color: var(--success-color);
+}
+
+.toast.danger {
+    border-left: solid 15px var(--danger-color);
+    color: var(--danger-color);
+}
+
+.toast.info {
+    border-left: solid 15px var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.toast.error {
+    border-left: solid 15px var(--danger-color);
+    color: var(--danger-color);
+}
+
+.toast.warning {
+    border-left: solid 15px var(--warning-color);
+    color: var(--warning-color);
 }
 
 .search-blob {
@@ -66,6 +106,11 @@ body, body * {
     margin: 0;
     outline: none !important;
     color: var(--text-white-color);
+}
+
+.search-blob input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--second-background-color) inset;
+    -webkit-text-fill-color: var(--text-white-color);
 }
 
 /* shake animation */
@@ -108,3 +153,18 @@ body, body * {
 .search-blob span:hover {
     transform: scale(1.1);
 }
+
+.loader {
+    width: 90%;
+    margin: 20px 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--second-background-color);
+    border-radius: 6px;
+    padding: 20px;
+    color: var(--text-white-color);
+    position: absolute;
+}
+
+.material-symbols-outlined { user-select: none; }

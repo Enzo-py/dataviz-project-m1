@@ -1,7 +1,25 @@
 body {
-    /* background: rgb(5,30,55); */
     background-color: var(--background-color);
-/* background: linear-gradient(54deg, rgba(5,30,55,1) 0%, rgba(44,96,147,1) 41%, rgba(254,250,246,1) 100%); */
+    overflow-x: hidden;
+}
+
+body:not([ready]) table tr {
+    transform: translateY(-10px);
+    opacity: 0;
+}
+
+table tr {
+    transition: all 1s;
+}
+
+body:not([ready]) menu.filters-menu {
+    transform: translateX(-500px);
+}
+
+body menu {
+    position: relative;
+    transition: transform 0.8s ease-in-out;
+    width: fit-content;
 }
 
 .players-view table {
@@ -9,6 +27,8 @@ body {
     min-width: 320px;
     border-collapse: collapse;
     margin: 20px auto;
+    height: fit-content;
+    user-select: none;
 }
 
 .players-view table th {
@@ -17,6 +37,7 @@ body {
     font-weight: 600;
     padding: 10px 12px;
     text-align: left;
+    cursor: pointer;
 }
 
 .players-view table th:first-child {
@@ -50,8 +71,8 @@ body {
 }
 
 .players-view table tbody tr:hover {
-    filter: brightness(1.6);
-    transform: scale(1.01);
+    filter: brightness(1.8);
+    transform: scale(1.02);
     cursor: pointer;
     border: none;
 }
@@ -73,19 +94,20 @@ body {
     margin: 10px 5%;
     width: 90%;
     column-gap: 4px;
+    user-select: none;
 }
 
 #pagination span {
     padding: 4px 8px;
     border-radius: 3px;
     background-color: #555;
-    color: var(--table-color);
+    color: var(--text-white-color);
     cursor: pointer;
 }
 
 #pagination span.selected {
     background-color: var(--selected-color);
-    color: var(--text-white-color);
+    color: var(--selected-text-color);
 }
 
 #pagination span.dots_page {
@@ -136,6 +158,8 @@ body {
     margin: 20px 5%;
     background-color: var(--second-background-color);
     border-radius: 6px;
+    flex-wrap: wrap;
+    user-select: none;
 }
 
 .spider-charts .legend {
@@ -263,18 +287,18 @@ progress[seuil='very-high']::-webkit-progress-value {
     background-color: #2c9f2c;
 }
 
-menu {
+menu.filters-menu {
     display: flex;
     flex-direction: row;
     gap: 10px;
     align-items: flex-start;
 }
 
-menu .filters {
+menu.filters-menu .filters {
     position: relative;
 }
 
-menu .filters > span {
+menu.filters-menu .filters > span {
     display: block;
     border: solid 2px var(--secondary-color);
     background-color: var(--second-background-color);
@@ -286,7 +310,17 @@ menu .filters > span {
     cursor: pointer;
 }
 
-menu .filters .filter-options {
+menu.filters-menu .filters > span.found {
+    color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+menu.filters-menu .filters > span.not-found {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+menu.filters-menu .filters .filter-options {
     position: absolute;
     display: none;
     flex-direction: column;
@@ -300,16 +334,16 @@ menu .filters .filter-options {
     left: 10px;
 }
 
-menu .filters .filter-options.active { display: flex; }
+menu.filters-menu .filters .filter-options.active { display: flex; }
 
-menu .filters .filter-options .filter-option {
+menu.filters-menu .filters .filter-options .filter-option {
     display: flex;
     flex-direction: column;
     gap: 4px;
     color: var(--secondary-color);
 }
 
-menu .filters .filter-options select {
+menu.filters-menu .filters .filter-options select {
     width: fit-content;
     padding: 6px;
     border-radius: 6px;
@@ -359,3 +393,54 @@ menu .filters .filter-options select {
     height: 10px;
 }
 .sorting > span.active { display: block; }
+
+.choose-players {
+    height: fit-content;
+}
+
+@keyframes highlight-zoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+    
+}
+
+.switcher, .filters > span, menu.redirections > a { transition: all 0.3s; }
+
+.switcher:hover, .filters > span:hover, menu.redirections > a:hover {
+    color: var(--accent-color) !important;
+    animation: highlight-zoom 0.3s ease-in-out 2;
+}
+
+body:not([ready]) menu.redirections {
+    transform: translateX(220px);
+    opacity: 0;
+}
+
+body menu.redirections {
+    transition: all 0.8s ease-in-out;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+body menu.redirections > a {
+    color: var(--secondary-color) !important;
+    background-color: var(--second-background-color);
+    text-decoration: none !important;
+    padding: 8px;
+    border-radius: 8px;
+    border: solid 2px var(--secondary-color);
+}
+
+a.back-to-team:not(.active) { display: none; }
+a.back-to-team.active { display: block; }

@@ -14,18 +14,18 @@
       "Finishing": {
         "stats": {
           "shots_on_target_per90_percentile_overall": 2.5,
-          "shot_conversion_rate_percentile_overall": 0.5,
+          "shot_conversion_rate_percentile_overall": 1,
           "@inverse-hit_woodwork_per90_percentile_overall": 0.4,
-          "@bonus-rank_in_club_top_scorer": 0.05,
           "@bonus-rank_in_league_top_attackers": 0.1,
           "@bonus-two_goals_in_a_game_total_overall": 0.05,
           "@bonus-three_goals_in_a_game_percentage_overall": 0.1,
           "key_passes_per_game_overall": 0.1,
           "pen_scored_total_overall": 1,
-          "shot_accuraccy_percentage_percentile_overall": 1,
+          "shot_accuraccy_percentage_percentile_overall": 1.5,
           "@inverse-shots_off_target_per_game_overall": 0.5,
           "@inverse-shots_per_goal_scored_overall": 0.4,
-          "minutes_played_percentile_overall": 0.2
+          "minutes_played_percentile_overall": 0.8,
+          "assists_per90_percentile_overall": 0.5
         },
         "position_filter": ["Forward"]
       },
@@ -37,7 +37,7 @@
           "aerial_duels_won_per90_percentile_overall": 2.5,
           "aerial_duels_won_total_overall": 0.5,
           "@inverse-shots_per_goal_scored_overall": 0.01,
-          "@bonus-rank_in_club_top_scorer": 0.1,
+          "@bonus-rank_in_club_top_scorer": 0.05,
           "@bonus-rank_in_league_top_attackers": 0.2
         },
         "position_filter": null
@@ -56,7 +56,8 @@
           "assists_per_game_overall": 0.5,
           "assists_per90_percentile_overall": 2,
           "passes_per_game_overall": 0.5,
-          "cross_completion_rate_overall": 0.5
+          "cross_completion_rate_overall": 0.5,
+          "minutes_played_percentile_overall": 0.4
         },
         "position_filter": ["Midfielder", "Forward"]
       }
@@ -117,8 +118,10 @@
           "goals_involved_per90_percentile_overall": 1,
           "@bonus-rank_in_club_top_scorer": 0.1,
           "@bonus-rank_in_league_top_attackers": 0.4,
-          "@fouls_drawn_per90_percentile_overall": 0.5,
-          "@bonus-penalties_won_total_overall": 0.8
+          "@bonus-fouls_drawn_per90_percentile_overall": 0.5,
+          "@bonus-penalties_won_total_overall": 0.5,
+          "@bonus-inside_box_saves_total_overall": 0.6,
+          "minutes_played_percentile_overall": 0.6
         },
         "position_filter": null
       },
@@ -127,29 +130,32 @@
           "dribbles_successful_percentage_overall": 0.5,
           "fouls_drawn_per90_percentile_overall": 0.8,
           "dribbles_per_game_overall": 0.5,
-          "@bonus-saves_per_game_overall": 0.5,
-          "@bonus-shots_on_target_per_game_overall": 0.1,
+          "@bonus-inside_box_saves_total_overall": 0.5,
+          "@bonus-shots_on_target_per_game_overall": 0.15,
           "@bonus-aerial_duels_won_per_game_overall": 0.1,
           "dribbles_successful_per_game_overall": 0.5,
           "@inverse-dispossesed_per90_percentile_overall": 1,
           "@inverse-shots_off_target_per_game_overall": 0.1,
           "@bonus-rank_in_league_top_midfielders": 0.2,
-          "minutes_played_percentile_overall": 0.2
+          "minutes_played_percentile_overall": 0.2,
+          "aerial_duels_won_per90_percentile_overall": 0.05
         },
         "position_filter": null
       },
       "Balance": {
         "stats": {
           "duels_won_per90_percentile_overall": 0.8,
-          "aerial_duels_won_per90_percentile_overall": 0.8,
-          "interceptions_per90_percentile_overall": 1,
-          "fouls_committed_per_game_overall": 0.1,
-          "fouls_drawn_per_game_overall": 0.5,
+          "aerial_duels_won_per90_percentile_overall": 0.6,
+          "interceptions_per90_percentile_overall": 0.9,
+          "@inverse-fouls_committed_per_game_overall": 0.1,
+          "fouls_drawn_per_game_overall": 0.6,
           "pass_completion_rate_percentile_overall": 1,
           "@inverse-shots_faced_per_game_overall": 0.1,
           "@inverse-pen_committed_total_overall": 0.1,
           "@bonus-rank_in_league_top_midfielders": 0.2,
-          "assists_per90_percentile_overall": 0.4
+          "assists_per90_percentile_overall": 0.5,
+          "minutes_played_percentile_overall": 0.2,
+          "@bonus-accurate_crosses_per_game_overall": 0.1
         },
         "position_filter": null
       }
@@ -180,14 +186,14 @@
       "Marking": {
         "stats": {
           "blocks_per_game_overall": 1,
-          "blocks_per90_percentile_overall": 2.5,
+          "blocks_per90_percentile_overall": 3,
           "clearances_per_game_overall": 0.2,
           "duels_won_per90_percentile_overall": 0.5,
           "interceptions_per90_percentile_overall": 0.5,
           "@inverse-fouls_committed_per_game_overall": 0.6,
           "min_per_conceded_percentile_overall": 0.1,
           "@inverse-shots_faced_per_game_overall": 0.8,
-          "@bonus-rank_in_league_top_defenders": 0.1
+          "@bonus-rank_in_league_top_defenders": 0.15
         },
         "position_filter": null
       }
@@ -202,9 +208,9 @@
           "sm_minutes_played_recorded_overall": 0.5,
           "sm_matches_recorded_total_overall": 0.5,
           "minutes_played_percentile_overall": 1.5,
-          "dribbles_per_game_overall": 0.5,
+          "dribbles_per_game_overall": 0.8,
           "@inverse-is_defender": 0.3,
-          "@bonus-saves_per90_percentile_overall": 0.4
+          "@bonus-save_percentage_percentile_overall": 0.5
         },
         "position_filter": null
       },
@@ -218,10 +224,12 @@
           "minutes_played_overall": 0.5,
           "tackles_per_game_overall": 0.8,
           "@bonus-fouls_committed_per_game_overall": 0.2,
-          "@bonus-pen_committed_total_overall": 0.15,
-          "@bonus-saves_total_overall": 1,
+          "@bonus-pen_committed_total_overall": 0.1,
+          "@bonus-save_percentage_percentile_overall": 0.5,
+          "@bonus-punches_per_game_overall": 1,
           "@bonus-rank_in_league_top_defenders": 0.4,
-          "@bonus-shots_faced_per_game_overall": 0.1
+          "@bonus-shots_faced_per_game_overall": 0.1,
+          "@bonus-matches_played_percentile_overall": 0.3
         },
         "position_filter": null
       },
@@ -236,15 +244,16 @@
     "Goalkeeper": {
       "Saves": {
         "stats": {
-          "saves_per90_percentile_overall": 3,
-          "shots_faced_per_game_overall": 0.2,
-          "saves_total_overall": 1.5,
-          "save_percentage_percentile_overall": 2.5,
-          "punches_per_game_overall": 2,
+          "save_percentage_overall": 0.8,
+          "saves_per90_percentile_overall": 0.5,
+          "shots_faced_per90_percentile_overall": 0.5,
+          "saves_total_overall": 0.1,
+          "save_percentage_percentile_overall": 3.5,
           "@inverse-sm_goals_conceded_total_overall": 0.5,
-          "conceded_overall": 1,
-          "pens_saved_total_overall": 1,
-          "@inverse-pens_taken_total_overall": 0.5
+          "@bonus-pens_saved_total_overall": 0.2,
+          "@inverse-pens_taken_total_overall": 0.3,
+          "bonus-min_per_conceded_overall": 0.4,
+          "matches_played_percentile_overall": 0.4
         },
         "position_filter": ["Goalkeeper"]
       },
@@ -252,23 +261,26 @@
         "stats": {
           "save_percentage_percentile_overall": 1.5,
           "saves_per_game_overall": 1,
-          "punches_per_game_overall": 0.5,
+          "punches_per_game_overall": 1.5,
           "@inverse-sm_goals_conceded_total_overall": 0.2,
           "clearances_per_game_overall": 0.2,
           "@bonus-pens_saved_total_overall": 1,
-          "@inverse-pens_taken_total_overall": 1.5,
-          "inside_box_saves_total_overall": 0.8
+          "@inverse-pens_taken_total_overall": 1.8,
+          "inside_box_saves_total_overall": 0.5
         },
         "position_filter": ["Goalkeeper"]
       },
       "Sweeping": {
         "stats": {
-          "save_percentage_overall": 0.5,
-          "clearances_per_game_overall": 0.5,
-          "passes_total_overall": 0.1,
-          "blocks_per_game_overall": 0.1,
-          "interceptions_per_game_overall": 0.5,
-          "inside_box_saves_total_overall": 3
+          "save_percentage_percentile_overall": 1,
+          "clearances_per90_percentile_overall": 0.8,
+          "@bonus-passes_total_overall": 0.5,
+          "interceptions_per_game_overall": 0.1,
+          "inside_box_saves_total_overall": 5,
+          "dribbles_successful_percentage_percentile_overall": 1.5,
+          "dribbles_successful_percentage_overall": 0.8,
+          "@bonus-assists_per_game_overall": 0.5,
+          "@bonus-aerial_duels_won_per90_percentile_overall": 0.3
         },
         "position_filter": ["Goalkeeper"]
       }

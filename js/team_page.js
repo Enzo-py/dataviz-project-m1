@@ -169,7 +169,7 @@ function updateMatchesList() {
     matchesListElement.innerHTML = "";
 
     if (allMatches.length > 0) {
-        allMatches.forEach(match => {
+        allMatches.forEach((match, i) => {
             const row = document.createElement("tr");
             const homeScore = parseInt(match.home_team_goal_count);
             const awayScore = parseInt(match.away_team_goal_count);
@@ -204,6 +204,11 @@ function updateMatchesList() {
 document.addEventListener("DOMContentLoaded", function() {
     const urlParams = new URLSearchParams(window.location.search);
     const teamParam = urlParams.get('club');
+
+    // create url to the player page
+    const player_page = "player.html?club=" + teamParam
+    player_a = d3.select("a.view-players")
+    player_a.attr("href", player_page)
 
     document.getElementById("team1").addEventListener("change", updateStats);
     document.getElementById("season").addEventListener("change", function() {
@@ -247,6 +252,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Show the loading screen
+    team_info = d3.select(".team-info").style("transform", "scale(0)")
+    matches_info = d3.select(".matches").style("transform", `translateX(-${parseInt(window.innerWidth * 0.45)}px)`)
+    pages = d3.selectAll(".page").style("transform", "scale(0)")
+    pages_hear = d3.select(".head-pages").style("transform", "translateY(-200px)")
+    menu_wrapper = d3.select("menu").style("display", "none").style("transform", "translateX(300px)")
+
     document.getElementById("loading-screen").style.display = "flex";
     load_data().then(() => {
         if (teamParam) {
@@ -257,8 +268,56 @@ document.addEventListener("DOMContentLoaded", function() {
         updateStats();
         updateMatchesList();
 
+        page1_anim(true)
+        page2_anim(true, true)
+
         // Hide the loading screen
         document.getElementById("loading-screen").style.display = "none";
+        d3.select("body").attr("ready", true);
+        team_info.transition()
+            .duration(450)
+            .style("transform", "scale(1.1)")
+            .transition()
+            .duration(200)
+            .style("transform")
+
+        pages.transition()
+            .duration(650)
+            .delay(150)
+            .style("transform", "scale(1.02)")
+            .transition()
+            .duration(300)
+            .style("transform")
+
+        matches_info.transition()
+            .duration(1000)
+            .delay(400)
+            .style("transform", "translateX(8px)")
+            .transition()
+            .duration(250)
+            .style("transform")
+
+        pages_hear.transition()
+            .duration(500)
+            .delay(1000)
+            .style("transform", "translateY(8px)")
+            .transition()
+            .duration(250)
+            .style("transform")
+
+        menu_wrapper.transition()
+            .duration(500)
+            .delay(1200)
+            .style("display")
+            .style("transform", "translateX(-16px)")
+            .transition()
+            .duration(250)
+            .style("transform")
+
+        setTimeout(() => {
+            page1_anim()
+        }, 1500)
+
     });
 
     function updateStats() {
@@ -266,6 +325,11 @@ document.addEventListener("DOMContentLoaded", function() {
         updateMatchesList();
         const team1 = document.getElementById("team1").value;
         const season = document.getElementById("season").value;
+
+        // update player page link
+        const player_page = "player.html?club=" + team1
+        player_a = d3.select("a.view-players")
+        player_a.attr("href", player_page)
 
         if (team1) {
             let data1;
@@ -541,6 +605,7 @@ function createPerformanceChart(data) {
             .attr("dy", "0.35em")
             .attr("text-anchor", "end")
             .style("font-size", "16px")
+            .style("fill", "var(--text-light-color)")
             .text(Math.round(metric.homeValue));
 
         svg.append("text")
@@ -549,6 +614,7 @@ function createPerformanceChart(data) {
             .attr("y", y(metric.label) + y.bandwidth() / 2)
             .attr("dy", "0.35em")
             .style("font-size", "16px")
+            .style("fill", "var(--text-light-color)")
             .text(Math.round(metric.awayValue));
     });
 
@@ -560,8 +626,10 @@ function createPerformanceChart(data) {
         .call(g => {
             g.select(".domain").remove();
             g.selectAll(".tick text")
-                .style("font-size", "16px")
-                .style("font-weight", "bold");
+                .style("font-size", "0.9rem")
+                .style("font-weight", "normal")
+                .style("fill", "var(--text-white-color)")
+
         });
 
     //  legend
@@ -596,7 +664,8 @@ function createPerformanceChart(data) {
 
     legend.selectAll("text")
         .style("font-size", "14px")
-        .style("font-weight", "bold");
+        .style("font-weight", "normal")
+        .style("fill", "var(--text-white-color)");
 }
 
 function createGoalsTimelineChart(data) {
@@ -728,8 +797,10 @@ function createGoalsTimelineChart(data) {
     svg.append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x))
+        .style("color", "var(--text-light-color)")
         .selectAll("text")
-        .style("font-size", "12px");
+        .style("font-size", "12px")
+        .style("color", "var(--text-light-color)")
 
     // Add X axis label
     svg.append("text")
@@ -737,11 +808,14 @@ function createGoalsTimelineChart(data) {
         .attr("x", width / 2)
         .attr("y", height + 35)
         .style("font-size", "12px")
+        .style("fill", "var(--text-white-color)")
         .text("Minutes");
 
     svg.append("g")
         .call(d3.axisLeft(y))
+        .style("color", "var(--text-light-color)")
         .selectAll("text")
+        .style("fill", "var(--text-light-color)")
         .style("font-size", "12px");
 
     // Add Y axis label
@@ -751,6 +825,8 @@ function createGoalsTimelineChart(data) {
         .attr("y", -margin.left + 20)
         .attr("x", -height / 2 + 10)
         .style("font-size", "12px")
+        .style("fill", "var(--text-white-color)")
+        .style("font-weight", "normal")
         .text("Goals");
 
     // Move legend to bottom center
@@ -767,8 +843,9 @@ function createGoalsTimelineChart(data) {
         .attr("x", -10)
         .attr("y", 0)
         .attr("dy", "0.32em")
+        .style("fill", "var(--text-white-color)")
+        .style("font-weight", "normal")
         .text("Goals Scored")
-        .style("font-size", "16px");
 
     legend.append("circle")
         .attr("cx", 100)
@@ -780,27 +857,27 @@ function createGoalsTimelineChart(data) {
         .attr("x", 110)
         .attr("y", 0)        
         .attr("dy", "0.32em")        
+        .style("fill", "var(--text-white-color)")
+        .style("font-weight", "normal")
         .text("Goals Conceded")
-        .style("font-size", "16px");
 
-    console.log("Chart created")
+
 }
 
 function createGoalsDonutChart(data) {
     // Clear existing chart
     d3.select("#donut-charts").html("");
 
-    const width = 280; 
-    const height = 280;
+    const width = 300; 
+    const height = 300;
     const radius = Math.min(width, height) / 2;
-    const margin = 180;
 
     const svg = d3.select("#donut-charts")
         .append("svg")
-        .attr("width", width + margin)
-        .attr("height", height + margin)
+        .attr("width", width + 190)
+        .attr("height", height + 50)
         .append("g")
-        .attr("transform", `translate(${(width + margin) / 2},${(height + margin) / 2})`);
+        .attr("transform", `translate(${(width + 190) / 2},${(height + 50) / 2})`);
 
     const goalsData = [
         { label: "Goals Scored", value: parseInt(data.goals_scored) || 0, color: "#28a745" },
@@ -829,7 +906,7 @@ function createGoalsDonutChart(data) {
     arcs.append("path")
         .attr("d", arc)
         .attr("fill", d => d.data.color)
-        .attr("stroke", "white")
+        .attr("stroke", "var(--second-background-color)")
         .style("stroke-width", "2px")
         .style("opacity", 0.8);
 
@@ -839,7 +916,7 @@ function createGoalsDonutChart(data) {
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
         .style("font-size", "16px")
-        .style("fill", "white")
+        .style("fill", "var(--second-background-color)")
         .text(d => d.data.value);
 
     // Add center text
@@ -847,6 +924,7 @@ function createGoalsDonutChart(data) {
         .attr("text-anchor", "middle")
         .attr("dy", "-0.5em")
         .style("font-size", "14px")
+        .style("fill", "var(--text-white-color)")
         .text("Total Goals");
 
     svg.append("text")
@@ -854,6 +932,7 @@ function createGoalsDonutChart(data) {
         .attr("dy", "1em")
         .style("font-size", "20px")
         .style("font-weight", "bold")
+        .style("fill", "var(--text-white-color)")
         .text(total);
 
     // Update legend position and styling
@@ -876,7 +955,8 @@ function createGoalsDonutChart(data) {
             .attr("y", 8)
             .attr("dy", "0.32em")
             .style("font-size", "14px")
-            .style("font-weight", "bold")
+            .style("font-weight", "normal")
+            .style("fill", "var(--text-white-color)")
             .text(d.label);
     });
 }
@@ -885,17 +965,17 @@ function createWinsDonutChart(data) {
     // Clear existing chart
     // d3.select("#wins-donut-chart").html("");
 
-    const width = 280;
-    const height = 280;
+    const width = 300;
+    const height = 300;
     const radius = Math.min(width, height) / 2;
     const margin = 180;
 
     const svg = d3.select("#donut-charts")
         .append("svg")
-        .attr("width", width + margin)
-        .attr("height", height + margin)
+        .attr("width", width + 180)
+        .attr("height", height + 50)
         .append("g")
-        .attr("transform", `translate(${(width + margin) / 2},${(height + margin) / 2})`);
+        .attr("transform", `translate(${(width + 180) / 2},${(height + 50) / 2})`);
 
     const winsData = [
         { label: "Wins", value: parseInt(data.wins) || 0, color: "#28a745" },
@@ -925,7 +1005,7 @@ function createWinsDonutChart(data) {
     arcs.append("path")
         .attr("d", arc)
         .attr("fill", d => d.data.color)
-        .attr("stroke", "white")
+        .attr("stroke", "var(--second-background-color)")
         .style("stroke-width", "2px")
         .style("opacity", 0.8);
 
@@ -935,7 +1015,7 @@ function createWinsDonutChart(data) {
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
         .style("font-size", "16px")
-        .style("fill", "white")
+        .style("fill", "var(--second-background-color)")
         .text(d => d.data.value);
 
     // Add center text
@@ -943,6 +1023,7 @@ function createWinsDonutChart(data) {
         .attr("text-anchor", "middle")
         .attr("dy", "-0.5em")
         .style("font-size", "14px")
+        .style("fill", "var(--text-white-color)")
         .text("Total Matches");
 
     svg.append("text")
@@ -950,6 +1031,7 @@ function createWinsDonutChart(data) {
         .attr("dy", "1em")
         .style("font-size", "20px")
         .style("font-weight", "bold")
+        .style("fill", "var(--text-white-color)")
         .text(total);
 
     const legend = svg.append("g")
@@ -971,7 +1053,8 @@ function createWinsDonutChart(data) {
             .attr("y", 8)
             .attr("dy", "0.32em")
             .style("font-size", "14px")
-            .style("font-weight", "bold")
+            .style("font-weight", "normal")
+            .style("fill", "var(--text-white-color)")
             .text(d.label);
     });
 }
@@ -980,17 +1063,17 @@ function createShotsDonutChart(data) {
     // Clear existing chart
     // d3.select("#donut-charts").html("");
 
-    const width = 280; 
-    const height = 280;
+    const width = 300; 
+    const height = 300;
     const radius = Math.min(width, height) / 2;
     const margin = 180;
 
     const svg = d3.select("#donut-charts")
         .append("svg")
-        .attr("width", width + margin)
-        .attr("height", height + margin)
+        .attr("width", width + 185)
+        .attr("height", height + 50)
         .append("g")
-        .attr("transform", `translate(${(width + margin) / 2},${(height + margin) / 2})`);
+        .attr("transform", `translate(${(width + 185) / 2},${(height + 50) / 2})`);
 
     const shotsData = [
         { label: "Shots On Target", value: parseInt(data.shots_on_target) || 0, color: "#28a745" },
@@ -1019,7 +1102,7 @@ function createShotsDonutChart(data) {
     arcs.append("path")
         .attr("d", arc)
         .attr("fill", d => d.data.color)
-        .attr("stroke", "white")
+        .attr("stroke", "var(--second-background-color)")
         .style("stroke-width", "2px")
         .style("opacity", 0.8);
 
@@ -1029,7 +1112,7 @@ function createShotsDonutChart(data) {
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
         .style("font-size", "16px")
-        .style("fill", "white")
+        .style("fill", "var(--second-background-color)")
         .text(d => d.data.value);
 
     // Add center text
@@ -1037,6 +1120,7 @@ function createShotsDonutChart(data) {
         .attr("text-anchor", "middle")
         .attr("dy", "-0.5em")
         .style("font-size", "14px")
+        .style("fill", "var(--text-white-color)")
         .text("Total Shots");
 
     svg.append("text")
@@ -1044,6 +1128,7 @@ function createShotsDonutChart(data) {
         .attr("dy", "1em")
         .style("font-size", "20px")
         .style("font-weight", "bold")
+        .style("fill", "var(--text-white-color)")
         .text(total);
 
     // Update legend position and styling
@@ -1066,7 +1151,8 @@ function createShotsDonutChart(data) {
             .attr("y", 8)
             .attr("dy", "0.32em")
             .style("font-size", "14px")
-            .style("font-weight", "bold")
+            .style("font-weight", "normal")
+            .style("fill", "var(--text-white-color)")
             .text(d.label);
     });
 }
@@ -1101,4 +1187,83 @@ function updateCharts(data) {
     createGoalsDonutChart(data);
     createWinsDonutChart(data);
     createShotsDonutChart(data);
+}
+
+function page1_anim(setup_start) {
+    donut_charts = d3.selectAll("#donut-charts svg")
+    donut_charts.each(function(_, i) {
+        chart = d3.select(this)
+        console.log(chart.selectAll('path'))
+
+        // chacher les text si setup_start
+        chart.selectAll('text, rect').each(function(_, j) {
+            text = d3.select(this)
+            if (setup_start) {
+                text.style("opacity", 0)
+            } else {
+                text.transition()
+                    .duration(200)
+                    .delay(j * 100 + i * 600 + 600)
+                    .style("opacity", 1)
+            }
+        })
+        chart.selectAll('path').each(function(_, j) {
+            path = d3.select(this)
+            if (setup_start) {
+                path.style("transform", "scale(0)")
+
+            } else {
+                path.transition()
+                    .duration(400)
+                    .delay(j * 150 + i * 300)
+                    .style("transform", "rotate(180deg) scale(0.5)")
+                    .transition()
+                    .duration(300)
+                    .style("transform", "rotate(360deg) scale(0.5)")
+                    .transition()
+                    .duration(500)
+                    .delay(10 * j)
+                    .style("transform")
+            }
+        })
+    })
+}
+
+function page2_anim(setup_start, save) {
+    performance_chart = d3.select("#performance-chart svg")
+    performance_chart.selectAll('rect').each(function(_, i) {
+        rect = d3.select(this)
+        if (setup_start) {
+            if (save) {
+                rect.attr("save_width", rect.attr("width"))
+
+                if (rect.attr("class") == "bar-home") // pour symétrie
+                    rect.style("transform", `translateX(${rect.attr("save_width")}px)`)
+            }
+            rect.attr("width", 0)
+        } else {
+            rect.transition()
+                .duration(200)
+                .delay(i * 100)
+                .attr("width", rect.attr("save_width"))
+                .style("transform")
+        }
+    })
+
+    goals_chart = d3.select("#goals-timeline-chart svg")
+    goals_chart.selectAll('circle').each(function(_, i) {
+        circle = d3.select(this)
+        if (setup_start) {
+            circle.style("opacity", "0")
+        } else {
+            circle.transition()
+                .duration(300)
+                .delay(i * 100)
+                .style("opacity", "1")
+                .style("transform", "scale(1.08)")
+                .transition()
+                .duration(200)
+                .style("transform")
+        }
+    })
 }
