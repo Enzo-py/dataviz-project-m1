@@ -45,7 +45,8 @@ function load_data() {
         './data/nationalities_flag.csv',
         './data/clubs_logo.csv',
         './data/player_card_stats.json',
-        './data/players_radar_categories.json'
+        './data/players_radar_categories.json',
+        './data/img/soccer_wiki.json'
     ]
 
     d3.select("body .players-view")
@@ -789,6 +790,7 @@ function update_players_charts() {
         }
     })
 
+
     current_player_2022_2023 = players_data.filter(player => Object.keys(player).includes("2022-2023"))
     const data_2022_2023 = current_player_2022_2023.map(player => {
         return {
@@ -883,6 +885,7 @@ function create_player_card(player_id, player_card) {
     player_club = player[Object.keys(player)[0]]["Current_Club"]
     player_nationality = player[Object.keys(player)[0]]["nationality"]
     player_number = parseInt(player[Object.keys(player)[0]]["shirt_number"])
+    const player_image_url = getPlayerImageUrl(player_name);
 
     // player_card = d3.select(`.players-card .player-card#${player_id}`)
     player_card.style("border-color", ctx.selected_players[player_id])
@@ -893,6 +896,12 @@ function create_player_card(player_id, player_card) {
     player_identity.append("span").text(player_number).style("color", ctx.selected_players[player_id]).attr("class", "player-number")
     player_identity_data = player_identity.append("div").attr("class", "player-identity-data")
     
+    // Add player's image next to their name
+    player_identity_data.append("img")
+        .attr("src", player_image_url)
+        .attr("alt", player_name)
+        .attr("class", "player-image");
+
     player_identity_data.append("h2").text(player_name)
     player_identity_data.append("span")
         .append("h5").text(player_position)
@@ -1101,3 +1110,20 @@ function get_player_score(player_id, position) {
 
     return Math.min(Math.max(parseInt((score + other_indicators * 0.27) * 100), 0), 100)
 }
+
+function getPlayerImageUrl(player_name) {
+    if (!ctx.data["soccer_wiki"]) {
+        console.error("soccer_wiki data is not loaded");
+        return null;
+    }
+
+    const playerData = ctx.data["soccer_wiki"].PlayerData;
+    const [forename, surname] = player_name.toLowerCase().split(" ");
+
+    const player = playerData.find(
+        p => p.Forename.toLowerCase() === forename && p.Surname.toLowerCase() === surname
+    );
+
+    return player ? player.ImageURL : "https://upload.wikimedia.org/wikipedia/commons/d/d4/Missing_photo.svg";
+}
+

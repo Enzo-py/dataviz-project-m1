@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team page</title>
+    <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="js/team_page.js"></script>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/team_page.css">
+    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" as="style" onload="this.onload=null;this.rel='stylesheet'">
+</head>
+<body>
+    <div id="loading-screen" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading data, please wait...</p>
+    </div>
+
+    <main>
+        <menu>
+            <!-- <button id="view-players" onclick="window.location.href='player.html'">View Players</button> -->
+            <a href="index.html" class="material-symbols-outlined back-to-map" title="go back to map">explore</a>
+            <a href="team_comparison.html" class="material-symbols-outlined compare-teams" title="compare_team">compare_arrows</a>
+            <a href="player.html" class="material-symbols-outlined view-players" title="view players">person</a>
+        </menu>
+
+        <section class="dashboard">
+            <div class="left-panel">
+                <div class="team-info">
+                    <img id="team-logo" src="" alt="Team Logo">
+                    <div class="team-details">
+                        <div class="team-name-group">
+                            <h2 id="team-name">Team Name</h2>
+                            <div class="team-selection">
+                                <div class="team">
+                                    <label for="team1"></label>
+                                    <input type="text" id="team1" list="teams" placeholder="Select a team">
+                                </div>
+                                <datalist id="teams">
+                                    
+                                </datalist>
+                            </div>
+                        </div>
+
+                        <div class="season">
+                            <label for="season"></label>
+                            <select id="season">
+                                <option value="All Seasons">All Seasons</option>
+                                <option value="2021-2022">2021-2022</option>
+                                <option value="2022-2023">2022-2023</option>
+                                <option value="2023-2024"selected>2023-2024</option>
+                            </select>
+                        </div>
+                        
+                        <h3 id="team-league">League</h3> 
+                        <h3 id="team-rank">Rank</h3> 
+                        <h3 id="team-ratio">Win ratio</h3>
+                    </div>
+                </div>
+
+                <div class="matches">
+                    <table id="matches-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Home Team</th>
+                                <th>Score</th>
+                                <th>Away Team</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="matches-list">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="right-panel">
+                <div class="head-pages">
+                    <div class="page-switcher">
+                        <span class="switcher" data-page="p1" onclick="switch_page(this)">Quickstats</span>
+                        <span class="switcher" data-page="p2" onclick="switch_page(this)">Performance</span>
+                        <span class="switcher" id="view-team-players" onclick="redirectToPlayers()">Players</span>
+                    </div>
+    
+                    <span class="material-symbols-outlined" id="toggle-league-average">info</span>
+                </div>
+
+                <div class="page p1 active">
+                    <div class="chart-container" id="donut-charts">
+                    </div>
+                </div>
+                <div class="page p2">
+                    <div class="chart-container">
+                        <h2>Home vs Away Performance</h2>
+                        <div id="performance-chart"></div>
+                    </div>
+                    <div class="chart-container">
+                        <h2>Goals Timeline</h2>
+                        <div id="goals-timeline-chart"></div>
+                    </div>
+                </div>
+                <div class="charts-grid">
+                    
+                    
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function switch_page(btn) {
+            page_number = btn.getAttribute("data-page");
+            document.querySelectorAll(".page").forEach(page => {
+                page.classList.remove("active");
+            });
+            document.querySelector(".page." + page_number).classList.add("active");
+            page1_anim(true)
+            page2_anim(true)
+            page1_anim()
+            page2_anim()
+        }
+    </script>
+</body>
+</html>

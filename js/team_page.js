@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Update both links
     // d3.selectAll("a.view-players, a.view-team-players").attr("href", player_page);
     
-    d3.selectAll("a.compare team").attr("href", compare_page);
+    d3.selectAll("a.compare-teams").attr("href", compare_page);
     d3.selectAll("a.view-team-players").attr("href", player_page);
 
     document.getElementById("team1").addEventListener("change", updateStats);
@@ -335,7 +335,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const player_page = "player.html?club=" + team1
         const compare_page = "team_comparison.html?club=" + teamParam;
         player_a = d3.select("a.view-players")
-        player_b = d3.select("a.compare team")
+        player_b = d3.select("a.compare-teams")
+        console.log(player_b)
         // player_a.attr("href", player_page)
         player_b.attr("href", compare_page)
         window.redirectToPlayers = function () {

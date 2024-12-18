@@ -256,7 +256,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Fill team1
     if (team1Param) {
         document.getElementById("team1").value = team1Param;
-        updateTeamInfo("team1", team1Param);
     }
     // Add event listeners
     document.getElementById("team1").addEventListener("change", updateStats);
@@ -453,7 +452,18 @@ document.addEventListener("DOMContentLoaded", function() {
         const team2Stats = getTeamStats(team2, data2);
 
         const comparisonMetrics = [
-            "wins", "losses", "draws", "goals_scored", "goals_conceded", "clean_sheets", "average_possession"
+            "Wins", 
+            "Losses", 
+            "Draws", 
+            "Goals Scored", 
+            "Goals Conceded", 
+            "Clean Sheets", 
+            "Average Possession",
+            "Shots on Target",
+            "Shots off Target",
+            "Cards",
+            "Fouls Committed",
+            "Corners per match",
         ];
 
         let comparisonHtml1 = "<table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>";
@@ -481,13 +491,18 @@ document.addEventListener("DOMContentLoaded", function() {
         // Fetch team stats based on the team name and season
         // This is a placeholder function, replace with actual data fetching logic
         return {
-            wins: data.wins,
-            losses: data.losses,
-            draws: data.draws,
-            goals_scored: data.goals_scored,
-            goals_conceded: data.goals_conceded,
-            clean_sheets: data.clean_sheets,
-            average_possession: data.average_possession
+            Wins: data.wins,
+            Losses: data.losses,
+            Draws: data.draws,
+            "Goals Scored": data.goals_scored,
+            "Goals Conceded": data.goals_conceded,
+            "Clean Sheets": data.clean_sheets,
+            "Average Possession": data.average_possession,
+            "Shots on Target": data.shots_on_target,
+            "Shots off Target": data.shots_off_target,
+            "Cards": data.cards_total,
+            "Fouls Committed": data.fouls,
+            "Corners per match": data.corners_per_match,
         };
     }
 });
