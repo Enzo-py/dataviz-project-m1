@@ -1,7 +1,6 @@
 body {
-    /* background: rgb(5,30,55); */
     background-color: var(--background-color);
-/* background: linear-gradient(54deg, rgba(5,30,55,1) 0%, rgba(44,96,147,1) 41%, rgba(254,250,246,1) 100%); */
+    overflow-x: hidden;
 }
 
 body:not([ready]) table tr {
@@ -13,11 +12,15 @@ table tr {
     transition: all 1s;
 }
 
-body:not([ready]) menu {
+body:not([ready]) menu.filters-menu {
     transform: translateX(-500px);
 }
 
-body menu { transition: transform 0.8s ease-in-out; }
+body menu {
+    position: relative;
+    transition: transform 0.8s ease-in-out;
+    width: fit-content;
+}
 
 .players-view table {
     width: 90%;
@@ -68,8 +71,8 @@ body menu { transition: transform 0.8s ease-in-out; }
 }
 
 .players-view table tbody tr:hover {
-    filter: brightness(1.6);
-    transform: scale(1.01);
+    filter: brightness(1.8);
+    transform: scale(1.02);
     cursor: pointer;
     border: none;
 }
@@ -284,18 +287,18 @@ progress[seuil='very-high']::-webkit-progress-value {
     background-color: #2c9f2c;
 }
 
-menu {
+menu.filters-menu {
     display: flex;
     flex-direction: row;
     gap: 10px;
     align-items: flex-start;
 }
 
-menu .filters {
+menu.filters-menu .filters {
     position: relative;
 }
 
-menu .filters > span {
+menu.filters-menu .filters > span {
     display: block;
     border: solid 2px var(--secondary-color);
     background-color: var(--second-background-color);
@@ -307,17 +310,17 @@ menu .filters > span {
     cursor: pointer;
 }
 
-menu .filters > span.found {
+menu.filters-menu .filters > span.found {
     color: var(--success-color);
     border-color: var(--success-color);
 }
 
-menu .filters > span.not-found {
+menu.filters-menu .filters > span.not-found {
     color: var(--danger-color);
     border-color: var(--danger-color);
 }
 
-menu .filters .filter-options {
+menu.filters-menu .filters .filter-options {
     position: absolute;
     display: none;
     flex-direction: column;
@@ -331,16 +334,16 @@ menu .filters .filter-options {
     left: 10px;
 }
 
-menu .filters .filter-options.active { display: flex; }
+menu.filters-menu .filters .filter-options.active { display: flex; }
 
-menu .filters .filter-options .filter-option {
+menu.filters-menu .filters .filter-options .filter-option {
     display: flex;
     flex-direction: column;
     gap: 4px;
     color: var(--secondary-color);
 }
 
-menu .filters .filter-options select {
+menu.filters-menu .filters .filter-options select {
     width: fit-content;
     padding: 6px;
     border-radius: 6px;
@@ -408,22 +411,29 @@ menu .filters .filter-options select {
     
 }
 
-.switcher { transition: all 0.3s; }
+.switcher, .filters > span, menu.redirections > a { transition: all 0.3s; }
 
-.switcher:hover {
-    color: var(--accent-color);
-    animation: highlight-zoom 0.3s ease-in-out 1;
+.switcher:hover, .filters > span:hover, menu.redirections > a:hover {
+    color: var(--accent-color) !important;
+    animation: highlight-zoom 0.3s ease-in-out 2;
 }
 
-body:not([ready]) .back-to-map {
-    transform: translateX(160px);
+body:not([ready]) menu.redirections {
+    transform: translateX(220px);
+    opacity: 0;
 }
 
-body .back-to-map {
+body menu.redirections {
     transition: all 0.8s ease-in-out;
     position: absolute;
     top: 10px;
     right: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+body menu.redirections > a {
     color: var(--secondary-color) !important;
     background-color: var(--second-background-color);
     text-decoration: none !important;
@@ -431,3 +441,6 @@ body .back-to-map {
     border-radius: 8px;
     border: solid 2px var(--secondary-color);
 }
+
+a.back-to-team:not(.active) { display: none; }
+a.back-to-team.active { display: block; }

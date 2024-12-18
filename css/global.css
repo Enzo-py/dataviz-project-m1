@@ -34,6 +34,15 @@ body, body * {
     font-family: 'Roboto', sans-serif;
 }
 
+@keyframes GoIn {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
 .toast {
     position: fixed;
     bottom: 0;
@@ -43,8 +52,35 @@ body, body * {
     margin: 10px;
     border-radius: 5px;
     background-color: var(--background-color);
-    box-shadow: 0 0 10px var(--shadow-color);
+    box-shadow: 0 0 4px var(--second-background-color);
     color: var(--text-light-color);
+    animation: GoIn 0.5s 1;
+    
+}
+
+.toast.success {
+    border-left: solid 15px var(--success-color);
+    color: var(--success-color);
+}
+
+.toast.danger {
+    border-left: solid 15px var(--danger-color);
+    color: var(--danger-color);
+}
+
+.toast.info {
+    border-left: solid 15px var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.toast.error {
+    border-left: solid 15px var(--danger-color);
+    color: var(--danger-color);
+}
+
+.toast.warning {
+    border-left: solid 15px var(--warning-color);
+    color: var(--warning-color);
 }
 
 .search-blob {

@@ -3,10 +3,12 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--background-color);
+    overflow-x: hidden;
 }
 
 main {
     padding: 14px;
+    max-width: 100vw;
 }
 
 .team {
@@ -28,11 +30,14 @@ main {
     outline: none !important;
 }
 
-.team-title {
+.team-info {
     background-color: var(--second-background-color);
     padding: 14px;
     border-radius: 8px;
     color: var(--text-white-color);
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
 .actions {
@@ -60,16 +65,19 @@ main {
     align-items: flex-start;
     margin: 0;
     padding: 0;
-    border-radius: 8px;
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
 }
 .season select {
     padding: 0.5rem;
     font-size: 1rem;
     width: 150px;
-    border: solid 2px var(--secondary-color);
+    border: solid 2px var(--text-white-color);
     color: var(--text-white-color);
     background-color: var(--second-background-color) !important;
-    border-radius: 8px;
+    border-radius: 6px;
+    outline: none !important;
 }
 
 .team-selection {
@@ -83,12 +91,6 @@ main {
     border: none;
     border-radius: 8px;
     box-shadow: none;
-}
-
-.team-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
 }
 
 #team-logo {
@@ -185,12 +187,11 @@ main {
 #matches-table td {
     padding: 12px 8px;
     text-align: center;
-    border-bottom: 1px solid #ddd;
 }
 
 #matches-table th {
-    background-color: var(--text-white-color);
-    color: var(--second-background-color);
+    background-color: var(--secondary-color);
+    color: var(--text-white-color);
     font-size: 1rem;
     font-weight: bold;
 }
@@ -204,6 +205,7 @@ main {
 #matches-table tbody tr {
     transition: all 0.3s;
     background-color: var(--second-background-color);
+    border-bottom: 1px solid #c0c0c0;
 }
 
 #matches-table tbody tr:hover {
@@ -228,11 +230,7 @@ main {
 }
 
 #performance-chart {
-    width: 100%;
-    height: auto;
-    min-height: 500px;
-    margin-top: 2rem;
-    padding: 1rem;
+    width: fit-content;
 }
 
 .bar-label {
@@ -251,7 +249,7 @@ main {
 }
 
 .bar-away {
-    fill: #dc3545;
+    fill: #ffd644;
 }
 
 .axis-label {
@@ -345,12 +343,6 @@ main {
     width: 35%;
     height: fit-content;
 }
-
-.right-panel {
-    flex: 1;
-}
-
-
 
 .charts-grid {
     display: grid;
@@ -465,7 +457,10 @@ menu > a {
     gap: 14px;
     justify-content: center;
     align-items: flex-start;
+    align-content: flex-start;
 }
+
+.p2 .chart-container { flex-direction: column; align-items: center; }
 
 .head-pages {
     display: flex;
@@ -516,6 +511,16 @@ menu > a {
     max-width: 100%;
 }
 
+.right-panel { 
+    width: 65%;
+}
+
+.right-panel h2 {
+    color: var(--text-white-color);
+    font-weight: 300;
+    margin-bottom: -22px;
+}
+
 .right-panel:has(.page-switcher span[data-page="p1"]:hover) .page.p2::before {
     max-width: 100%;
     max-height: 100%;
@@ -540,4 +545,23 @@ menu > a {
 
 .team-name-group:hover .team-selection, .team-selection:has(input:focus) {
     display: flex;
+}
+
+@keyframes highlight-zoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+menu > * { transition: all 0.3s; }
+
+menu > *:hover {
+    color: var(--accent-color) !important;
+    animation: highlight-zoom 0.3s ease-in-out 2;
 }

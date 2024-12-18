@@ -18,48 +18,45 @@
         <p>Loading data, please wait...</p>
     </div>
 
-    <menu>
-        <!-- <button id="view-players" onclick="window.location.href='player.html'">View Players</button> -->
-        <a href="index.html" class="material-symbols-outlined back-to-map">explore</a>
-        <a href="team_comparison.html" class="material-symbols-outlined compare-teams">compare</a>
-        <a href="player.html" class="material-symbols-outlined view-players">person</a>
-    </menu>
-
-    
     <main>
+        <menu>
+            <!-- <button id="view-players" onclick="window.location.href='player.html'">View Players</button> -->
+            <a href="index.html" class="material-symbols-outlined back-to-map" title="go back to map">explore</a>
+            <a href="team_comparison.html" class="material-symbols-outlined compare-teams" title="compare team">compare_arrows</a>
+            <a href="player.html/?team=#" class="material-symbols-outlined view-players" title="view players">person</a>
+        </menu>
+
         <section class="dashboard">
             <div class="left-panel">
-                <div class="team-title" id="team1">
-                    <div class="team-info">
-                        <img id="team-logo" src="" alt="Team Logo">
-                        <div class="team-details">
-                            <div class="team-name-group">
-                                <h2 id="team-name">Team Name</h2>
-                                <div class="team-selection">
-                                    <div class="team">
-                                        <label for="team1"></label>
-                                        <input type="text" id="team1" list="teams" placeholder="Select a team">
-                                    </div>
-                                    <datalist id="teams">
-                                        
-                                    </datalist>
+                <div class="team-info">
+                    <img id="team-logo" src="" alt="Team Logo">
+                    <div class="team-details">
+                        <div class="team-name-group">
+                            <h2 id="team-name">Team Name</h2>
+                            <div class="team-selection">
+                                <div class="team">
+                                    <label for="team1"></label>
+                                    <input type="text" id="team1" list="teams" placeholder="Select a team">
                                 </div>
+                                <datalist id="teams">
+                                    
+                                </datalist>
                             </div>
-
-                            <div class="season">
-                                <label for="season"></label>
-                                <select id="season">
-                                    <option value="All Seasons">All Seasons</option>
-                                    <option value="2021-2022">2021-2022</option>
-                                    <option value="2022-2023">2022-2023</option>
-                                    <option value="2023-2024"selected>2023-2024</option>
-                                </select>
-                            </div>
-                            
-                            <h3 id="team-league">League</h3> 
-                            <h3 id="team-rank">Rank</h3> 
-                            <h3 id="team-ratio">Win ratio</h3>
                         </div>
+
+                        <div class="season">
+                            <label for="season"></label>
+                            <select id="season">
+                                <option value="All Seasons">All Seasons</option>
+                                <option value="2021-2022">2021-2022</option>
+                                <option value="2022-2023">2022-2023</option>
+                                <option value="2023-2024"selected>2023-2024</option>
+                            </select>
+                        </div>
+                        
+                        <h3 id="team-league">League</h3> 
+                        <h3 id="team-rank">Rank</h3> 
+                        <h3 id="team-ratio">Win ratio</h3>
                     </div>
                 </div>
 
@@ -119,6 +116,10 @@
                 page.classList.remove("active");
             });
             document.querySelector(".page." + page_number).classList.add("active");
+            page1_anim(true)
+            page2_anim(true)
+            page1_anim()
+            page2_anim()
         }
     </script>
 </body>

@@ -91,6 +91,10 @@ function load_data() {
     }).catch(error => {
         d3.select(".loader").text("Python server error, please reload").style("color", "red")
         setTimeout(() => {
+            d3.select(".loader").transition()
+                .duration(500)
+                .style("transform", "translateY(-200px)")
+                .remove()
             load_data()
         }, 1000)
     })
@@ -299,6 +303,10 @@ function populate_players() {
                 // selected player is an object, remove it
                 delete ctx.selected_players[player_id]
                 d3.select(this).classed("selected", false)
+
+                // remove the event on the row
+                d3.select(this).on("mouseover", null).on("mouseout", null)
+
             } else {
                 if (Object.keys(ctx.selected_players).length >= COLORS.length) {
                     toast('warning', `You can't select more than ${COLORS.length} players`)
@@ -307,6 +315,14 @@ function populate_players() {
                 // player_id =  color
                 ctx.selected_players[player_id] = get_color()
                 d3.select(this).classed("selected", true)
+                // add event to the row on over to highlight the player in the radar chart
+                d3.select(this).on("mouseover", function() {
+                    radar_area = d3.selectAll(`path[player-id="${player_id}"]`)
+                    radar_area.dispatch("mouseover")
+                }).on("mouseout", function() {
+                    radar_area = d3.selectAll(`path[player-id="${player_id}"]`)
+                    radar_area.dispatch("mouseout")
+                })
             }
 
             update_players_charts()
@@ -442,7 +458,7 @@ function pagination(animation) {
                 .style("transform", "scale(1.02)")
                 .transition()
                 .duration(200)
-                .style("transform", "scale(1)")
+                .style("transform")
                 .style("transition", "all 0.3s")
         });
 
@@ -454,7 +470,7 @@ function pagination(animation) {
             .style("transform", "scale(1.04)")
             .transition()
             .duration(100)
-            .style("transform", "scale(1)")
+            .style("transform")
     }
     
 }
@@ -567,7 +583,8 @@ function create_radar(svg_id, categories) {
         .style("transform", "scale(1.1)")
         .transition()
         .duration(200)
-        .style("transform", "scale(1)")
+        // remove the transform
+        .style("transform")
 
     // Axes
     const axis = svg.selectAll(".axis")
@@ -650,7 +667,6 @@ function drawRadarChart(svgId, data) {
         })
         .on("mouseout", function() {
             d3.select(this).style("fill-opacity", 0.2);
-            d3.select(this).style("stroke", "none");
         })
         .append("title")
         .text(d => d.name)
@@ -830,6 +846,9 @@ function update_players_charts() {
                 .style("transform", "scale(0)")
                 .style("opacity", 0)
                 .style("height", "0px")
+                .style("width", "0px")
+                .style("border", "none")
+                .style("padding", "0px")
                 .transition()
                 .remove()
         )

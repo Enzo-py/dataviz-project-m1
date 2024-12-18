@@ -16,7 +16,7 @@
 <body onload="load_data()">
     <div class="page-wrapper players-view">
         <div class="choose-players">
-            <menu>
+            <menu class="filters-menu">
                 <div class="search-blob">
                     <div class="switch-search-mode">
                         <span class="material-symbols-outlined switcher" onclick="switch_search_mode(this)">person</span>
@@ -50,8 +50,10 @@
                 </div>
             </menu>
 
-            <a href="index.html" class="material-symbols-outlined back-to-map">explore</a>
-            
+            <menu class="redirections">
+                <a href="index.html" class="material-symbols-outlined back-to-map" title="go back to map">explore</a>
+                <a href="team_page.html" class="material-symbols-outlined back-to-team" title="go back to team">sports_soccer</a>
+            </menu>
 
             <table class="players-table">
                 <thead>
@@ -297,6 +299,21 @@
 
         // when document has attribute 'ready'
         document.addEventListener('ready', function() {
+            const url_params = new URLSearchParams(window.location.search);
+            const team = url_params.get('club');
+            if (team !== null) {
+                filters.club = team
+                filter()
+
+                // check if players are found
+                if (document.querySelectorAll('tr[is-visible="true"]').length === 0)
+                    toast('error', 'No players found for this team',)
+
+                // add go back team button
+                let button = document.querySelector('.back-to-team')
+                button.classList.add('active')
+                button.href = `team_page.html?club=${team}`
+            }
             sort_player_table(sorts['club'], sorts['player_name'], sorts['age'], sorts['score'], sorts['position'], sorts['nationality'], true)
         })
     </script>
