@@ -1,0 +1,567 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    overflow-x: hidden;
+}
+
+main {
+    padding: 14px;
+    max-width: 100vw;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team input {
+    font-size: 1.5rem;
+    font-weight: 300 !important;
+    height: 100%;
+    width: 100%;
+    background-color: var(--second-background-color) !important;
+    color: var(--text-white-color);
+    border: none;
+    border-bottom: solid 2px var(--secondary-color);
+    padding: 6px;
+    outline: none !important;
+}
+
+.team-info {
+    background-color: var(--second-background-color);
+    padding: 14px;
+    border-radius: 8px;
+    color: var(--text-white-color);
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.actions {
+    background-color: var(--second-background-color);
+    border-radius: 8px;
+    width: 100%;
+    padding: 14px;
+    color: var(--text-white-color);
+}
+
+.matches {
+    background-color: var(--second-background-color);
+    color: var(--text-white-color);
+    border-radius: 8px;
+    padding: 14px;
+    width: 100%;
+    max-height: calc(110svh - (14px * 9) - 25svh);
+    overflow-y: auto;
+}
+
+
+.season {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+}
+.season select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 150px;
+    border: solid 2px var(--text-white-color);
+    color: var(--text-white-color);
+    background-color: var(--second-background-color) !important;
+    border-radius: 6px;
+    outline: none !important;
+}
+
+.team-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+#team-logo {
+    width: auto;
+    height: 155px;
+    margin-right: 1rem;
+}
+
+#team-name {
+    margin: 0;
+    font-size: 2.1rem;
+    font-weight: 500;
+}
+
+#team-league {
+    margin-top: 0.5rem; 
+    font-size: 1.2em;
+}
+
+#team-rank {
+    margin-top: 0rem; 
+    font-size: 1.2em;
+}
+    
+.top-controls {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+    background-color: transparent;
+    border: none;
+}
+
+#view-players {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#view-players:hover {
+    background-color: #555;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 0.5rem;
+}
+
+#compare-teams {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#compare-teams:hover {
+    background-color: #555;
+}
+
+#toggle-league-average {
+    background-color: var(--second-background-color);
+    color: var(--secondary-color);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    cursor: pointer;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#matches-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9em;
+}
+
+#matches-table th,
+#matches-table td {
+    padding: 12px 8px;
+    text-align: center;
+}
+
+#matches-table th {
+    background-color: var(--secondary-color);
+    color: var(--text-white-color);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#matches-table thead {
+    position: sticky;
+    top: 0;
+    color: white;
+    z-index: 1;
+}
+#matches-table tbody tr {
+    transition: all 0.3s;
+    background-color: var(--second-background-color);
+    border-bottom: 1px solid #c0c0c0;
+}
+
+#matches-table tbody tr:hover {
+    filter: brightness(1.4);
+    transform: scale(1.01);
+    cursor: default;
+}
+
+#matches-table td.win {
+    color: #28a745;
+    font-weight: bold;
+}
+
+#matches-table td.loss {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+#matches-table td.draw {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+#performance-chart {
+    width: fit-content;
+}
+
+.bar-label {
+    font-size: 14px;
+    font-weight: 600;
+    fill: #333;
+}
+
+.y-axis text {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.bar-home {
+    fill: #28a745;
+}
+
+.bar-away {
+    fill: #ffd644;
+}
+
+.axis-label {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+#goals-timeline-chart {
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+#goals-timeline-chart .line-scored,
+#goals-timeline-chart .line-conceded {
+    fill: none;
+    stroke-width: 2;
+}
+
+#goals-timeline-chart .dot-scored,
+#goals-timeline-chart .dot-conceded {
+    stroke-width: 1;
+    stroke: white;
+}
+
+#goals-timeline-chart text {
+    font-weight: 600;
+}
+
+#goals-donut-chart {
+    width: 90%;
+    height: auto;
+    min-height: 300px;
+    margin-top: 1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#goals-donut-chart text {
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+}
+
+#wins-donut-chart {
+    width: 90%;
+    height: auto;
+    min-height: 300px;
+    margin-top: 1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#wins-donut-chart text {
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+}
+
+#shots-donut-chart {
+    width: 90%;
+    height: auto;
+    min-height: 300px;
+    margin-top: 1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#shots-donut-chart text {
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    column-gap: 14px;
+    height: fit-content;
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 35%;
+    height: fit-content;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 0;
+    padding: 1;
+}
+
+.charts-grid > *:first-child {
+    grid-column: 1 / -1;  
+    padding-bottom: 0rem;
+}
+
+#donut-charts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 1rem;
+    padding-right: 0rem;
+    padding-left: 0rem;
+    margin-bottom: 0rem;
+    gap: 0rem;
+}
+
+menu {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    gap: 14px;
+}
+
+menu > a {
+    color: var(--secondary-color) !important;
+    text-decoration: none !important;
+    background-color: var(--second-background-color);
+    border-radius: 8px;
+    border: solid 2px var(--secondary-color);
+    padding: 8px;
+}
+
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(25, 25, 25, 0.8);
+    color: var(--text-white-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.spinner {
+    border: 8px solid #333; /* Light gray */
+    border-top: 8px solid #f3f3f3; /* Dark gray */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1.5s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
+.page {
+    width: 100%;
+    background-color: var(--second-background-color);
+    padding: 14px;
+    border-radius: 8px;
+    height: 100%;
+    display: none;
+    position: relative;
+}
+
+.page::before {
+    content: " ";
+    display: block;
+    transition: all 0.3s ease-in-out; 
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    background-color: var(--secondary-color);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    max-width: 0;
+    max-height: 0;
+    z-index: -1;
+    border-radius: 10px;
+}
+
+.page.active {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    max-height: 7;
+}
+
+.p2 .chart-container { flex-direction: column; align-items: center; }
+
+.head-pages {
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    margin-bottom: 14px;
+}
+
+.page-switcher {
+    width: fit-content;
+    height: fit-content;
+    padding: 14px;
+    background-color: var(--second-background-color);
+    border-radius: 8px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    display: flex;
+    gap: 14px;
+    flex-direction: row;
+}
+
+.page-switcher span {
+    color: var(--text-white-color);
+    border: 2px solid var(--secondary-color);
+    border-radius: 6px;
+    padding: 8px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.page-switcher span::before { 
+    content: " ";
+    display: block;
+    transition: all 0.3s ease-in-out; 
+    width: 100%;
+    height: 100%;
+    background-color: var(--secondary-color);
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 0;
+    z-index: -1;
+}
+
+.page-switcher span:hover::before {
+    max-width: 100%;
+}
+
+.right-panel { 
+    width: 65%;
+}
+
+.right-panel h2 {
+    color: var(--text-white-color);
+    font-weight: 300;
+    margin-bottom: -22px;
+}
+
+.right-panel:has(.page-switcher span[data-page="p1"]:hover) .page.p2::before {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.right-panel:has(.page-switcher span[data-page="p2"]:hover) .page.p1::before {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.team-name-group {
+    height: 2.5rem;
+}
+
+.team-name-group .team-selection {
+    display: none;
+}
+
+.team-name-group:hover h2, .team-name-group:has(input:focus) h2 {
+    display: none;
+}
+
+.team-name-group:hover .team-selection, .team-selection:has(input:focus) {
+    display: flex;
+}
+
+@keyframes highlight-zoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+menu > * { transition: all 0.3s; }
+
+menu > *:hover {
+    color: var(--accent-color) !important;
+    animation: highlight-zoom 0.3s ease-in-out 2;
+}
