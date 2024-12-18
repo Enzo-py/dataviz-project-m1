@@ -305,6 +305,3 @@ function updateGoalTimings(containerClass, timings) {
         container.appendChild(goal);
     });
 }
-
-
-

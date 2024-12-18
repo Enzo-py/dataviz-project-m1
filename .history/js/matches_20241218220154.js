@@ -133,8 +133,6 @@ function updateTeamsList() {
 }
 
 function updateMatchesList() {
-    // get club name from url 
-    const team = urlParams.get('team');
     const matchesListElement = document.getElementById("matches-list");
     let allMatches = [];
     ["2023-2024", "2022-2023", "2021-2022"].forEach(season => {
@@ -143,17 +141,11 @@ function updateMatchesList() {
         }
     });
 
-    // Filter matches to only include those involving the specified team
-    const teamMatches = allMatches.filter(match => 
-        match.home_team_name === team || match.away_team_name === team
-    );
-
-    // Sort matches by date in descending order (newest first)
-    teamMatches.sort((a, b) => new Date(b.date_GMT) - new Date(a.date_GMT));
+    allMatches.sort((a, b) => new Date(b.date_GMT) - new Date(a.date_GMT));
     
     // Display matches
     matchesListElement.innerHTML = "";
-    teamMatches.forEach(match => {
+    allMatches.forEach(match => {
         const row = document.createElement("tr");
         const homeScore = parseInt(match.home_team_goal_count);
         const awayScore = parseInt(match.away_team_goal_count);
@@ -167,6 +159,7 @@ function updateMatchesList() {
         matchesListElement.appendChild(row);
     });
 }
+
 // Helper function to get the team's league
 function getTeamLeague(teamName, season) {
     let league = null;
@@ -230,12 +223,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function goBackToAllMatches() {
-    const team = urlParams.get('team');
-    window.location.href = `matches.html?team=${encodeURIComponent(team)}`;
-}
-const urlParams = new URLSearchParams(window.location.search);
-
 
 function showMatchDetails(match) {
     const matchDetails = document.querySelector('.match-details');
@@ -271,17 +258,13 @@ function showMatchDetails(match) {
     updateStatItem(statsGrid, 'fouls', match.home_team_fouls, match.away_team_fouls);
     updateStatItem(statsGrid, 'yellow_cards', match.home_team_yellow_cards, match.away_team_yellow_cards);
     updateStatItem(statsGrid, 'red_cards', match.home_team_red_cards, match.away_team_red_cards);
-    updateStatItem(statsGrid, 'xg', match.team_a_xg, match.team_b_xg);
+    updateStatItem(statsGrid, 'xg', match.team_a_xg, match.away_team_red_cards);
 
     // Clear and update goal timings
     document.querySelector('.home-goals').innerHTML = '';
     document.querySelector('.away-goals').innerHTML = '';
     updateGoalTimings('home-goals', match.home_team_goal_timings);
     updateGoalTimings('away-goals', match.away_team_goal_timings);
-
-    // Update possession percentages
-    matchDetails.querySelector('.home-possession').textContent = `${match.home_team_possession}%`;
-    matchDetails.querySelector('.away-possession').textContent = `${match.away_team_possession}%`;
 }
 
 function updateStatItem(grid, type, homeValue, awayValue) {
@@ -289,6 +272,21 @@ function updateStatItem(grid, type, homeValue, awayValue) {
     if (item) {
         item.querySelector('.home-value').textContent = homeValue;
         item.querySelector('.away-value').textContent = awayValue;
+    }
+}
+
+function updateCards(containerClass, yellowCount, redCount) {
+    const container = document.querySelector(`.${containerClass}`);
+    container.innerHTML = ''; // Clear existing cards
+    for (let i = 0; i < yellowCount; i++) {
+        const card = document.createElement('div');
+        card.className = 'card yellow';
+        container.appendChild(card);
+    }
+    for (let i = 0; i < redCount; i++) {
+        const card = document.createElement('div');
+        card.className = 'card red';
+        container.appendChild(card);
     }
 }
 

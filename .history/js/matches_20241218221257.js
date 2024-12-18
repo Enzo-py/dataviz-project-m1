@@ -143,17 +143,12 @@ function updateMatchesList() {
         }
     });
 
-    // Filter matches to only include those involving the specified team
-    const teamMatches = allMatches.filter(match => 
-        match.home_team_name === team || match.away_team_name === team
-    );
-
-    // Sort matches by date in descending order (newest first)
-    teamMatches.sort((a, b) => new Date(b.date_GMT) - new Date(a.date_GMT));
+    allMatches.sort((a, b) => new Date(b.date_GMT) - new Date(a.date_GMT));
     
     // Display matches
     matchesListElement.innerHTML = "";
-    teamMatches.forEach(match => {
+    allMatches.forEach(match => {
+        if (team && team !== match.home_team_name && team !== match.away_team_name) [];
         const row = document.createElement("tr");
         const homeScore = parseInt(match.home_team_goal_count);
         const awayScore = parseInt(match.away_team_goal_count);
@@ -167,6 +162,7 @@ function updateMatchesList() {
         matchesListElement.appendChild(row);
     });
 }
+
 // Helper function to get the team's league
 function getTeamLeague(teamName, season) {
     let league = null;
@@ -229,12 +225,6 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("loading-screen").style.display = "none";
     });
 });
-
-function goBackToAllMatches() {
-    const team = urlParams.get('team');
-    window.location.href = `matches.html?team=${encodeURIComponent(team)}`;
-}
-const urlParams = new URLSearchParams(window.location.search);
 
 
 function showMatchDetails(match) {

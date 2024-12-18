@@ -46,7 +46,7 @@
 
         <div class="match-details">
             <div class="back-button">
-                <button onclick="goBackToAllMatches()">← Back to All Matches</button>
+                <button onclick="window.location.href='matches.html'">← Back to All Matches</button>
             </div>
             <div class="match-header">
                 <div class="team home-team">
@@ -92,7 +92,6 @@
                         <span class="away-possession"></span>
                     </div>
                     <div class="stats-grid">
-
                         <div class="stat-item" data-stat="shots">
                             <span class="home-value"></span>
                             <span class="stat-label">Total Shots</span>
@@ -101,11 +100,6 @@
                         <div class="stat-item" data-stat="shots_on_target">
                             <span class="home-value"></span>
                             <span class="stat-label">Shots on Target</span>
-                            <span class="away-value"></span>
-                        </div>
-                        <div class="stat-item" data-stat="xg">
-                            <span class="home-value"></span>
-                            <span class="stat-label">XG Goals</span>
                             <span class="away-value"></span>
                         </div>
                         <div class="stat-item" data-stat="shots_off_target">
@@ -123,16 +117,18 @@
                             <span class="stat-label">Fouls</span>
                             <span class="away-value"></span>
                         </div>
-                        <div class="stat-item" data-stat="yellow_cards">
-                            <span class="home-value"></span>
-                            <span class="stat-label">Yellow Cards</span>
-                            <span class="away-value"></span>
-                        </div>
-                        <div class="stat-item" data-stat="red_cards">
-                            <span class="home-value"></span>
-                            <span class="stat-label">Red Cards</span>
-                            <span class="away-value"></span>
-                        </div>
+                    </div>
+                </div>
+                <div class="cards-section">
+                    <div class="first-half">
+                        <h4>First Half Cards</h4>
+                        <div class="home-cards-first"></div>
+                        <div class="away-cards-first"></div>
+                    </div>
+                    <div class="second-half">
+                        <h4>Second Half Cards</h4>
+                        <div class="home-cards-second"></div>
+                        <div class="away-cards-second"></div>
                     </div>
                 </div>
             </div>

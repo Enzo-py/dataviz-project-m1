@@ -133,8 +133,6 @@ function updateTeamsList() {
 }
 
 function updateMatchesList() {
-    // get club name from url 
-    const team = urlParams.get('team');
     const matchesListElement = document.getElementById("matches-list");
     let allMatches = [];
     ["2023-2024", "2022-2023", "2021-2022"].forEach(season => {
@@ -143,17 +141,11 @@ function updateMatchesList() {
         }
     });
 
-    // Filter matches to only include those involving the specified team
-    const teamMatches = allMatches.filter(match => 
-        match.home_team_name === team || match.away_team_name === team
-    );
-
-    // Sort matches by date in descending order (newest first)
-    teamMatches.sort((a, b) => new Date(b.date_GMT) - new Date(a.date_GMT));
+    allMatches.sort((a, b) => new Date(b.date_GMT) - new Date(a.date_GMT));
     
     // Display matches
     matchesListElement.innerHTML = "";
-    teamMatches.forEach(match => {
+    allMatches.forEach(match => {
         const row = document.createElement("tr");
         const homeScore = parseInt(match.home_team_goal_count);
         const awayScore = parseInt(match.away_team_goal_count);
@@ -230,12 +222,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function goBackToAllMatches() {
-    const team = urlParams.get('team');
-    window.location.href = `matches.html?team=${encodeURIComponent(team)}`;
-}
-const urlParams = new URLSearchParams(window.location.search);
-
 
 function showMatchDetails(match) {
     const matchDetails = document.querySelector('.match-details');
@@ -266,22 +252,25 @@ function showMatchDetails(match) {
     const statsGrid = matchDetails.querySelector('.stats-grid');
     updateStatItem(statsGrid, 'shots', match.home_team_shots, match.away_team_shots);
     updateStatItem(statsGrid, 'shots_on_target', match.home_team_shots_on_target, match.away_team_shots_on_target);
-    updateStatItem(statsGrid, 'shots_off_target', match.home_team_shots_off_target, match.away_team_shots_off_target);
+    updateStatItem(statsGrid, 'shots_on_target', match.home_team_shots_off_target, match.away_team_shots_on_target);
     updateStatItem(statsGrid, 'corners', match.home_team_corner_count, match.away_team_corner_count);
     updateStatItem(statsGrid, 'fouls', match.home_team_fouls, match.away_team_fouls);
-    updateStatItem(statsGrid, 'yellow_cards', match.home_team_yellow_cards, match.away_team_yellow_cards);
-    updateStatItem(statsGrid, 'red_cards', match.home_team_red_cards, match.away_team_red_cards);
-    updateStatItem(statsGrid, 'xg', match.team_a_xg, match.team_b_xg);
+
+    // Update cards
+    updateCards('home-cards-first', match.home_team_first_half_yellow_cards, 'yellow');
+    updateCards('home-cards-second', match.home_team_second_half_yellow_cards, 'yellow');
+    updateCards('away-cards-first', match.away_team_first_half_yellow_cards, 'yellow');
+    updateCards('away-cards-second', match.away_team_second_half_yellow_cards, 'yellow');
+
+    // Add red cards if any
+    if (match.home_team_red_cards > 0) updateCards('home-cards-second', match.home_team_red_cards, 'red');
+    if (match.away_team_red_cards > 0) updateCards('away-cards-second', match.away_team_red_cards, 'red');
 
     // Clear and update goal timings
     document.querySelector('.home-goals').innerHTML = '';
     document.querySelector('.away-goals').innerHTML = '';
     updateGoalTimings('home-goals', match.home_team_goal_timings);
     updateGoalTimings('away-goals', match.away_team_goal_timings);
-
-    // Update possession percentages
-    matchDetails.querySelector('.home-possession').textContent = `${match.home_team_possession}%`;
-    matchDetails.querySelector('.away-possession').textContent = `${match.away_team_possession}%`;
 }
 
 function updateStatItem(grid, type, homeValue, awayValue) {
@@ -289,6 +278,16 @@ function updateStatItem(grid, type, homeValue, awayValue) {
     if (item) {
         item.querySelector('.home-value').textContent = homeValue;
         item.querySelector('.away-value').textContent = awayValue;
+    }
+}
+
+function updateCards(containerClass, count, type) {
+    const container = document.querySelector(`.${containerClass}`);
+    container.innerHTML = ''; // Clear existing cards
+    for (let i = 0; i < count; i++) {
+        const card = document.createElement('div');
+        card.className = `card ${type}`;
+        container.appendChild(card);
     }
 }
 

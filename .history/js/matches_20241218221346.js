@@ -230,12 +230,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function goBackToAllMatches() {
-    const team = urlParams.get('team');
-    window.location.href = `matches.html?team=${encodeURIComponent(team)}`;
-}
-const urlParams = new URLSearchParams(window.location.search);
-
 
 function showMatchDetails(match) {
     const matchDetails = document.querySelector('.match-details');

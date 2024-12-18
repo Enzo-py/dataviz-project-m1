@@ -407,7 +407,6 @@ main {
     font-weight: bold;
     color: #666;
     width: 50px;
-    text-align: center;
 }
 
 .possession-bar {
@@ -429,6 +428,7 @@ main {
     background: var(--secondary-color);
     transition: width 0.3s ease;
 }
+
 
 .stats-grid {
     display: grid;

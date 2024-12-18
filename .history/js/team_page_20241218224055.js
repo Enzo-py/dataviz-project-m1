@@ -170,10 +170,10 @@ function updateMatchesList() {
 
     if (allMatches.length > 0) {
         allMatches.forEach((match, i) => {
-            console.log("Match: eeeeeeeeeeeeee", match);
             const row = document.createElement("tr");
             const homeScore = parseInt(match.home_team_goal_count);
             const awayScore = parseInt(match.away_team_goal_count);
+            const matchDate = new Date(match.date_GMT);
             let result = 'draw';
             
             if (match.home_team_name === team1) {
@@ -195,7 +195,7 @@ function updateMatchesList() {
             row.style.cursor = "pointer";
             row.addEventListener("click", () => {
                 const currentTeam = document.getElementById("team1").value;
-                window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
+                window.location.href = `matches.html?match=${match.date}&team=${currentTeam}`;
             });
             matchesListElement.appendChild(row);
         });

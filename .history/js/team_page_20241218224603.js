@@ -195,7 +195,7 @@ function updateMatchesList() {
             row.style.cursor = "pointer";
             row.addEventListener("click", () => {
                 const currentTeam = document.getElementById("team1").value;
-                window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
+                window.location.href = `matches.html?match=1&date=${match.date_GMT}&team=${currentTeam}`;
             });
             matchesListElement.appendChild(row);
         });
