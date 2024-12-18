@@ -896,14 +896,17 @@ function create_player_card(player_id, player_card) {
     player_identity.append("span").text(player_number).style("color", ctx.selected_players[player_id]).attr("class", "player-number")
     player_identity_data = player_identity.append("div").attr("class", "player-identity-data")
     
-    player_identity_data.append("h2").text(player_name)
-    player_identity_data.append("h5").text(player_position)
-    
-    player_identity.append("img")
+    // Add player's image next to their name
+    player_identity_data.append("img")
         .attr("src", player_image_url)
         .attr("alt", player_name)
         .attr("class", "player-image");
 
+    player_identity_data.append("h2").text(player_name)
+    player_identity_data.append("span")
+        .append("h5").text(player_position)
+        .text(player_position)
+    
     player_identity_data.select("span").append("img").attr("src", ctx.data["nationalities_flag"][player_nationality]).attr("class", "flag")
     player_identity_data.append("span").text(`Rating: ${get_player_score(player_id, player_position)}`)
     
