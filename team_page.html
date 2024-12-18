@@ -20,10 +20,8 @@
 
     <main>
         <menu>
-            <!-- <button id="view-players" onclick="window.location.href='player.html'">View Players</button> -->
             <a href="index.html" class="material-symbols-outlined back-to-map" title="go back to map">explore</a>
             <a href="team_comparison.html" class="material-symbols-outlined compare-teams" title="compare team">compare_arrows</a>
-            <a href="player.html" class="material-symbols-outlined view-players" title="view players">person</a>
         </menu>
 
         <section class="dashboard">
@@ -92,13 +90,21 @@
                     </div>
                 </div>
                 <div class="page p2">
-                    <div class="chart-container">
-                        <h2>Home vs Away Performance</h2>
-                        <div id="performance-chart"></div>
-                    </div>
-                    <div class="chart-container">
-                        <h2>Goals Timeline</h2>
-                        <div id="goals-timeline-chart"></div>
+                    
+                    <div class="slider">
+                        <div class="slider-inner">
+                            <div class="chart-container">
+                                <h2>Home vs Away Performance</h2>
+                                <div id="performance-chart"></div>
+                            </div>
+                            <div class="chart-container">
+                                <h2>Goals Timeline</h2>
+                                <div id="goals-timeline-chart"></div>
+                            </div>
+                        </div>
+
+                        <span class="slider-button left material-symbols-outlined" onclick="slider_left()">keyboard_arrow_left</span>
+                        <span class="slider-button right material-symbols-outlined" onclick="slider_right()">keyboard_arrow_right</span>
                     </div>
                 </div>
                 <div class="charts-grid">
@@ -120,6 +126,74 @@
             page2_anim(true)
             page1_anim()
             page2_anim()
+
+            reset_slider()
+        }
+
+        function reset_slider() {
+            const slider = document.querySelector(".slider");
+            const slider_width = slider.offsetWidth;
+            const slider_inner = document.querySelector(".slider-inner");
+            const slider_center = slider_width / 2;
+
+            let focus_on = document.querySelector(".chart-container:has( > #performance-chart)");
+            // calculate margin-right to push the element on the right out of the screen
+            let margin_right = slider_width - focus_on.offsetWidth;
+
+            focus_on.style.marginRight = `${margin_right}px`;
+
+            // translate inner to center focus element
+            focus_center = focus_on.offsetLeft + focus_on.offsetWidth / 2;
+            offset = slider_center - focus_center;
+            console.log(offset, focus_center, slider_center);
+            slider_inner.style.transform = `translateX(${offset}px)`;
+
+            // hide left button
+            document.querySelector(".slider-button.left").style.display = "none";
+        }
+
+        function slider_left() {
+            const slider = document.querySelector(".slider");
+            const slider_width = slider.offsetWidth;
+            const slider_inner = document.querySelector(".slider-inner");
+            const slider_center = slider_width / 2;
+
+            let focus_on = document.querySelector(".chart-container:has( > #performance-chart)");
+            let margin_right = slider_width - focus_on.offsetWidth;
+
+            focus_on.style.marginRight = `${margin_right}px`;
+
+            // translate inner to center focus element
+            focus_center = focus_on.offsetLeft + focus_on.offsetWidth / 2;
+            offset = slider_center - focus_center;
+            slider_inner.style.transform = `translateX(${offset}px)`;
+
+            // hide left button
+            document.querySelector(".slider-button.left").style.display = "none";
+            // show right button
+            document.querySelector(".slider-button.right").style.display = "flex";
+        }
+
+        function slider_right() {
+            const slider = document.querySelector(".slider");
+            const slider_width = slider.offsetWidth;
+            const slider_inner = document.querySelector(".slider-inner");
+            const slider_center = slider_width / 2;
+
+            let focus_on = document.querySelector(".chart-container:has( > #goals-timeline-chart)");
+            let margin_right = slider_width - focus_on.offsetWidth;
+
+            focus_on.style.marginRight = `${margin_right}px`;
+
+            // translate inner to center focus element
+            focus_center = focus_on.offsetLeft + focus_on.offsetWidth / 2;
+            offset = slider_center - focus_center;
+            slider_inner.style.transform = `translateX(${offset}px)`;
+
+            // hide right button
+            document.querySelector(".slider-button.right").style.display = "none";
+            // show left button
+            document.querySelector(".slider-button.left").style.display = "flex";
         }
     </script>
 </body>
