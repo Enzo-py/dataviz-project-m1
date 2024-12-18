@@ -562,8 +562,8 @@ function createPerformanceChart(data) {
     }));
 
     const margin = { top: 30, right: 60, bottom: 30, left: 160 };
-    const width = 600 - margin.left - margin.right;
-    const height = metrics.length * 35;
+    const width = 800 - margin.left - margin.right;
+    const height = metrics.length * 50;
 
     const svg = d3.select("#performance-chart")
         .append("svg")
@@ -715,8 +715,8 @@ function createGoalsTimelineChart(data) {
 
     // Set up dimensions
     const margin = { top: 20, right: 60, bottom: 50, left: 60 };
-    const width = 600 - margin.left - margin.right;
-    const height = 300 - margin.top - margin.bottom;
+    const width = 800 - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
 
     // Create SVG
     const svg = d3.select("#goals-timeline-chart")
@@ -1276,7 +1276,7 @@ function page2_anim(setup_start, save) {
                 .duration(300)
                 .delay(i * 100)
                 .style("opacity", "1")
-                .style("transform", "scale(1.08)")
+                .style("transform", "scale(1.09)")
                 .transition()
                 .duration(200)
                 .style("transform")
