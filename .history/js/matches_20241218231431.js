@@ -238,6 +238,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const team1 = team;
         if (team1) {
             window.location.href = `team_page.html?club=${encodeURIComponent(team1)}`;
+            style.cursor = "pointer";
         }
     });
 

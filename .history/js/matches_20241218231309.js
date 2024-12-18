@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 m.date_GMT === date
             );
             if (match) {
-                team2 = match.away_team_name;
+                team
                 showMatchDetails(match);
                 // Hide the matches list since we're showing a specific match
                 document.querySelector('.matches').style.display = 'none';
@@ -242,6 +242,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById("team2-logo").addEventListener("click", () => {
+        const team2 = match.away_team_name
         if (team2) {
             window.location.href = `team_page.html?club=${encodeURIComponent(team2)}`;
         }

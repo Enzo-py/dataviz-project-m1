@@ -167,6 +167,7 @@ function updateMatchesList() {
         row.addEventListener('click', () => showMatchDetails(match));
         row.style.cursor = "pointer";
         row.addEventListener("click", () => {
+            const currentTeam = document.getElementById("team1").value;
             window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
         });
         matchesListElement.appendChild(row);
@@ -217,8 +218,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 (m.home_team_name === team || m.away_team_name === team) && 
                 m.date_GMT === date
             );
+            
             if (match) {
-                team2 = match.away_team_name;
                 showMatchDetails(match);
                 // Hide the matches list since we're showing a specific match
                 document.querySelector('.matches').style.display = 'none';
@@ -232,19 +233,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Hide the loading screen
         document.getElementById("loading-screen").style.display = "none";
-    });
-
-    document.getElementById("team1-logo").addEventListener("click", () => {
-        const team1 = team;
-        if (team1) {
-            window.location.href = `team_page.html?club=${encodeURIComponent(team1)}`;
-        }
-    });
-
-    document.getElementById("team2-logo").addEventListener("click", () => {
-        if (team2) {
-            window.location.href = `team_page.html?club=${encodeURIComponent(team2)}`;
-        }
     });
 });
 

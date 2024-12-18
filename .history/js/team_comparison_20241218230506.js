@@ -216,11 +216,6 @@ function updateMatchesList() {
                 <td>${homeScore} - ${awayScore}</td>
                 <td>${match.away_team_name}</td>
             `;
-            row.style.cursor = "pointer";
-            row.addEventListener("click", () => {
-                const currentTeam = document.getElementById("team1").value;
-                window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
-            });
             matchesListElement.appendChild(row);
         });
     } else {
