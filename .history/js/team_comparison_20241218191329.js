@@ -511,7 +511,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "Shots off Target": data.shots_off_target,
             "Cards": data.cards_total,
             "Fouls Committed": data.fouls,
-            "Corners per match": Math.round((data.corners_per_match) * 100) / 100,
+            "Corners per match": data.corners_per_match).round(2),
         };
     }
 });

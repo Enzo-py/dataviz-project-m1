@@ -387,15 +387,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (team1 && team2) {
-            document.getElementById("team1-stats").style.display = "";
-            document.getElementById("team2-stats").style.display = "";
             console.log("team2", data2);
             compareTeams(team1, team2, data1, data2, season);
-        }else {
-            // Hide the stats element if no team is selected
-
-            document.getElementById("team1-stats").style.display = "none";
-            document.getElementById("team2-stats").style.display = "none";
+        } else {
+            document.getElementById("team2-stats").innerHTML = `<p>Please select a team.</p>`;
         }
         updateMatchesList();
     }
@@ -403,7 +398,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function aggregateTeamData(teamDataArray) {
         const data1 = {};
-    
+
         // Fields to sum
         const sumFields = [
             "wins", "losses", "draws",
@@ -420,40 +415,38 @@ document.addEventListener("DOMContentLoaded", function() {
             "shots_off_target", "shots_off_target_home", "shots_off_target_away",
             "clean_sheets", "cards", "fouls", "corners_per_match"
         ];
-    
+
         // Fields to average
         const avgFields = [
             "average_possession_home", "average_possession_away",
             "points_per_game_home", "points_per_game_away",
             "average_possession"
         ];
-    
+
         // Sum fields
         sumFields.forEach(field => {
             data1[field] = teamDataArray.reduce((sum, teamData) => sum + (parseFloat(teamData[field]) || 0), 0);
         });
-    
+
         // Average fields
         avgFields.forEach(field => {
             data1[field] = teamDataArray.reduce((sum, teamData) => sum + (parseFloat(teamData[field]) || 0), 0) / teamDataArray.length;
-            data1[field] = parseFloat(data1[field].toFixed(1)); // Round to 1 decimal place
         });
-    
+
         // Aggregate time period goals
         const timePeriods = ['0_to_10', '11_to_20', '21_to_30', '31_to_40', '41_to_50', '51_to_60', '61_to_70', '71_to_80', '81_to_90'];
         timePeriods.forEach(period => {
             data1[`goals_scored_min_${period}`] = teamDataArray.reduce((sum, teamData) => sum + (parseInt(teamData[`goals_scored_min_${period}`]) || 0), 0);
             data1[`goals_conceded_min_${period}`] = teamDataArray.reduce((sum, teamData) => sum + (parseInt(teamData[`goals_conceded_min_${period}`]) || 0), 0);
         });
-    
+
         // Handle non-numeric fields
         data1.common_name = teamDataArray[0].common_name;
         data1.country = teamDataArray[0].country;
         data1.league_position = "-"; // Not applicable for all seasons
-    
+
         return data1;
     }
-    
 
     function compareTeams(team1, team2, data1, data2, season) {
         // Fetch and compare stats for team1 and team2
@@ -511,7 +504,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "Shots off Target": data.shots_off_target,
             "Cards": data.cards_total,
             "Fouls Committed": data.fouls,
-            "Corners per match": Math.round((data.corners_per_match) * 100) / 100,
+            "Corners per match": data.corners_per_match,
         };
     }
 });

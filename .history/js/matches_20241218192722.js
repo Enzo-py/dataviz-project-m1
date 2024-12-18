@@ -216,6 +216,7 @@ function updateMatchesList() {
                 <td>${homeScore} - ${awayScore}</td>
                 <td>${match.away_team_name}</td>
             `;
+            row.addEventListener('click', () => showMatchDetails(match));
             matchesListElement.appendChild(row);
         });
     } else {
@@ -562,6 +563,64 @@ function search(event, input) {
         return
     }
 
+}
+
+// Add this function after existing code
+function showMatchDetails(match) {
+    const matchDetails = document.querySelector('.match-details');
+    matchDetails.style.display = 'block';
+
+    // Update team logos
+    const homeLogo = matchDetails.querySelector('.home-team .team-logo');
+    const awayLogo = matchDetails.querySelector('.away-team .team-logo');
+    homeLogo.src = ctx.logos[match.home_team_name] || '';
+    awayLogo.src = ctx.logos[match.away_team_name] || '';
+
+    // Update team names
+    matchDetails.querySelector('.home-team .team-name').textContent = match.home_team_name;
+    matchDetails.querySelector('.away-team .team-name').textContent = match.away_team_name;
+
+    // Update score and match info
+    matchDetails.querySelector('.date').textContent = match.date_GMT;
+    matchDetails.querySelector('.home-score').textContent = match.home_team_goal_count;
+    matchDetails.querySelector('.away-score').textContent = match.away_team_goal_count;
+    matchDetails.querySelector('.stadium').textContent = match.stadium_name;
+
+    // Update possession bar
+    const possessionBar = matchDetails.querySelector('.possession-bar');
+    possessionBar.style.setProperty('--home-possession', `${match.home_team_possession}%`);
+    possessionBar.setAttribute('title', `Possession: ${match.home_team_possession}% - ${match.away_team_possession}%`);
+
+    // Update stats
+    const statsGrid = matchDetails.querySelector('.stats-grid');
+    updateStatItem(statsGrid, 'Shots', match.home_team_shots, match.away_team_shots);
+    updateStatItem(statsGrid, 'Shots on Target', match.home_team_shots_on_target, match.away_team_shots_on_target);
+    updateStatItem(statsGrid, 'Corners', match.home_team_corner_count, match.away_team_corner_count);
+    updateStatItem(statsGrid, 'Fouls', match.home_team_fouls, match.away_team_fouls);
+
+    // Update cards
+    updateCards('home-cards', match.home_team_yellow_cards, match.home_team_red_cards);
+    updateCards('away-cards', match.away_team_yellow_cards, match.away_team_red_cards);
+}
+
+function updateStatItem(grid, label, homeValue, awayValue) {
+    const item = grid.querySelector(`[data-stat="${label}"]`);
+    if (item) {
+        item.querySelector('.home-value').textContent = homeValue;
+        item.querySelector('.away-value').textContent = awayValue;
+    }
+}
+
+function updateCards(containerClass, yellowCount, redCount) {
+    const container = document.querySelector(`.${containerClass}`);
+    container.innerHTML = '';
+    
+    for (let i = 0; i < yellowCount; i++) {
+        container.innerHTML += '<div class="card yellow"></div>';
+    }
+    for (let i = 0; i < redCount; i++) {
+        container.innerHTML += '<div class="card red"></div>';
+    }
 }
 
 

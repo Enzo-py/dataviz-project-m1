@@ -310,3 +310,119 @@ main {
 .matches {
     display: none; /* Hide by default */
 }
+
+/* Match details */
+.match-details {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.match-header .team {
+    text-align: center;
+    width: 30%;
+}
+
+.match-header .team-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+}
+
+.match-score {
+    text-align: center;
+}
+
+.match-score .score {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.match-score .date {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.match-score .stadium {
+    font-size: 1rem;
+    color: #888;
+}
+
+.match-stats {
+    margin-top: 2rem;
+}
+
+.possession-bar {
+    height: 30px;
+    background: #f0f0f0;
+    border-radius: 15px;
+    margin: 1rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.possession-bar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: #f8f8f8;
+    border-radius: 4px;
+}
+
+.cards-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.cards-section .card {
+    width: 20px;
+    height: 30px;
+    margin: 0 5px;
+    display: inline-block;
+}
+
+.card.yellow {
+    background: #ffd700;
+}
+
+.card.red {
+    background: #ff0000;
+}
+
+/* Make matches table rows clickable */
+#matches-table tr {
+    cursor: pointer;
+}
+
+#matches-table tr:hover {
+    background-color: var(--accent-color-light);
+}

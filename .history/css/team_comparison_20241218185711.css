@@ -153,13 +153,13 @@ main {
     width: 300px;
 }
 
-/* team stats .highlights  */
+/* Highlight styles for best stats */
 .highlight-team1 {
-    background-color: #67a8f341; /
+    background-color: #d4edda; /* Light green */
 }
 
 .highlight-team2 {
-    background-color: #67a8f341; 
+    background-color: #f8d7da; /* Light red */
 }
 
 .highlight-team1 td {
@@ -167,7 +167,7 @@ main {
 }
 
 .highlight-team2 td {
-    background-color: #67a8f341; /* Team 2 background */
+    background-color: #67a8f341; /* Light green for both teams */
 }
 
 #team1-ratio, #team2-ratio {

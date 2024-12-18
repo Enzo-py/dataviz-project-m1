@@ -387,8 +387,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (team1 && team2) {
-            document.getElementById("team1-stats").style.display = "";
-            document.getElementById("team2-stats").style.display = "";
+            document.getElementById("team1-stats").style.display = "none";
+            document.getElementById("team2-stats").style.display = "none";
             console.log("team2", data2);
             compareTeams(team1, team2, data1, data2, season);
         }else {
@@ -511,7 +511,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "Shots off Target": data.shots_off_target,
             "Cards": data.cards_total,
             "Fouls Committed": data.fouls,
-            "Corners per match": Math.round((data.corners_per_match) * 100) / 100,
+            "Corners per match": data.corners_per_match,
         };
     }
 });

@@ -18,17 +18,12 @@ main {
     padding-right: 3rem;
 }
 
-.team-comparison-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1rem;
-}
-
-.team-container {
-    width: 45%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* Remove unused styles */
+.team-comparison-container,
+.team-container,
+.comparison-results,
+.team-stats {
+    display: none;
 }
 
 .team {
@@ -78,19 +73,20 @@ main {
     margin: 0.2rem 0;
 }
 
-.comparison-results {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1rem;
+/* Remove team comparison styles and update match details */
+.match-details {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem auto;
+    max-width: 1200px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.team-stats {
-    background-color: #fff;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 45%;
-    margin-top: 1rem;
+.matches {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: block; /* Show by default now */
 }
 
 .team-stats h2 {
@@ -309,4 +305,258 @@ main {
 /* Hide matches section by default */
 .matches {
     display: none; /* Hide by default */
+}
+
+/* Match details */
+.match-details {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.match-header .team {
+    text-align: center;
+    width: 30%;
+}
+
+.match-header .team-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+}
+
+.match-score {
+    text-align: center;
+}
+
+.match-score .score {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.match-score .date {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.match-score .stadium {
+    font-size: 1rem;
+    color: #888;
+}
+
+.match-stats {
+    margin-top: 2rem;
+}
+
+.possession-bar {
+    height: 30px;
+    background: #f0f0f0;
+    border-radius: 15px;
+    margin: 1rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.possession-bar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.possession-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.possession-wrapper span {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #666;
+    width: 50px;
+}
+
+.possession-bar {
+    flex-grow: 1;
+    height: 30px;
+    background: #f0f0f0;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.possession-bar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: var(--home-possession, 50%);
+    background: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+/* ...existing code... */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stat-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f8f8;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.stat-item .home-value {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.stat-item .away-value {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.stat-item .stat-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* ...rest of existing code... */
+
+.cards-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.cards-section .card {
+    width: 20px;
+    height: 30px;
+    margin: 0 5px;
+    display: inline-block;
+}
+
+.card.yellow {
+    background: #ffd700;
+}
+
+.card.red {
+    background: #ff0000;
+}
+
+/* Make matches table rows clickable */
+#matches-table tr {
+    cursor: pointer;
+}
+
+#matches-table tr:hover {
+    background-color: var(--accent-color-light);
+}
+
+/* ...existing code... */
+
+.back-button {
+    margin-bottom: 1rem;
+}
+
+.back-button button {
+    padding: 0.5rem 1rem;
+    background: var(--accent-color);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.back-button button:hover {
+    background: var(--accent-color-dark);
+}
+
+/* ...rest of existing code... */
+
+.match-info {
+    margin-bottom: 0rem;
+    text-align: center;
+}
+
+.half-time-score {
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: #666;
+}
+
+.goal-timings {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.goal-timings .goal-time {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    margin: 0.2rem;
+    background: #f0f0f0;
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+.cards-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.cards-section h4 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* ...existing code... */
+
+.match-info {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.match-info .separator {
+    color: #ccc;
+}
+
+.match-info span span {
+    font-weight: 600;
+    color: #333;
 }

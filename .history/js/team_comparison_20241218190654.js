@@ -291,7 +291,6 @@ document.addEventListener("DOMContentLoaded", function() {
         let league2;
 
         if (team1) {
-            
             document.getElementById("team1-stats").innerHTML = `<h2>${team1} Stats (${season})</h2><p>Stats for ${team1} in ${season} will be displayed here.</p>`;
             const team1Logo = document.getElementById("team1-logo");
             const team1Info = document.getElementById("team1-info");
@@ -303,7 +302,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 const teamDataArray = seasons
                     .map(s => ctx.teams[s]?.find(team => team.common_name === team1))
                     .filter(Boolean);
-                
 
                 // Initialize aggregated data
                 data1 = aggregateTeamData(teamDataArray);
@@ -321,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Update League
             const country1 = data1 && data1.length > 0 ? data1.country.toLowerCase() : data1 ? data1.country.toLowerCase() : "";
             league1 = countryToLeague[country1] || "Unknown League";
-           
+
             // Update Rank
             if (season === "All Seasons") {
                 rank1 = "Rank: N/A (All Seasons)";
@@ -330,16 +328,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 rank1 = "Rank: " + var1;
             }
             // Update Team Ratio
-            const wins =  data1.wins ;
+            const wins = data1.wins;
             const losses = data1.losses;
-            const draws = data1.draws ;
+            const draws = data1.draws;
             const ratio = wins + "/" + losses + "/" + draws;
-            team1Info.textContent = league1 + " | " + rank1 + " | "+ ratio;
-                        
+            team1Info.textContent = league1 + " | " + rank1 + " | " + ratio;
         }
 
         if (team2) {
-            console.log("team2", data2);
             document.getElementById("team2-stats").innerHTML = `<h2>${team2} Stats (${season})</h2><p>Stats for ${team2} in ${season} will be displayed here.</p>`;
             const team2Logo = document.getElementById("team2-logo");
             const team2Info = document.getElementById("team2-info");
@@ -351,11 +347,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 const teamDataArray = seasons
                     .map(s => ctx.teams[s]?.find(team => team.common_name === team2))
                     .filter(Boolean);
-                
 
                 // Initialize aggregated data
                 data2 = aggregateTeamData(teamDataArray);
-
             } else if (ctx.teams[season]) {
                 data2 = ctx.teams[season].find(team => team.common_name === team2);
             }
@@ -370,7 +364,6 @@ document.addEventListener("DOMContentLoaded", function() {
             // Update League
             const country2 = data2 && data2.length > 0 ? data2.country.toLowerCase() : data2 ? data2.country.toLowerCase() : "";
             league2 = countryToLeague[country2] || "Unknown League";
-            // team2LeagueElement.textContent = league2;
             // Update Rank
             if (season === "All Seasons") {
                 rank2 = "Rank: N/A (All Seasons)";
@@ -379,23 +372,21 @@ document.addEventListener("DOMContentLoaded", function() {
                 rank2 = "Rank: " + var2;
             }
             // Update Team Ratio
-            const wins2 =  data2.wins ;
+            const wins2 = data2.wins;
             const losses2 = data2.losses;
-            const draws2 = data2.draws ;
+            const draws2 = data2.draws;
             const ratio2 = wins2 + "/" + losses2 + "/" + draws2;
-            team2Info.textContent = league2 + " | " + rank2 + " | "+ ratio2;
+            team2Info.textContent = league2 + " | " + rank2 + " | " + ratio2;
         }
 
         if (team1 && team2) {
-            document.getElementById("team1-stats").style.display = "";
-            document.getElementById("team2-stats").style.display = "";
-            console.log("team2", data2);
             compareTeams(team1, team2, data1, data2, season);
-        }else {
-            // Hide the stats element if no team is selected
-
-            document.getElementById("team1-stats").style.display = "none";
-            document.getElementById("team2-stats").style.display = "none";
+        } else if (team1 && !team2) {
+            // Display team1 stats only
+            document.getElementById("team2-stats").innerHTML = `<p>Please select a team to compare.</p>`;
+        } else {
+            document.getElementById("team1-stats").innerHTML = `<p>Please select a team.</p>`;
+            document.getElementById("team2-stats").innerHTML = `<p>Please select a team.</p>`;
         }
         updateMatchesList();
     }
@@ -511,7 +502,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "Shots off Target": data.shots_off_target,
             "Cards": data.cards_total,
             "Fouls Committed": data.fouls,
-            "Corners per match": Math.round((data.corners_per_match) * 100) / 100,
+            "Corners per match": data.corners_per_match,
         };
     }
 });

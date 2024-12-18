@@ -133,97 +133,33 @@ function updateTeamsList() {
 }
 
 function updateMatchesList() {
-    const team1 = document.getElementById("team1").value;
-    const team2 = document.getElementById("team2").value;
-    const season = document.getElementById("season").value;
     const matchesListElement = document.getElementById("matches-list");
-    const matchesTable = document.querySelector(".matches"); // Reference to the matches section
-
-    if (!team1 || !team2) {
-        matchesListElement.innerHTML = `
-            <tr>
-                <td colspan="5">Please select both teams.</td>
-            </tr>`;
-        matchesTable.style.display = 'none'; // Hide matches table
-        return;
-    }
-
-    // Retrieve league information
-    const league1 = getTeamLeague(team1, season);
-    const league2 = getTeamLeague(team2, season);
-    console.log("league1", league1);
-    console.log("league2", league2);
-    if (league1 !== league2) {
-        matchesListElement.innerHTML = `
-            <tr>
-                <td colspan="5">The teams are not in the same league.</td>
-            </tr>`;
-        matchesTable.style.display = 'none'; // Hide matches table
-        return;
-    } else {
-        matchesTable.style.display = 'block'; // Show matches table
-    }
-
+    // Get all matches from all seasons
     let allMatches = [];
-    if(team1 && team2){
-        console.log("team1", team1);    
-        console.log("team2", team2);
-        if (season === "All Seasons") {
-            // Combine matches from all seasons in reverse order
-            ["2023-2024", "2022-2023", "2021-2022"].forEach(s => {
-                if (ctx.matches[s]) {
-                    allMatches = allMatches.concat(
-                        ctx.matches[s].filter(match =>
-                            (match.home_team_name === team1 && match.away_team_name === team2) || 
-                            (match.home_team_name === team2 && match.away_team_name === team1)
-                        )
-                    );
-                }
-            });
-
-        } else if (ctx.matches[season]) {
-            allMatches = ctx.matches[season].filter(match =>
-                (match.home_team_name === team1 && match.away_team_name === team2) || 
-                (match.home_team_name === team2 && match.away_team_name === team1)
-            );
+    ["2023-2024", "2022-2023", "2021-2022"].forEach(season => {
+        if (ctx.matches[season]) {
+            allMatches = allMatches.concat(ctx.matches[season]);
         }
-        console.log(matchesListElement);
-    }else if(team1 === team2){
-        matchesListElement.innerHTML = `
-        <tr>
-            <td colspan="5">Choose two different teams.</td>
-        </tr>`;
-    }else{
-        matchesListElement.innerHTML = `
-        <tr>
-            <td colspan="5">Choose a team to compare to.</td>
-        </tr>`;
-    }
+    });
 
-
-    // Sort matches by date in descending order (newest first)
+    // Sort matches by date (newest first)
     allMatches.sort((a, b) => new Date(b.date_GMT) - new Date(a.date_GMT));
+    
+    // Display matches
     matchesListElement.innerHTML = "";
-
-    if (allMatches.length > 0) {
-        allMatches.forEach(match => {
-            const row = document.createElement("tr");
-            const homeScore = parseInt(match.home_team_goal_count);
-            const awayScore = parseInt(match.away_team_goal_count);
-            row.innerHTML = `
-                <td>${match.date_GMT}</td>
-                <td>${match.home_team_name}</td>
-                <td>${homeScore} - ${awayScore}</td>
-                <td>${match.away_team_name}</td>
-            `;
-            matchesListElement.appendChild(row);
-        });
-    } else {
-        matchesListElement.innerHTML = `
-            <tr>
-                <td colspan="5">No matches found for ${team1} ${season === "All Seasons" ? "in any season" : `in ${season}`}.</td>
-            </tr>`;
-    }
+    allMatches.forEach(match => {
+        const row = document.createElement("tr");
+        const homeScore = parseInt(match.home_team_goal_count);
+        const awayScore = parseInt(match.away_team_goal_count);
+        row.innerHTML = `
+            <td>${match.date_GMT}</td>
+            <td>${match.home_team_name}</td>
+            <td>${homeScore} - ${awayScore}</td>
+            <td>${match.away_team_name}</td>
+        `;
+        row.addEventListener('click', () => showMatchDetails(match));
+        matchesListElement.appendChild(row);
+    });
 }
 
 // Helper function to get the team's league
@@ -455,65 +391,45 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
 
-    function compareTeams(team1, team2, data1, data2, season) {
-        // Fetch and compare stats for team1 and team2
-        const team1Stats = getTeamStats(team1, data1);
-        const team2Stats = getTeamStats(team2, data2);
 
-        const comparisonMetrics = [
-            "Wins", 
-            "Losses", 
-            "Draws", 
-            "Goals Scored", 
-            "Goals Conceded", 
-            "Clean Sheets", 
-            "Average Possession",
-            "Shots on Target",
-            "Shots off Target",
-            "Cards",
-            "Fouls Committed",
-            "Corners per match",
-        ];
+document.addEventListener("DOMContentLoaded", function() {
+    // Get parameters from link 
+    const urlParams = new URLSearchParams(window.location.search);
+    const matchId = urlParams.get('match');
+    const date = urlParams.get('date');
+    const team = urlParams.get('team');
 
-        let comparisonHtml1 = "<table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>";
-        let comparisonHtml2 = "<table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>";
+    // Add loading screen
+    document.getElementById("loading-screen").style.display = "flex";
+    load_data().then(() => {
+        // If we have a specific match to display
+        if (matchId && date && team) {
+            let allMatches = [];
+            Object.values(ctx.matches).forEach(seasonMatches => {
+                allMatches = allMatches.concat(seasonMatches);
+            });
+            
+            // Find the specific match
+            const match = allMatches.find(m => 
+                (m.home_team_name === team || m.away_team_name === team) && 
+                m.date_GMT === date
+            );
+            
+            if (match) {
+                showMatchDetails(match);
+                // Hide the matches list since we're showing a specific match
+                document.querySelector('.matches').style.display = 'none';
+            }
+        } else {
+            // Show all matches if no specific match is requested
+            updateMatchesList();
+            document.querySelector('.matches').style.display = 'block';
+            document.querySelector('.match-details').style.display = 'none';
+        }
 
-        comparisonMetrics.forEach(metric => {
-            const team1Value = team1Stats[metric] || 0;
-            const team2Value = team2Stats[metric] || 0;
-            const isTeam1Better = team1Value > team2Value;
-            const isTeam2Better = team2Value > team1Value;
-
-            comparisonHtml1 += `<tr class="${isTeam1Better ? 'highlight-team1' : ''}"><td>${metric}</td><td>${team1Value}</td></tr>`;
-            comparisonHtml2 += `<tr class="${isTeam2Better ? 'highlight-team2' : ''}"><td>${metric}</td><td>${team2Value}</td></tr>`;
-        });
-
-        comparisonHtml1 += "</tbody></table>";
-        comparisonHtml2 += "</tbody></table>";
-
-        document.getElementById("team1-stats").innerHTML = `<h2>${team1} Stats (${season})</h2>` + comparisonHtml1;
-        document.getElementById("team2-stats").innerHTML = `<h2>${team2} Stats (${season})</h2>` + comparisonHtml2;
-    }
-
-    function getTeamStats(team, data) {
-        console.log("team", data);
-        // Fetch team stats based on the team name and season
-        // This is a placeholder function, replace with actual data fetching logic
-        return {
-            Wins: data.wins,
-            Losses: data.losses,
-            Draws: data.draws,
-            "Goals Scored": data.goals_scored,
-            "Goals Conceded": data.goals_conceded,
-            "Clean Sheets": data.clean_sheets,
-            "Average Possession": data.average_possession,
-            "Shots on Target": data.shots_on_target,
-            "Shots off Target": data.shots_off_target,
-            "Cards": data.cards_total,
-            "Fouls Committed": data.fouls,
-            "Corners per match": Math.round((data.corners_per_match) * 100) / 100,
-        };
-    }
+        // Hide the loading screen
+        document.getElementById("loading-screen").style.display = "none";
+    });
 });
 
 function search(event, input) {
@@ -562,6 +478,64 @@ function search(event, input) {
         return
     }
 
+}
+
+// Add this function after existing code
+function showMatchDetails(match) {
+    const matchDetails = document.querySelector('.match-details');
+    matchDetails.style.display = 'block';
+
+    // Update team logos
+    const homeLogo = matchDetails.querySelector('.home-team .team-logo');
+    const awayLogo = matchDetails.querySelector('.away-team .team-logo');
+    homeLogo.src = ctx.logos[match.home_team_name] || '';
+    awayLogo.src = ctx.logos[match.away_team_name] || '';
+
+    // Update team names
+    matchDetails.querySelector('.home-team .team-name').textContent = match.home_team_name;
+    matchDetails.querySelector('.away-team .team-name').textContent = match.away_team_name;
+
+    // Update score and match info
+    matchDetails.querySelector('.date').textContent = match.date_GMT;
+    matchDetails.querySelector('.home-score').textContent = match.home_team_goal_count;
+    matchDetails.querySelector('.away-score').textContent = match.away_team_goal_count;
+    matchDetails.querySelector('.stadium').textContent = match.stadium_name;
+
+    // Update possession bar
+    const possessionBar = matchDetails.querySelector('.possession-bar');
+    possessionBar.style.setProperty('--home-possession', `${match.home_team_possession}%`);
+    possessionBar.setAttribute('title', `Possession: ${match.home_team_possession}% - ${match.away_team_possession}%`);
+
+    // Update stats
+    const statsGrid = matchDetails.querySelector('.stats-grid');
+    updateStatItem(statsGrid, 'Shots', match.home_team_shots, match.away_team_shots);
+    updateStatItem(statsGrid, 'Shots on Target', match.home_team_shots_on_target, match.away_team_shots_on_target);
+    updateStatItem(statsGrid, 'Corners', match.home_team_corner_count, match.away_team_corner_count);
+    updateStatItem(statsGrid, 'Fouls', match.home_team_fouls, match.away_team_fouls);
+
+    // Update cards
+    updateCards('home-cards', match.home_team_yellow_cards, match.home_team_red_cards);
+    updateCards('away-cards', match.away_team_yellow_cards, match.away_team_red_cards);
+}
+
+function updateStatItem(grid, label, homeValue, awayValue) {
+    const item = grid.querySelector(`[data-stat="${label}"]`);
+    if (item) {
+        item.querySelector('.home-value').textContent = homeValue;
+        item.querySelector('.away-value').textContent = awayValue;
+    }
+}
+
+function updateCards(containerClass, yellowCount, redCount) {
+    const container = document.querySelector(`.${containerClass}`);
+    container.innerHTML = '';
+    
+    for (let i = 0; i < yellowCount; i++) {
+        container.innerHTML += '<div class="card yellow"></div>';
+    }
+    for (let i = 0; i < redCount; i++) {
+        container.innerHTML += '<div class="card red"></div>';
+    }
 }
 
 
