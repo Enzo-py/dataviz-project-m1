@@ -139,6 +139,9 @@ function render_map() {
         .fitSize([ctx.MAP_W, ctx.MAP_H], ctx.data["map-focus"])
 
     const countriesWithGlow = ["FR", "ES", "DE", "IT", "UK"];
+    // get true value of --background-color
+    background_color = getComputedStyle(document.documentElement).getPropertyValue('--background-color')
+
     ctx.path = d3.geoPath(ctx.proj);
     d3.select(".map svg").append("g")
         .attr("id", "countries-area")
@@ -168,6 +171,22 @@ function render_map() {
             document.body.style.backgroundImage = "";
         })
 
+        d3.selectAll(".map svg #countries-area path").each(function(d, i) {
+            d3.select(this)
+                .attr("save-bg-color", getComputedStyle(this).getPropertyValue("fill"))
+                .attr("save-border-color", getComputedStyle(this).getPropertyValue("stroke"))
+                .style("fill", background_color)
+                .style("stroke", background_color)
+                .transition()
+                .delay(i * 4)
+                .duration(1600)
+                .style("stroke", d3.select(this).attr("save-border-color"))
+                .transition()
+                .duration(800)
+                .style("fill", d3.select(this).attr("save-bg-color"))
+
+        })
+        
     // raise countries with glow
     d3.selectAll(".map svg #countries-area .focus").raise()
 
@@ -300,6 +319,16 @@ function render_map() {
             .attr("value", club)
             .attr("name", "club")
     })
+
+    cities = d3.selectAll("#cities path, .extra-cities span")
+    cities.style("opacity", 0).transition()
+        .delay((d, i) => i * 15 + 1400)
+        .duration(600)
+        .style("opacity", 1)
+
+    setTimeout(() => {
+        d3.select('body').attr('ready', true)
+    }, 1600)
 }
 
 function city_name_to_id(city_name) {
