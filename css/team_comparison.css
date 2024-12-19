@@ -2,14 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-}
-
-header {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem;  
+    background-color: var(--background-color);
 }
 
 main {
@@ -18,10 +11,60 @@ main {
     padding-right: 3rem;
 }
 
+@keyframes highlight-zoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+    
+}
+
+menu {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+}
+
+body menu > a {
+    color: var(--secondary-color) !important;
+    background-color: var(--second-background-color);
+    text-decoration: none !important;
+    padding: 8px;
+    border-radius: 8px;
+    border: solid 2px var(--secondary-color);
+}
+
+menu > a { transition: all 0.3s; }
+
+menu > a:hover {
+    color: var(--accent-color) !important;
+    animation: highlight-zoom 0.3s ease-in-out 2;
+}
+
 .team-comparison-container {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     margin-top: 1rem;
+    color: var(--text-white-color);
+}
+
+.team-comparison-container span {
+    font-size: 8rem;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -1.5rem;
+    transition: all 0.3s ease-in-out;
+    cursor: default;
+}
+
+.team-comparison-container span:hover {
+    transform: skewX(-20deg)
 }
 
 .team-container {
@@ -42,12 +85,15 @@ main {
 }
 
 .team input {
-    padding: 0.5rem;
+    padding: 6px;
     font-size: 1rem;
     width: 200px;
     border: solid 2px var(--secondary-color);
+    background-color: var(--second-background-color);
+    color: var(--secondary-color);
+    text-align: center;
     border-radius: 8px;
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
+    outline: none !important;
 }
 
 .team-title {
@@ -59,13 +105,14 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 1rem;
+    gap: 14px;
 }
 
 .team-logo-name img {
     width: auto;
     height: 250px;
     margin-bottom: 0.5rem;
+    cursor: pointer;
 }
 
 .team-logo-name h2 {
@@ -81,26 +128,27 @@ main {
 .comparison-results {
     display: flex;
     justify-content: space-around;
-    margin-top: 1rem;
+    margin-top: 14px;
 }
 
 .team-stats {
-    background-color: #fff;
+    background-color: var(--second-background-color);
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 45%;
-    margin-top: 1rem;
+    margin-top: 14px;
 }
 
 .team-stats h2 {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 14px;
+    color: var(--text-white-color);
 }
 
 .team-stats table {
     width: 100%;
     border-collapse: collapse;
+    color: var(--text-white-color);
 }
 
 .team-stats th, .team-stats td {
@@ -109,13 +157,11 @@ main {
     text-align: center;
 }
 
-/* Position the season selector in the top left corner */
 .season {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin: 0;
-    padding: 0;
+    margin: 14px;
     border-radius: 8px;
 }
 
@@ -127,9 +173,11 @@ main {
     padding: 0.5rem;
     font-size: 1rem;
     width: 150px;
-    border: solid 2px var(--secondary-color);
+    border: solid 2px var(--text-white-color);
+    background-color: var(--second-background-color);
+    color: var(--text-white-color);
     border-radius: 8px;
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
+    outline: none !important;
 }
 
 .team-selection {
@@ -195,16 +243,6 @@ main {
     margin-top: 0rem; 
     font-size: 1.2em;
     color: #000000;
-}
-.top-controls {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    display: flex;
-    align-items: center;
-    gap: 20px; 
-    background-color: transparent;
-    border: none;
 }
 
 

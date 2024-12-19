@@ -17,25 +17,19 @@
         <div class="spinner"></div>
         <p>Loading data, please wait...</p>
     </div>
-    <!-- Place the season selector at the top left corner -->
-    <div class="top-controls">
-        <div class="season">
-            <label for="season"></label>
-            <select id="season">
-                <option value="All Seasons" selected>All Seasons</option>
-                <option value="2021-2022">2021-2022</option>
-                <option value="2022-2023">2022-2023</option>
-                <option value="2023-2024">2023-2024</option>
-            </select>
-        </div>
-        <menu>
-            <a href="index.html" class="material-symbols-outlined back-to-map" title="Back to map">explore</a>
-            <a href="player.html" class="material-symbols-outlined view-players" title="View players">person</a>
-        </menu>
+    <div class="season">
+        <label for="season"></label>
+        <select id="season">
+            <option value="All Seasons" selected>All Seasons</option>
+            <option value="2021-2022">2021-2022</option>
+            <option value="2022-2023">2022-2023</option>
+            <option value="2023-2024">2023-2024</option>
+        </select>
     </div>
-    <header>
-        <h1>Team Comparison</h1>
-    </header>
+    <menu>
+        <a href="index.html" class="material-symbols-outlined back-to-map" title="Back to map">explore</a>
+        <a href="matches.html" class="material-symbols-outlined view-players" title="View matches">sports_soccer</a>
+    </menu>
 
     <main>
         <div class="team-comparison-container">
@@ -49,6 +43,8 @@
                     </div>
                 </div>
             </div>
+
+            <span>Vs</span>
 
             <div class="team-container">
                 <div class="team">

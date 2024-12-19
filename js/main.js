@@ -37,11 +37,11 @@ function create_toggle_button() {
         .style("fill", "none")
         .style("border-radius", "50%")
         .style("stroke", "green")
-        .style("width", "60px")
+        .style("width", "25px")
         .style("border", "3px solid green")
         // Center
         .style("margin", "auto")
-        .style("height", "26px");
+        .style("height", "25px");
 }
 
 function toggle_rendering() {
