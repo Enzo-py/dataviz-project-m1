@@ -863,12 +863,6 @@ function update_players_charts() {
     d3.select("#spider-chart-2022-2023").selectAll(".radarWrapper").remove()
     d3.select("#spider-chart-2023-2024").selectAll(".radarWrapper").remove()
 
-    // create player card
-    // d3.select(".players-card").selectAll(".player-card").remove()
-    // Object.keys(ctx.selected_players).forEach(player_id => {
-    //     create_player_card(player_id)
-    // })
-    // use un select all join update exit
     d3.select(".players-card").selectAll(".player-card")
         .data(Object.keys(ctx.selected_players), d => d)
         .join(
@@ -917,11 +911,11 @@ function create_player_card(player_id, player_card) {
     }
 
     player = ctx.data["players_agg"][player_id]
-    player_name = player[Object.keys(player)[0]]["full_name"]
-    player_position = player[Object.keys(player)[0]]["position"]
-    player_club = player[Object.keys(player)[0]]["Current_Club"]
-    player_nationality = player[Object.keys(player)[0]]["nationality"]
-    player_number = parseInt(player[Object.keys(player)[0]]["shirt_number"])
+    player_name = player[Object.keys(player).slice(-1)[0]]["full_name"]
+    player_position = player[Object.keys(player).slice(-1)[0]]["position"]
+    player_club = player[Object.keys(player).slice(-1)[0]]["Current_Club"]
+    player_nationality = player[Object.keys(player).slice(-1)[0]]["nationality"]
+    player_number = parseInt(player[Object.keys(player).slice(-1)[0]]["shirt_number"])
     const player_image_url = getPlayerImageUrl(player_name);
 
     // player_card = d3.select(`.players-card .player-card#${player_id}`)
@@ -930,24 +924,31 @@ function create_player_card(player_id, player_card) {
     head_card = player_card.append("div").attr("class", "head-card")
     player_identity = head_card.append("div").attr("class", "player-identity")
 
-    player_identity.append("span").text(player_number).style("color", ctx.selected_players[player_id]).attr("class", "player-number")
-    player_identity_data = player_identity.append("div").attr("class", "player-identity-data")
-    
-    player_identity_data.append("h2").text(player_name)
-    player_identity_data.append("h5").text(player_position)
-    
     player_identity.append("img")
         .attr("src", player_image_url)
         .attr("alt", player_name)
         .attr("class", "player-image");
+    player_identity_data = player_identity.append("div").attr("class", "player-identity-data")
+    
+    player_identity_data.append("h2").text(player_name)
+    player_identity_data.append("span").text(player_position)
 
     player_identity_data.select("span").append("img").attr("src", ctx.data["nationalities_flag"][player_nationality]).attr("class", "flag")
     player_identity_data.append("span").text(`Rating: ${get_player_score(player_id, player_position)}`)
     
     // happen club logo
-    head_card.append("img").attr("src", ctx.data["clubs_logo"][player_club])
+    left_head_card = head_card.append("div").attr("class", "left-head-card")
+    left_head_card.append("img").attr("src", ctx.data["clubs_logo"][player_club])
         .attr("class", "club-logo")
         .append("title").text(player_club)
+
+    left_head_card.append("img").attr("src", "./data/img/icon/shirt.png").attr("class", "shirt")
+    // load the svg of the shirt
+    // left_head_card.append("object").attr("data", "./data/img/icon/shirt2.svg").attr("class", "shirt")
+
+
+    left_head_card.append("span").text(player_number).style("color", ctx.selected_players[player_id]).attr("class", "player-number")
+
 
     // add the categories
     Object.keys(ctx.data["player_card_stats"]).forEach(category => {
@@ -1088,35 +1089,35 @@ function get_player_score(player_id, position) {
     // score = 
     const scorification = {
         "Goalkeeper": {
-            "Saves": 0.50,
-            "Reflexes": 0.30,
+            "Saves": 0.52,
+            "Reflexes": 0.38,
             "Sweeping": 0.15,
         },
         "Defender": {
-            "Tackles": 0.20,
-            "Interceptions": 0.20,
+            "Tackles": 0.25,
+            "Interceptions": 0.25,
             "Marking": 0.25,
-            "Jumping": 0.08,
+            "Jumping": 0.09,
             "Balance": 0.13,
         },
         "Midfielder": {
-            "Ball Control": 0.20,
-            "Playmaking": 0.25,
+            "Ball Control": 0.22,
+            "Playmaking": 0.31,
             "Acceleration and Speed": 0.10,
-            "Balance": 0.10,
+            "Balance": 0.12,
             "Stamina": 0.10,
             "Interception": 0.10,
             "Tackles": 0.10,
             "Jumping": 0.06
         },
         "Forward": {
-            "Finishing": 0.40,
-            "Dribbling": 0.20,
+            "Finishing": 0.45,
+            "Dribbling": 0.25,
             "Acceleration and Speed": 0.15,
-            "Crosses": 0.10,
-            "Heading": 0.08,
+            "Crosses": 0.11,
+            "Heading": 0.10,
             "Agility": 0.12,
-            "Ball Control": 0.05
+            "Ball Control": 0.1
         }
     }
 
@@ -1142,7 +1143,7 @@ function get_player_score(player_id, position) {
     // bonus/malus avg
     other_indicators = other_indicators.reduce((acc, cur) => acc + cur, 0) / other_indicators.length
 
-    return Math.min(Math.max(parseInt((score + other_indicators * 0.27) * 100), 0), 100)
+    return Math.min(Math.max(parseInt((score + other_indicators * 0.3) * 100), 0), 100)
 }
 
 function getPlayerImageUrl(player_name) {

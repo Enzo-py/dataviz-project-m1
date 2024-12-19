@@ -492,3 +492,13 @@ a.back-to-team.active { display: block; }
     border-radius: 50%;
     object-fit: cover;
 }
+
+.flag {
+    margin-left: 2px;
+}
+
+.player-image {
+    border-radius: 50%;
+    background-color: var(--text-white-color);
+    border: solid 6px var(--background-color);
+}
