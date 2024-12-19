@@ -129,8 +129,8 @@ body, body * {
 }
 
 .toast.info {
-    border-left: solid 15px var(--secondary-color);
-    color: var(--secondary-color);
+    border-left: solid 15px var(--accent-color);
+    color: var(--accent-color);
 }
 
 .toast.error {

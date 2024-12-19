@@ -384,6 +384,16 @@ menu > a {
     padding: 8px;
 }
 
+#currently-viewing {
+    color: var(--text-white-color);
+    font-weight: 300;
+    font-style: italic;
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    transition: all 0.3s;
+}
+
 .slider {
     width: 100%;
     overflow-x: hidden;
@@ -445,6 +455,7 @@ span.slider-button {
     border-radius: 8px;
     display: none;
     position: relative;
+    overflow: hidden;
 }
 
 .page::before {

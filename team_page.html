@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team page</title>
     <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="js/toolbox.js"></script>
     <script type="text/javascript" src="js/team_page.js"></script>
 
     <link rel="stylesheet" href="css/global.css">
@@ -82,12 +83,14 @@
                         <span class="switcher" id="view-team-players" onclick="redirectToPlayers()">Players</span>
                     </div>
     
-                    <span class="material-symbols-outlined" id="toggle-league-average">info</span>
+                    <span class="material-symbols-outlined" title="Show League Average" id="toggle-league-average">show_chart</span>
                 </div>
 
                 <div class="page p1 active">
                     <div class="chart-container" id="donut-charts">
                     </div>
+                    
+                    <span id="currently-viewing">Currently view team statistics</span>
                 </div>
                 <div class="page p2">
                     
@@ -106,16 +109,19 @@
                         <span class="slider-button left material-symbols-outlined" onclick="slider_left()">keyboard_arrow_left</span>
                         <span class="slider-button right material-symbols-outlined" onclick="slider_right()">keyboard_arrow_right</span>
                     </div>
-                </div>
-                <div class="charts-grid">
-                    
-                    
+
+                    <span id="currently-viewing">Currently view team statistics</span>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
+        let first_time_on_right = true;
+        let first_time_on_left = true;
+
+        document.body.addEventListener("reset_slider", reset_slider);
+
         function switch_page(btn) {
             page_number = btn.getAttribute("data-page");
             document.querySelectorAll(".page").forEach(page => {
@@ -150,6 +156,12 @@
 
             // hide left button
             document.querySelector(".slider-button.left").style.display = "none";
+
+            // show right button
+            document.querySelector(".slider-button.right").style.display = "flex";
+
+            first_time_on_right = true;
+            first_time_on_left = true;
         }
 
         function slider_left() {
@@ -172,6 +184,11 @@
             document.querySelector(".slider-button.left").style.display = "none";
             // show right button
             document.querySelector(".slider-button.right").style.display = "flex";
+
+            if (first_time_on_left) {
+                first_time_on_left = false;
+                page1_anim()
+            }
         }
 
         function slider_right() {
@@ -194,6 +211,11 @@
             document.querySelector(".slider-button.right").style.display = "none";
             // show left button
             document.querySelector(".slider-button.left").style.display = "flex";
+
+            if (first_time_on_right) {
+                first_time_on_right = false;
+                page2_anim()
+            }
         }
     </script>
 </body>

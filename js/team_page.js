@@ -232,8 +232,18 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll("#toggle-league-average").forEach(button => {
         button.addEventListener("click", function() {
             showingLeagueAverage = !showingLeagueAverage; // Toggle state
-            button.textContent = showingLeagueAverage ? "Show Club Stats" : "Show League Average";
-            
+            button.textContent = showingLeagueAverage ? "sports_soccer" : "show_chart";
+            button.setAttribute("title", showingLeagueAverage ? "Show Team Stats" : "Show League Average");
+
+            d3.selectAll("#currently-viewing")
+                .transition()
+                .duration(500)
+                .style("transform", "translateY(100px)")
+                .transition()
+                .text(showingLeagueAverage ? "Currently viewing League Average" : "Currently viewing Team Statistics")
+                .duration(500)
+                .style("transform", "translateY(0px)");
+
             const team1 = document.getElementById("team1").value;
             const season = document.getElementById("season").value;
             let teamData;
@@ -1202,6 +1212,8 @@ function updateCharts(data) {
     createWinsDonutChart(data);
     createShotsDonutChart(data);
 
+    d3.select("body").dispatch("reset_slider")
+
     // run anims
     page1_anim(true)
     page2_anim(true, true)
@@ -1235,11 +1247,11 @@ function page1_anim(setup_start) {
 
             } else {
                 path.transition()
-                    .duration(400)
-                    .delay(j * 150 + i * 300)
+                    .duration(100)
+                    .delay(j * 150 + i * 250)
                     .style("transform", "rotate(180deg) scale(0.5)")
                     .transition()
-                    .duration(250)
+                    .duration(350)
                     .style("transform", "rotate(360deg) scale(0.5)")
                     .transition()
                     .duration(400)
