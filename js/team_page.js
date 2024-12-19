@@ -278,9 +278,6 @@ document.addEventListener("DOMContentLoaded", function() {
         updateStats();
         updateMatchesList();
 
-        page1_anim(true)
-        page2_anim(true, true)
-
         // Hide the loading screen
         document.getElementById("loading-screen").style.display = "none";
         d3.select("body").attr("ready", true);
@@ -323,10 +320,6 @@ document.addEventListener("DOMContentLoaded", function() {
             .transition()
             .duration(250)
             .style("transform")
-
-        setTimeout(() => {
-            page1_anim()
-        }, 1500)
 
     });
 
@@ -1208,6 +1201,13 @@ function updateCharts(data) {
     createGoalsDonutChart(data);
     createWinsDonutChart(data);
     createShotsDonutChart(data);
+
+    // run anims
+    page1_anim(true)
+    page2_anim(true, true)
+
+    page1_anim()
+    page2_anim()
 }
 
 function page1_anim(setup_start) {

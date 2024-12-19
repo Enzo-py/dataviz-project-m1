@@ -1,7 +1,7 @@
 ctx = {
     data: {},
     selected_players: {},
-    rScale: {},
+    radius_scale: {},
     color_index: 0,
     distribution_chart_height: 100,
     distribution_chart_width: 300,
@@ -521,17 +521,54 @@ function sort_player_table(club, player_name, age, score, position, nationality,
     pagination(animation_pagination)
 }
 
-function table_filter(players, positions, clubs, nationality) {
+function filter_tr(tr, players, position, clubs, nationality) {
+    tr_player = tr.attr("player_name").toLowerCase()
+    tr_position = tr.attr("position").toLowerCase()
+    tr_club = tr.attr("current_club").toLowerCase()
+    tr_nationality = tr.attr("nationality").toLowerCase()
+
+    if (players !== null) {
+        is_in_players = false
+        for (let player of players) {
+            player = player.toLowerCase()
+            if (tr_player.includes(player)) {
+                is_in_players = true
+                break // if break isn't recommended, but i think the forloop is short so still more optimized
+            }
+        }
+
+        if (!is_in_players) return false
+    }
+
+    if (position !== null && tr_position !== position.toLowerCase()) return false
+
+    if (clubs !== null) {
+        is_in_clubs = false
+        for (let club of clubs) {
+            club = club.toLowerCase()
+            if (tr_club.includes(club)) {
+                is_in_clubs = true
+                break // if break isn't recommended, but i think the forloop is short so still more optimized
+            }
+        }
+
+        if (!is_in_clubs) return false
+    }
+
+    if (nationality !== null && tr_nationality !== nationality.toLowerCase()) return false
+
+    return true
+}
+
+function table_filter(players, position, clubs, nationality) {
     table = d3.select(".players-view table tbody")
     table.selectAll("tr").style("display", "none").attr("is-visible", "false")
 
-    table.selectAll("tr").filter(function() {
-        return (players === null || players.toLowerCase().includes(this.getAttribute("player_name")) || this.getAttribute("player_name").includes(players.toLowerCase())) &&
-            (positions === null || positions == this.getAttribute("position")) &&
-            (clubs === null || clubs.toLowerCase().includes(this.getAttribute("current_club")) || this.getAttribute("current_club").includes(clubs.toLowerCase())) &&
-            (nationality === null || nationality.includes(this.getAttribute("nationality")) || this.getAttribute("nationality").includes(nationality))
-    }).style("display", "").attr("is-visible", "true")
+    filtred_tr = table.selectAll("tr").filter(function() {
+        return filter_tr(d3.select(this), players, position, clubs, nationality)
+    })
 
+    filtred_tr.style("display", "").attr("is-visible", "true")
     pagination()
 }
 
@@ -561,11 +598,11 @@ function create_radar(svg_id, categories) {
     const angleSlice = 2 * Math.PI / totalAxes;
 
     // Échelle radiale
-    const rScale = d3.scaleLinear()
+    const radius_scale = d3.scaleLinear()
         .range([0, radius])
         .domain([0, config.maxValue]);
 
-    ctx.rScale[svg_id] = rScale
+    ctx.radius_scale[svg_id] = radius_scale
 
     // Grille circulaire
     svg.selectAll(".levels")
@@ -597,8 +634,8 @@ function create_radar(svg_id, categories) {
     axis.append("line")
         .attr("x1", 0)
         .attr("y1", 0)
-        .attr("x2", (d, i) => rScale(config.maxValue * 1.1) * Math.cos(angleSlice * i - Math.PI / 2))
-        .attr("y2", (d, i) => rScale(config.maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2))
+        .attr("x2", (d, i) => radius_scale(config.maxValue * 1.1) * Math.cos(angleSlice * i - Math.PI / 2))
+        .attr("y2", (d, i) => radius_scale(config.maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2))
         .style("stroke", "#555")
         .style("stroke-width", "1.5px")
         .style("transform", (d, i) => `rotate(${i * 180 / totalAxes}deg)`)
@@ -612,8 +649,8 @@ function create_radar(svg_id, categories) {
 
     axis.append("text")
         .attr("class", "legend")
-        .attr("x", (d, i) => rScale(config.maxValue * 1.25) * Math.cos(angleSlice * i - Math.PI / 2))
-        .attr("y", (d, i) => rScale(config.maxValue * 1.25) * Math.sin(angleSlice * i - Math.PI / 2))
+        .attr("x", (d, i) => radius_scale(config.maxValue * 1.25) * Math.cos(angleSlice * i - Math.PI / 2))
+        .attr("y", (d, i) => radius_scale(config.maxValue * 1.25) * Math.sin(angleSlice * i - Math.PI / 2))
         .attr("text-anchor", "middle")
         .text(d => d.replaceAll("_", " "))
         .style("font-size", "11px")
@@ -624,20 +661,20 @@ function create_radar(svg_id, categories) {
 
 }
 
-function drawRadarChart(svgId, data) {
+function populate_radar_chart(svg_id, data) {
 
-    rScale = ctx.rScale[svgId]
+    radius_scale = ctx.radius_scale[svg_id]
 
     // Ligne radar
     const radarLine = d3.lineRadial()
-        .radius(d => rScale(d.value))
+        .radius(d => radius_scale(d.value))
         .angle((d, i) => i * angleSlice)
         .curve(d3.curveLinearClosed);
 
     const totalAxes = data[0].axes.length;
     const angleSlice = 2 * Math.PI / totalAxes;
 
-    svg = d3.select(svgId).select("g")
+    svg = d3.select(svg_id).select("g")
     // Création des "blobs"
     const blobWrapper = svg.selectAll(".radarWrapper")
         .data(data)
@@ -686,8 +723,8 @@ function drawRadarChart(svgId, data) {
     //     .enter().append("circle")
     //     .attr("class", "radarCircle")
     //     .attr("r", 4)
-    //     .attr("cx", d => rScale(d.value) * Math.cos(angleSlice * d.axisIndex - Math.PI / 2))
-    //     .attr("cy", d => rScale(d.value) * Math.sin(angleSlice * d.axisIndex - Math.PI / 2))
+    //     .attr("cx", d => radius_scale(d.value) * Math.cos(angleSlice * d.axisIndex - Math.PI / 2))
+    //     .attr("cy", d => radius_scale(d.value) * Math.sin(angleSlice * d.axisIndex - Math.PI / 2))
     //     .style("fill", (d, i, nodes) => config.color(nodes[i].parentNode.__data__.__index__))        
     //     .style("fill-opacity", 0.8);
 }
@@ -826,12 +863,6 @@ function update_players_charts() {
     d3.select("#spider-chart-2022-2023").selectAll(".radarWrapper").remove()
     d3.select("#spider-chart-2023-2024").selectAll(".radarWrapper").remove()
 
-    // create player card
-    // d3.select(".players-card").selectAll(".player-card").remove()
-    // Object.keys(ctx.selected_players).forEach(player_id => {
-    //     create_player_card(player_id)
-    // })
-    // use un select all join update exit
     d3.select(".players-card").selectAll(".player-card")
         .data(Object.keys(ctx.selected_players), d => d)
         .join(
@@ -856,9 +887,9 @@ function update_players_charts() {
         )
 
     // plot category  for the selected players
-    if (current_player_2021_2022.length > 0) drawRadarChart("#spider-chart-2021-2022", data_2021_2022)
-    if (current_player_2022_2023.length > 0) drawRadarChart("#spider-chart-2022-2023", data_2022_2023)
-    if (current_player_2023_2024.length > 0) drawRadarChart("#spider-chart-2023-2024", data_2023_2024)
+    if (current_player_2021_2022.length > 0) populate_radar_chart("#spider-chart-2021-2022", data_2021_2022)
+    if (current_player_2022_2023.length > 0) populate_radar_chart("#spider-chart-2022-2023", data_2022_2023)
+    if (current_player_2023_2024.length > 0) populate_radar_chart("#spider-chart-2023-2024", data_2023_2024)
 }
 
 function sum_dict(dict) {
@@ -880,11 +911,11 @@ function create_player_card(player_id, player_card) {
     }
 
     player = ctx.data["players_agg"][player_id]
-    player_name = player[Object.keys(player)[0]]["full_name"]
-    player_position = player[Object.keys(player)[0]]["position"]
-    player_club = player[Object.keys(player)[0]]["Current_Club"]
-    player_nationality = player[Object.keys(player)[0]]["nationality"]
-    player_number = parseInt(player[Object.keys(player)[0]]["shirt_number"])
+    player_name = player[Object.keys(player).slice(-1)[0]]["full_name"]
+    player_position = player[Object.keys(player).slice(-1)[0]]["position"]
+    player_club = player[Object.keys(player).slice(-1)[0]]["Current_Club"]
+    player_nationality = player[Object.keys(player).slice(-1)[0]]["nationality"]
+    player_number = parseInt(player[Object.keys(player).slice(-1)[0]]["shirt_number"])
     const player_image_url = getPlayerImageUrl(player_name);
 
     // player_card = d3.select(`.players-card .player-card#${player_id}`)
@@ -893,24 +924,31 @@ function create_player_card(player_id, player_card) {
     head_card = player_card.append("div").attr("class", "head-card")
     player_identity = head_card.append("div").attr("class", "player-identity")
 
-    player_identity.append("span").text(player_number).style("color", ctx.selected_players[player_id]).attr("class", "player-number")
-    player_identity_data = player_identity.append("div").attr("class", "player-identity-data")
-    
-    player_identity_data.append("h2").text(player_name)
-    player_identity_data.append("h5").text(player_position)
-    
     player_identity.append("img")
         .attr("src", player_image_url)
         .attr("alt", player_name)
         .attr("class", "player-image");
+    player_identity_data = player_identity.append("div").attr("class", "player-identity-data")
+    
+    player_identity_data.append("h2").text(player_name)
+    player_identity_data.append("span").text(player_position)
 
     player_identity_data.select("span").append("img").attr("src", ctx.data["nationalities_flag"][player_nationality]).attr("class", "flag")
     player_identity_data.append("span").text(`Rating: ${get_player_score(player_id, player_position)}`)
     
     // happen club logo
-    head_card.append("img").attr("src", ctx.data["clubs_logo"][player_club])
+    left_head_card = head_card.append("div").attr("class", "left-head-card")
+    left_head_card.append("img").attr("src", ctx.data["clubs_logo"][player_club])
         .attr("class", "club-logo")
         .append("title").text(player_club)
+
+    left_head_card.append("img").attr("src", "./data/img/icon/shirt.png").attr("class", "shirt")
+    // load the svg of the shirt
+    // left_head_card.append("object").attr("data", "./data/img/icon/shirt2.svg").attr("class", "shirt")
+
+
+    left_head_card.append("span").text(player_number).style("color", ctx.selected_players[player_id]).attr("class", "player-number")
+
 
     // add the categories
     Object.keys(ctx.data["player_card_stats"]).forEach(category => {
@@ -1051,35 +1089,35 @@ function get_player_score(player_id, position) {
     // score = 
     const scorification = {
         "Goalkeeper": {
-            "Saves": 0.50,
-            "Reflexes": 0.30,
+            "Saves": 0.52,
+            "Reflexes": 0.38,
             "Sweeping": 0.15,
         },
         "Defender": {
-            "Tackles": 0.20,
-            "Interceptions": 0.20,
+            "Tackles": 0.25,
+            "Interceptions": 0.25,
             "Marking": 0.25,
-            "Jumping": 0.08,
+            "Jumping": 0.09,
             "Balance": 0.13,
         },
         "Midfielder": {
-            "Ball Control": 0.20,
-            "Playmaking": 0.25,
+            "Ball Control": 0.22,
+            "Playmaking": 0.31,
             "Acceleration and Speed": 0.10,
-            "Balance": 0.10,
+            "Balance": 0.12,
             "Stamina": 0.10,
             "Interception": 0.10,
             "Tackles": 0.10,
             "Jumping": 0.06
         },
         "Forward": {
-            "Finishing": 0.40,
-            "Dribbling": 0.20,
+            "Finishing": 0.45,
+            "Dribbling": 0.25,
             "Acceleration and Speed": 0.15,
-            "Crosses": 0.10,
-            "Heading": 0.08,
+            "Crosses": 0.11,
+            "Heading": 0.10,
             "Agility": 0.12,
-            "Ball Control": 0.05
+            "Ball Control": 0.1
         }
     }
 
@@ -1105,7 +1143,7 @@ function get_player_score(player_id, position) {
     // bonus/malus avg
     other_indicators = other_indicators.reduce((acc, cur) => acc + cur, 0) / other_indicators.length
 
-    return Math.min(Math.max(parseInt((score + other_indicators * 0.27) * 100), 0), 100)
+    return Math.min(Math.max(parseInt((score + other_indicators * 0.3) * 100), 0), 100)
 }
 
 function getPlayerImageUrl(player_name) {

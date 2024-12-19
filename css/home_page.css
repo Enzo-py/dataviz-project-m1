@@ -38,12 +38,14 @@ menu.right > button {
     align-items: center;
 }
 
-menu.right > button span {
+menu.right > button a {
     cursor: pointer;
     transition: transform 0.5s ease-in-out;
+    color: var(--secondary-color) !important;
+    text-decoration: none !important;
 }
 
-menu.right > button span:hover {
+menu.right > button a:hover {
     transform: rotateZ(180deg) scale(1.2);
 }
 
@@ -322,6 +324,14 @@ body[ready] .glow {
 .toggle-button.active {
     background-color: var(--toggle-active);
     color: #fff;
+}
+
+.toggle-button > * {
+    transition: transform 0.3s;
+}
+
+.toggle-button > *:hover {
+    transform: scale(1.2);
 }
 
 .toggle-button img {
