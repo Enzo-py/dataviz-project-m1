@@ -1,8 +1,9 @@
+COLORS = ["#e35763", "#f4ca13", "#58cd58", "#2663f8", "#55b3e7", "#9364e3"]
+
 ctx = {
     data: {},
     selected_players: {},
     radius_scale: {},
-    color_index: 0,
     distribution_chart_height: 100,
     distribution_chart_width: 300,
 }
@@ -12,11 +13,10 @@ RADAR_CATEGORIES = ['DISCIPLINE', 'DEFENDING', 'VISION', 'ASSISTS', 'SCORING', '
 
 let VALUES_CARD_STATS = {}
 
-COLORS = ["#e35763", "#f4ca13", "#68a068", "#436ebf", "#55b3e7", "#9364e3"]
 
 function get_color() {
     available_colors = COLORS.filter(color => !Object.values(ctx.selected_players).includes(color))
-    return available_colors[0]
+    return available_colors[Math.floor(Math.random() * available_colors.length)]
 }
 
 async function setup_radar() {
@@ -900,7 +900,7 @@ function sum_dict(dict) {
     return v
 }
 
-function create_player_card(player_id, player_card) {
+async function create_player_card(player_id, player_card) {
     const seuils = {
         0.1: "very-low",
         0.2: "low",
@@ -934,21 +934,44 @@ function create_player_card(player_id, player_card) {
     player_identity_data.append("span").text(player_position)
 
     player_identity_data.select("span").append("img").attr("src", ctx.data["nationalities_flag"][player_nationality]).attr("class", "flag")
-    player_identity_data.append("span").text(`Rating: ${get_player_score(player_id, player_position)}`)
     
     // happen club logo
     left_head_card = head_card.append("div").attr("class", "left-head-card")
     left_head_card.append("img").attr("src", ctx.data["clubs_logo"][player_club])
         .attr("class", "club-logo")
+        .on("click", function() {
+            // redirect to club page
+            window.location.href = `team_page.html?club=${player_club}`
+        })
         .append("title").text(player_club)
 
-    left_head_card.append("img").attr("src", "./data/img/icon/shirt.png").attr("class", "shirt")
     // load the svg of the shirt
     // left_head_card.append("object").attr("data", "./data/img/icon/shirt2.svg").attr("class", "shirt")
 
 
-    left_head_card.append("span").text(player_number).style("color", ctx.selected_players[player_id]).attr("class", "player-number")
+    sub_head_card = player_card.append("div").attr("class", "sub-head-card")
+    sub_head_card.append("img").attr("src", "./data/img/icon/shirt.png").attr("class", "shirt")
+    sub_head_card.append("span")
+        .text(player_number)
+        .style("color", ctx.selected_players[player_id])
+        .style("font-size", d => `${player_number.toString().length > 1 ? 100 / 3 : 100 / 2}px`)
+        .attr("class", "player-number")
 
+    sub_head_card.append("span").text("some information about the player")
+        .style("text-align", "center")
+    svg_star = await load_svg_into(sub_head_card, "./data/img/icon/star.svg")
+    svg_star.attr("class", "raiting-star")
+        .attr("width", "100px")
+        .attr("height", "100px")
+        
+    
+    // "#a3a33d"
+    svg_star.select("path").style("stroke", ctx.selected_players[player_id]).style("stroke-width", 0.5)
+
+    sub_head_card.append("span")
+        .text(`${get_player_score(player_id, player_position)}`)
+        .classed("raiting", true)
+        .attr("title", "Player global score")
 
     // add the categories
     Object.keys(ctx.data["player_card_stats"]).forEach(category => {
@@ -1007,6 +1030,19 @@ function create_player_card(player_id, player_card) {
                 })
         })
     })
+}
+
+function load_svg_into(object, svg_url) {
+    return Promise.resolve(
+        d3.xml(svg_url).then(data => {
+            const importedNode = document.importNode(data.documentElement, true);
+            object.node().appendChild(importedNode);
+        
+            return d3.select(importedNode)
+        }).catch(error => {
+            console.error("Erreur lors du chargement du SVG :", error);
+        })
+    )
 }
 
 function get_indicator_id(indicator) {
@@ -1162,3 +1198,7 @@ function getPlayerImageUrl(player_name) {
     return player ? player.ImageURL : "https://upload.wikimedia.org/wikipedia/commons/d/d4/Missing_photo.svg";
 }
 
+function get_player_short_info(player) {
+
+    return `This player is ...`
+}

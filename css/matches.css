@@ -1,8 +1,7 @@
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: var(--background-color);
 }
 
 header {
@@ -13,9 +12,7 @@ header {
 }
 
 main {
-    padding-left: 3rem;
-    padding-top: 0.5rem; 
-    padding-right: 3rem;
+    padding: 14px;
 }
 
 /* Remove unused styles */
@@ -74,19 +71,17 @@ main {
 }
 
 /* Remove team comparison styles and update match details */
-.match-details {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    margin: 2rem auto;
-    max-width: 1200px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+
 
 .matches {
-    max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 5%;
+    width: 90%;
     display: block; /* Show by default now */
+}
+
+.matches h2 {
+    text-align: center;
+    color: var(--text-white-color);
 }
 
 .team-stats h2 {
@@ -204,102 +199,113 @@ main {
 }
 
 
-#back-to-map {
-    position: fixed;
-    top: 15px;
-    right: 10px;
-    align-items: center;
-    display: flex   ;
-    padding: 0.5rem;
-    font-size: 1rem;
-    width: 110px;
-    border: solid 2px var(--secondary-color);
+@keyframes highlight-zoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+    
+}
+
+menu {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+}
+
+body menu > a {
+    color: var(--secondary-color) !important;
+    background-color: var(--second-background-color);
+    text-decoration: none !important;
+    padding: 8px;
     border-radius: 8px;
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
-    background-color: #fff;
-    color: #000;
-    cursor: pointer;
+    border: solid 2px var(--secondary-color);
 }
 
-#back-to-map:hover {
-    background-color: #f0f0f0;
+menu > a { transition: all 0.3s; }
+
+menu > a:hover {
+    color: var(--accent-color) !important;
+    animation: highlight-zoom 0.3s ease-in-out 2;
 }
 
 
-#loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-}
-
-.spinner {
-    border: 8px solid #f3f3f3; /* Light gray */
-    border-top: 8px solid #333; /* Dark gray */
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1.5s linear infinite;
-    margin-bottom: 1rem;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
 
 
 /* Matches table */
-#matches-table {
-    width: 100%;
-    table-layout: fixed;
+
+table#matches-table {
+    width: 90%;
+    min-width: 320px;
     border-collapse: collapse;
-    margin-top: 1rem;
-    font-size: 0.9em;
+    margin: 20px auto;
+    height: fit-content;
+    user-select: none;
 }
 
-#matches-table th,
-#matches-table td {
-    padding: 12px 8px;
-    text-align: center;
-    align-content: center;
-    border-bottom: 1px solid #ddd;
+table#matches-table th {
+    background-color: var(--table-color);
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 12px;
+    text-align: left;
+    cursor: pointer;
 }
 
-#matches-table th {
-    background-color: #333;
-    color: white;
-    font-weight: bold;
+table#matches-table th:first-child {
+    border-top-left-radius: 6px;
 }
 
-#matches-table thead {
-    position: sticky;
-    top: 0;
-    background-color: #333;
-    color: white;
-    z-index: 1;
+table#matches-table th:last-child {
+    border-top-right-radius: 6px;
 }
 
-#matches-table tr:hover {
-    background-color: #f5f5f5;
-    cursor: default;
+table#matches-table tr[is-visible="true"]:last-child td:first-child {
+    border-bottom-left-radius: 6px;
 }
 
-#matches-table td.win {
-    color: #28a745;
-    font-weight: bold;
+table#matches-table tr[is-visible="true"]:last-child td:last-child {
+    border-bottom-right-radius: 6px;
 }
 
-#matches-table td.loss {
-    color: #dc3545;
-    font-weight: bold;
+table#matches-table tbody tr[is-visible="true"] {
+    transition: all 0.3s;
+    font-weight: 400;
+    color: var(--text-white-color);
+    background-color: var(--second-background-color);
+    border: none;
+    cursor: pointer;
+}
+
+table#matches-table tr[is-visible="true"].selected {
+    background-color: var(--selected-color);
+    color: var(--selected-text-color);
+    border: none;
+}
+
+table#matches-table tbody tr:hover {
+    filter: brightness(1.8);
+    transform: scale(1.02);
+    cursor: pointer;
+    border: none;
+}
+
+table#matches-table td {
+    padding: 6px 12px;
+    border: none;
+    height: 42px;
+}
+
+table#matches-table td img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 /* Hide matches section by default */
@@ -309,11 +315,13 @@ main {
 
 /* Match details */
 .match-details {
-    background: white;
-    padding: 2rem;
+    background: var(--second-background-color);
+    padding: 14px;
     border-radius: 8px;
-    margin-top: 2rem;
+    margin: 14px auto;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: var(--text-white-color);
+    max-width: 1200px;
 }
 
 .match-header {
@@ -362,15 +370,6 @@ main {
     margin-top: 2rem;
 }
 
-.possession-bar {
-    height: 30px;
-    background: #f0f0f0;
-    border-radius: 15px;
-    margin: 1rem 0;
-    position: relative;
-    overflow: hidden;
-}
-
 .possession-bar::before {
     content: '';
     position: absolute;
@@ -388,7 +387,7 @@ main {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    color: #666;
+    color: var(--text-white-color);
     font-weight: bold;
     font-size: 1rem;
     text-align: center;
@@ -413,10 +412,12 @@ main {
 .possession-bar {
     flex-grow: 1;
     height: 30px;
-    background: #f0f0f0;
+    background: var(--background-color);
     border-radius: 15px;
     position: relative;
     overflow: hidden;
+    color: var(--text-white-color);
+    margin: 1rem 0;
 }
 
 .possession-bar::before {
@@ -445,24 +446,24 @@ main {
     grid-template-columns: 1fr 2fr 1fr;
     align-items: center;
     padding: 0rem;
-    background: #f8f8f8;
+    background: var(--background-color);
     border-radius: 4px;
     text-align: center;
 }
 
 .stat-item .home-value {
     font-weight: bold;
-    color: var(--secondary-color);
+    color: var(--accent-color);
 }
 
 .stat-item .away-value {
     font-weight: bold;
-    color: var(--secondary-color);
+    color: var(--accent-color);
 }
 
 .stat-item .stat-label {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-light-color);
 }
 
 .cards-section {
@@ -486,12 +487,13 @@ main {
     background: #ff0000;
 }
 
-/* Make matches table rows clickable */
-#matches-table tr {
-    cursor: pointer;
+h1 {
+    margin: -38px 0 38px 0;
 }
 
-#matches-table tr:hover {
+/* Make matches table rows clickable */
+
+tr:ho#matches-table er {
     background-color: var(--accent-color-light);
 }
 
@@ -503,10 +505,10 @@ main {
 
 .back-button button {
     padding: 0.5rem 1rem;
-    background: var(--shadow-color);
+    background: var(--background-color);
     border: none;
     border-radius: 4px;
-    color: white;
+    color: var(--text-white-color);
     cursor: pointer;
     font-size: 1rem;
 }

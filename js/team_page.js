@@ -1239,10 +1239,10 @@ function page1_anim(setup_start) {
                     .delay(j * 150 + i * 300)
                     .style("transform", "rotate(180deg) scale(0.5)")
                     .transition()
-                    .duration(300)
+                    .duration(250)
                     .style("transform", "rotate(360deg) scale(0.5)")
                     .transition()
-                    .duration(500)
+                    .duration(400)
                     .delay(10 * j)
                     .style("transform")
             }

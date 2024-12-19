@@ -17,15 +17,10 @@
         <div class="spinner"></div>
         <p>Loading data, please wait...</p>
     </div>
-    <div class="top-controls">
-        <menu>
-            <a href="index.html" class="material-symbols-outlined back-to-map" title="Back to map">explore</a>
-            <a href="player.html" class="material-symbols-outlined view-players" title="View players">person</a>
-        </menu>
-    </div>
-    <header>
-        <h1>Match Details</h1>
-    </header>
+    <menu>
+        <a href="index.html" class="material-symbols-outlined back-to-map" title="Back to map">explore</a>
+        <a href="player.html" class="material-symbols-outlined view-players" title="View players">person</a>
+    </menu>
 
     <main>
         <div class="matches">
@@ -42,6 +37,8 @@
                 <tbody id="matches-list">
                 </tbody>
             </table>
+
+            <div id="pagination"></div>
         </div>
 
         <div class="match-details">
@@ -55,6 +52,8 @@
                     <div class="home-goals"></div>
                 </div>
                 <div class="match-score">
+                    <h1>Match Details</h1>
+
                     <div class="date"></div>
                     <div class="score">
                         <span class="home-score"></span>

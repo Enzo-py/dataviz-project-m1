@@ -155,6 +155,7 @@ function updateMatchesList() {
     matchesListElement.innerHTML = "";
     teamMatches.forEach(match => {
         const row = document.createElement("tr");
+        row.setAttribute("is-visible", "true");
         const homeScore = parseInt(match.home_team_goal_count);
         const awayScore = parseInt(match.away_team_goal_count);
         const currentTeam = urlParams.get('team');
@@ -171,6 +172,8 @@ function updateMatchesList() {
         });
         matchesListElement.appendChild(row);
     });
+
+    pagination(false);
 }
 // Helper function to get the team's league
 function getTeamLeague(teamName, season) {
@@ -324,5 +327,123 @@ function updateGoalTimings(containerClass, timings) {
     });
 }
 
+function pagination(animation) {
+    var table = document.querySelector('table#matches-table');
+    var rows = table.querySelectorAll('tr[is-visible="true"]');
+    var rpp = 15 - 1; // rows per page
+    var rows_length = rows.length;
 
+    for (var i = 0; i < rows_length; i++) {
+        if (i > rpp) {
+            rows[i].style.display = 'none';
+        }
+    }
+
+    var pageCount = Math.ceil((rows_length - 1) / rpp);
+    var pagination = document.getElementById('pagination');
+
+    // empty the pagination
+    while (pagination.firstChild) {
+        pagination.removeChild(pagination.firstChild);
+    }
+
+    for (var i = 0; i < pageCount; i++) {
+        var page = document.createElement('span');
+        if (i == 1) {
+            dots_page = document.createElement('span');
+            dots_page.innerHTML = '...';
+            dots_page.style.display = 'none';
+            dots_page.setAttribute('id', 'dots_page_start');
+            dots_page.classList.add('dots_page');
+            pagination.appendChild(dots_page);
+        }
+        if (i == pageCount - 1) {
+            dots_page = document.createElement('span');
+            dots_page.innerHTML = '...';
+            dots_page.style.display = 'none';
+            dots_page.setAttribute('id', 'dots_page_end');
+            dots_page.classList.add('dots_page');
+            pagination.appendChild(dots_page);
+        }
+        page.innerHTML = i + 1;
+        page.setAttribute('id', 'page' + (i + 1));
+        page.onclick = function () {
+            var p = parseInt(this.innerHTML);
+
+            // deselect all other pages and select the 3 pages around the current page
+            for (var j = 1; j <= pageCount; j++) {
+                if (j != p) {
+                    document.getElementById('page' + j).removeAttribute('class');
+                }
+
+                if (j < p - 3 || j > p + 3) {
+                    document.getElementById('page' + j).style.display = 'none';
+                } else {
+                    document.getElementById('page' + j).style.display = '';
+                }
+            }
+            this.classList.add('selected');
+            
+            for (var j = 0; j < rows_length; j++) {
+                if (j >= rpp * (p - 1) && j < rpp * p) {
+                    rows[j].style.display = '';
+                } else {
+                    rows[j].style.display = 'none';
+                }
+            }
+
+            // si la dernière page n'est pas afficher, on l'affiche ainsi que ...
+            if (p < pageCount - 3) {
+                document.getElementById('dots_page_end').style.display = '';
+                document.getElementById('page' + pageCount).style.display = '';
+            } else if (pageCount > 6) {
+                document.getElementById('dots_page_end').style.display = 'none';
+            }
+            if (p > 4) {
+                document.getElementById('dots_page_start').style.display = '';
+                document.getElementById('page1').style.display = '';
+
+            // vérifier s'il y  a suffisamment de pages pour afficher les ...
+            } else if (pageCount > 6) {
+                document.getElementById('dots_page_start').style.display = 'none';
+            }
+        }
+        pagination.appendChild(page);
+    }
+
+    // select the first page
+    if (document.getElementById('page1') != null) document.getElementById('page1').click();
+
+    if (animation !== undefined && animation) {
+        // anim visible tr sur la current page
+        current_page_tr = d3.selectAll("tr[is-visible='true']").filter(function() {
+            return this.style.display != 'none'
+        })
+        current_page_tr.each(function(d, i) {
+            var tr = d3.select(this);
+            delay = i;
+            tr.style("transition", "none").style("transform", "scale(0)").style("transform-origin", "top").style("display", "none")
+                .transition()
+                .duration(500)
+                .delay(delay * 40)
+                .style("display", "")
+                .style("transform", "scale(1.02)")
+                .transition()
+                .duration(200)
+                .style("transform")
+                .style("transition", "all 0.3s")
+        });
+
+        pagination = d3.select("#pagination")
+        pagination.style("transform", "scale(0)").style("transform-origin", "left")
+            .transition()
+            .delay(100 * rpp + 400)
+            .duration(300)
+            .style("transform", "scale(1.04)")
+            .transition()
+            .duration(100)
+            .style("transform")
+    }
+    
+}
 

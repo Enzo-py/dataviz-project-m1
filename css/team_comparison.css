@@ -6,9 +6,12 @@ body {
 }
 
 main {
-    padding-left: 3rem;
-    padding-top: 0.5rem; 
-    padding-right: 3rem;
+    padding: 14px;
+}
+
+main > * {
+    width: 90%;
+    margin: 0 auto;
 }
 
 @keyframes highlight-zoom {
@@ -127,7 +130,7 @@ menu > a:hover {
 
 .comparison-results {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-top: 14px;
 }
 
@@ -135,7 +138,7 @@ menu > a:hover {
     background-color: var(--second-background-color);
     padding: 1rem;
     border-radius: 8px;
-    width: 45%;
+    width: calc(50% - 30px);
     margin-top: 14px;
 }
 
@@ -245,29 +248,6 @@ menu > a:hover {
     color: #000000;
 }
 
-
-#back-to-map {
-    position: fixed;
-    top: 15px;
-    right: 10px;
-    align-items: center;
-    display: flex   ;
-    padding: 0.5rem;
-    font-size: 1rem;
-    width: 110px;
-    border: solid 2px var(--secondary-color);
-    border-radius: 8px;
-    box-shadow: 0 3px 3px 0 var(--shadow-color);
-    background-color: #fff;
-    color: #000;
-    cursor: pointer;
-}
-
-#back-to-map:hover {
-    background-color: #f0f0f0;
-}
-
-
 #loading-screen {
     position: fixed;
     top: 0;
@@ -297,40 +277,66 @@ menu > a:hover {
     100% { transform: rotate(360deg); }
 }
 
+.matches h2 { color: var(--text-white-color); }
 
 /* Matches table */
 #matches-table {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
-    margin-top: 1rem;
     font-size: 0.9em;
+    color: var(--text-white-color);
+    margin-top: 14px;
 }
+
+#matches-table th:nth-child(1) {
+    border-top-left-radius: 8px;
+}
+
+#matches-table th:nth-last-child(1) {
+    border-top-right-radius: 8px;
+}
+
+#matches-table tr:last-child td:nth-child(1) {
+    border-bottom-right-radius: 8px;
+}
+
+#matches-table tr:last-child td:nth-last-child(1) {
+    border-bottom-left-radius: 8px;
+}
+
 
 #matches-table th,
 #matches-table td {
     padding: 12px 8px;
     text-align: center;
     align-content: center;
-    border-bottom: 1px solid #ddd;
+    border: 1px solid #333;
 }
 
 #matches-table th {
     background-color: #333;
+    border-color: var(--second-background-color);
     color: white;
     font-weight: bold;
 }
 
 #matches-table thead {
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     background-color: #333;
     color: white;
     z-index: 1;
 }
 
-#matches-table tr:hover {
-    background-color: #f5f5f5;
+#matches-table tbody tr {
+    transition: all 0.3s;
+    background-color: var(--second-background-color);
+}
+
+#matches-table tbody tr:hover {
+    filter: brightness(1.1);
+    transform: scale(1.01);
     cursor: default;
 }
 
@@ -347,4 +353,8 @@ menu > a:hover {
 /* Hide matches section by default */
 .matches {
     display: none; /* Hide by default */
+    padding: 14px;
+    background-color: var(--second-background-color);
+    border-radius: 8px;
+    margin-top: 14px;
 }

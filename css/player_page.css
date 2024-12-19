@@ -114,35 +114,6 @@ body menu {
     object-fit: cover;
 }
 
-#pagination {
-    display: flex;
-    margin: 10px 5%;
-    width: 90%;
-    column-gap: 4px;
-    user-select: none;
-}
-
-#pagination span {
-    padding: 4px 8px;
-    border-radius: 3px;
-    background-color: #555;
-    color: var(--text-white-color);
-    cursor: pointer;
-}
-
-#pagination span.selected {
-    background-color: var(--selected-color);
-    color: var(--selected-text-color);
-}
-
-#pagination span.dots_page {
-    padding: 4px 8px;
-    border-radius: 3px;
-    background-color: #333;
-    color: #9f9f9f;
-    cursor: auto;
-}
-
 .players-tags {
     display: flex;
     margin: 20px 5%;
@@ -208,7 +179,7 @@ body menu {
     transition: all 0.3s;
     width: calc(50% - 10px);
     border: solid 4px;
-
+    position: relative;
     flex-wrap: wrap;
     flex-direction: row;
     align-items: flex-start;
@@ -225,6 +196,7 @@ body menu {
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
+    height: 150px;
 }
 
 .players-card .player-card .head-card .player-identity {
@@ -243,6 +215,7 @@ body menu {
     font-weight: 700;
     font-size: 4.5rem;
     text-shadow: 0 0 1px var(--shadow-color);
+    left: (10% + 45px);
 }
 
 .players-card .player-card .head-card .player-identity .player-identity-data {
@@ -284,8 +257,44 @@ body menu {
     /* margin-bottom: 10px; */
 }
 
+.sub-head-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 20%;
+    margin-top: -30px;
+    padding: 10px 0;
+    border-top: solid 3px var(--background-color);
+    border-bottom: solid 3px var(--background-color);
+}
+
+.sub-head-card img.shirt {
+    filter: invert(0.2);
+}
+
+.sub-head-card .player-number {
+    position: absolute;
+    font-weight: 900;
+    left: calc(20% + 6px);
+    width: 100px;
+    display: block;
+    text-align: center;
+}
+
+.sub-head-card .raiting {
+    position: absolute;
+    width: 100px;
+    display: block;
+    text-align: center;
+    margin-bottom: -8px;
+    font-size: 30px;
+    right: calc(20% + 10px - 4px); 
+}
+
 .players-card .player-card .category {
-    width: calc(50% - 15px);
+    width: calc(33% - 30px);
     display: flex;
     flex-direction: column;
     align-items: center;
