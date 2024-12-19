@@ -170,7 +170,6 @@ function updateMatchesList() {
 
     if (allMatches.length > 0) {
         allMatches.forEach((match, i) => {
-            console.log("Match: eeeeeeeeeeeeee", match);
             const row = document.createElement("tr");
             const homeScore = parseInt(match.home_team_goal_count);
             const awayScore = parseInt(match.away_team_goal_count);
