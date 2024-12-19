@@ -50,6 +50,10 @@
                 </div>
             </menu>
 
+            <div class="current-filters">
+                <!-- span of the filters -->
+            </div>
+
             <menu class="redirections">
                 <a href="index.html" class="material-symbols-outlined back-to-map" title="go back to map">explore</a>
                 <a href="team_page.html" class="material-symbols-outlined back-to-team" title="go back to team">sports_soccer</a>
@@ -146,6 +150,7 @@
 
     <script>
         const filter_page = document.querySelector('.filter-options');
+        const filters_feedback = document.querySelector('.current-filters');
         const filters = {
             position: null,
             nationality: null,
@@ -192,6 +197,21 @@
 
         function filter_position(value) {
             filters.position = value == 'all' ? null : value
+
+            span_filter = filters_feedback.querySelector(`span[filter-category='position']`)
+            if (span_filter === null && value !== 'all') {
+                span_filter = document.createElement('span')
+                span_filter.setAttribute('filter-category', 'position')
+                span_filter.setAttribute('filter-value', value)
+                span_filter.addEventListener('click', (event) => remove_filter(event.target))
+                span_filter.textContent = "Position: " + value
+                filters_feedback.appendChild(span_filter)
+            } else {
+                span_filter.textContent = "Position: " + value
+                span_filter.setAttribute('filter-value', value)
+                if (value === 'all') span_filter.remove()
+            }
+
             filter()
             if (document.querySelectorAll('tr[is-visible="true"]').length === 0) {
                 setTimeout(() => {
@@ -212,6 +232,22 @@
 
         function filter_national(value) {
             filters.nationality = value == 'all' ? null : value
+            span_filter = filters_feedback.querySelector(`span[filter-category='nationality']`)
+            
+            if (span_filter === null && value !== 'all') {
+                span_filter = document.createElement('span')
+                span_filter.setAttribute('filter-category', 'nationality')
+                span_filter.setAttribute('filter-value', value)
+                span_filter.addEventListener('click', (event) => remove_filter(event.target))
+                span_filter.textContent = "Nationality: " + value
+                filters_feedback.appendChild(span_filter)
+            } else {
+                span_filter.textContent = "Nationality: " + value
+                span_filter.setAttribute('filter-value', value)
+                if (value === 'all') span_filter.remove()
+
+            }
+
             filter()
 
             if (document.querySelectorAll('tr[is-visible="true"]').length === 0) {
@@ -231,13 +267,70 @@
             }
         }
 
+        function remove_filter(span_filter) {
+            category = span_filter.getAttribute('filter-category')
+            value = span_filter.getAttribute('filter-value')
+            if (category === 'club') {
+                filters.club = filters.club.filter(c => c !== value)
+                filters.club = filters.club.length === 0 ? null : filters.club
+           
+            } else if (category === 'player') {
+                filters.player = filters.player.filter(p => p !== value)
+                filters.player = filters.player.length === 0 ? null : filters.player
+
+            } else if (category === 'position') {
+                filters.position = null
+                document.querySelector('#position').value = 'all'
+           
+            } else if (category === 'nationality') {
+                filters.nationality = null
+                document.querySelector('#nationality-select').value = 'all'
+            }
+            span_filter.remove()
+            filter()
+        }
+
         function filter_search(value) {
-            value = value.trim()
-            value = value.length > 0 ? value.toLowerCase() : null
+            value = value.trim().toLowerCase()
+            new_filter = false
+            if (value.length == 0) return
             if (search_mode === 'player') {
-                filters.player = value
+                if (filters.player === null) { filters.player = [value] }
+                else {
+                    new_filter = true
+                    if (filters.player.length >= 6) {
+                        toast('error', 'You can only filter by 6 players')
+                        return
+                    }
+                    filters.player.push(value)
+                }
             } else {
-                filters.club = value
+                // filters.club = value
+                if (filters.club === null) { filters.club = [value] }
+                else {
+                    new_filter = true
+                    if (filters.club.length >= 6) {
+                        toast('error', 'You can only filter by 6 clubs')
+                        return
+                    }
+                    filters.club.push(value)
+                }
+            }
+
+            // empty the search input
+            document.querySelector('#search').value = ''
+
+            span_filter = filters_feedback.querySelector(`span[filter-category='${search_mode}']`)
+            if (span_filter === null || new_filter) {
+                span_filter = document.createElement('span')
+                span_filter.setAttribute('filter-category', search_mode)
+                span_filter.setAttribute('filter-value', value)
+                span_filter.addEventListener('click', (event) => remove_filter(event.target))
+                span_filter.textContent = search_mode + ': ' + value
+                filters_feedback.appendChild(span_filter)
+            } else {
+                span_filter.textContent = search_mode + ': ' + value
+                span_filter.setAttribute('filter-value', value)
             }
             
             filter()
@@ -263,6 +356,7 @@
         }
 
         function filter() {
+            
             // table_filter(search, positions, clubs, nationaly)
             table_filter(filters.player, filters.position, filters.club, filters.nationality)
         }
@@ -302,7 +396,13 @@
             const url_params = new URLSearchParams(window.location.search);
             const team = url_params.get('club');
             if (team !== null) {
-                filters.club = team
+                filters.club = [team]
+                span_filter = document.createElement('span')
+                span_filter.setAttribute('filter-category', 'club')
+                span_filter.setAttribute('filter-value', team)
+                span_filter.addEventListener('click', (event) => remove_filter(event.target))
+                span_filter.textContent = "Club: " + team
+                filters_feedback.appendChild(span_filter)
                 filter()
 
                 // check if players are found

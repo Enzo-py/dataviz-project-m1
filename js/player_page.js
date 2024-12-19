@@ -1,7 +1,7 @@
 ctx = {
     data: {},
     selected_players: {},
-    rScale: {},
+    radius_scale: {},
     color_index: 0,
     distribution_chart_height: 100,
     distribution_chart_width: 300,
@@ -521,17 +521,54 @@ function sort_player_table(club, player_name, age, score, position, nationality,
     pagination(animation_pagination)
 }
 
-function table_filter(players, positions, clubs, nationality) {
+function filter_tr(tr, players, position, clubs, nationality) {
+    tr_player = tr.attr("player_name").toLowerCase()
+    tr_position = tr.attr("position").toLowerCase()
+    tr_club = tr.attr("current_club").toLowerCase()
+    tr_nationality = tr.attr("nationality").toLowerCase()
+
+    if (players !== null) {
+        is_in_players = false
+        for (let player of players) {
+            player = player.toLowerCase()
+            if (tr_player.includes(player)) {
+                is_in_players = true
+                break // if break isn't recommended, but i think the forloop is short so still more optimized
+            }
+        }
+
+        if (!is_in_players) return false
+    }
+
+    if (position !== null && tr_position !== position.toLowerCase()) return false
+
+    if (clubs !== null) {
+        is_in_clubs = false
+        for (let club of clubs) {
+            club = club.toLowerCase()
+            if (tr_club.includes(club)) {
+                is_in_clubs = true
+                break // if break isn't recommended, but i think the forloop is short so still more optimized
+            }
+        }
+
+        if (!is_in_clubs) return false
+    }
+
+    if (nationality !== null && tr_nationality !== nationality.toLowerCase()) return false
+
+    return true
+}
+
+function table_filter(players, position, clubs, nationality) {
     table = d3.select(".players-view table tbody")
     table.selectAll("tr").style("display", "none").attr("is-visible", "false")
 
-    table.selectAll("tr").filter(function() {
-        return (players === null || players.toLowerCase().includes(this.getAttribute("player_name")) || this.getAttribute("player_name").includes(players.toLowerCase())) &&
-            (positions === null || positions == this.getAttribute("position")) &&
-            (clubs === null || clubs.toLowerCase().includes(this.getAttribute("current_club")) || this.getAttribute("current_club").includes(clubs.toLowerCase())) &&
-            (nationality === null || nationality.includes(this.getAttribute("nationality")) || this.getAttribute("nationality").includes(nationality))
-    }).style("display", "").attr("is-visible", "true")
+    filtred_tr = table.selectAll("tr").filter(function() {
+        return filter_tr(d3.select(this), players, position, clubs, nationality)
+    })
 
+    filtred_tr.style("display", "").attr("is-visible", "true")
     pagination()
 }
 
@@ -561,11 +598,11 @@ function create_radar(svg_id, categories) {
     const angleSlice = 2 * Math.PI / totalAxes;
 
     // Échelle radiale
-    const rScale = d3.scaleLinear()
+    const radius_scale = d3.scaleLinear()
         .range([0, radius])
         .domain([0, config.maxValue]);
 
-    ctx.rScale[svg_id] = rScale
+    ctx.radius_scale[svg_id] = radius_scale
 
     // Grille circulaire
     svg.selectAll(".levels")
@@ -597,8 +634,8 @@ function create_radar(svg_id, categories) {
     axis.append("line")
         .attr("x1", 0)
         .attr("y1", 0)
-        .attr("x2", (d, i) => rScale(config.maxValue * 1.1) * Math.cos(angleSlice * i - Math.PI / 2))
-        .attr("y2", (d, i) => rScale(config.maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2))
+        .attr("x2", (d, i) => radius_scale(config.maxValue * 1.1) * Math.cos(angleSlice * i - Math.PI / 2))
+        .attr("y2", (d, i) => radius_scale(config.maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2))
         .style("stroke", "#555")
         .style("stroke-width", "1.5px")
         .style("transform", (d, i) => `rotate(${i * 180 / totalAxes}deg)`)
@@ -612,8 +649,8 @@ function create_radar(svg_id, categories) {
 
     axis.append("text")
         .attr("class", "legend")
-        .attr("x", (d, i) => rScale(config.maxValue * 1.25) * Math.cos(angleSlice * i - Math.PI / 2))
-        .attr("y", (d, i) => rScale(config.maxValue * 1.25) * Math.sin(angleSlice * i - Math.PI / 2))
+        .attr("x", (d, i) => radius_scale(config.maxValue * 1.25) * Math.cos(angleSlice * i - Math.PI / 2))
+        .attr("y", (d, i) => radius_scale(config.maxValue * 1.25) * Math.sin(angleSlice * i - Math.PI / 2))
         .attr("text-anchor", "middle")
         .text(d => d.replaceAll("_", " "))
         .style("font-size", "11px")
@@ -624,20 +661,20 @@ function create_radar(svg_id, categories) {
 
 }
 
-function drawRadarChart(svgId, data) {
+function populate_radar_chart(svg_id, data) {
 
-    rScale = ctx.rScale[svgId]
+    radius_scale = ctx.radius_scale[svg_id]
 
     // Ligne radar
     const radarLine = d3.lineRadial()
-        .radius(d => rScale(d.value))
+        .radius(d => radius_scale(d.value))
         .angle((d, i) => i * angleSlice)
         .curve(d3.curveLinearClosed);
 
     const totalAxes = data[0].axes.length;
     const angleSlice = 2 * Math.PI / totalAxes;
 
-    svg = d3.select(svgId).select("g")
+    svg = d3.select(svg_id).select("g")
     // Création des "blobs"
     const blobWrapper = svg.selectAll(".radarWrapper")
         .data(data)
@@ -686,8 +723,8 @@ function drawRadarChart(svgId, data) {
     //     .enter().append("circle")
     //     .attr("class", "radarCircle")
     //     .attr("r", 4)
-    //     .attr("cx", d => rScale(d.value) * Math.cos(angleSlice * d.axisIndex - Math.PI / 2))
-    //     .attr("cy", d => rScale(d.value) * Math.sin(angleSlice * d.axisIndex - Math.PI / 2))
+    //     .attr("cx", d => radius_scale(d.value) * Math.cos(angleSlice * d.axisIndex - Math.PI / 2))
+    //     .attr("cy", d => radius_scale(d.value) * Math.sin(angleSlice * d.axisIndex - Math.PI / 2))
     //     .style("fill", (d, i, nodes) => config.color(nodes[i].parentNode.__data__.__index__))        
     //     .style("fill-opacity", 0.8);
 }
@@ -856,9 +893,9 @@ function update_players_charts() {
         )
 
     // plot category  for the selected players
-    if (current_player_2021_2022.length > 0) drawRadarChart("#spider-chart-2021-2022", data_2021_2022)
-    if (current_player_2022_2023.length > 0) drawRadarChart("#spider-chart-2022-2023", data_2022_2023)
-    if (current_player_2023_2024.length > 0) drawRadarChart("#spider-chart-2023-2024", data_2023_2024)
+    if (current_player_2021_2022.length > 0) populate_radar_chart("#spider-chart-2021-2022", data_2021_2022)
+    if (current_player_2022_2023.length > 0) populate_radar_chart("#spider-chart-2022-2023", data_2022_2023)
+    if (current_player_2023_2024.length > 0) populate_radar_chart("#spider-chart-2023-2024", data_2023_2024)
 }
 
 function sum_dict(dict) {
