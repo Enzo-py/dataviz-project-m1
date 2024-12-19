@@ -273,7 +273,7 @@ function showMatchDetails(match) {
     matchDetails.querySelector('.away-team .team-name').textContent = match.away_team_name;
 
     // Update score and match info
-    matchDetails.querySelector('.date').textContent = match.date_GMT;
+    matchDetails.querySelector('.date').textContent = new Date(match.date_GMT).toLocaleDateString();
     matchDetails.querySelector('.home-score').textContent = match.home_team_goal_count;
     matchDetails.querySelector('.away-score').textContent = match.away_team_goal_count;
     matchDetails.querySelector('.stadium').textContent = match.stadium_name;
@@ -284,7 +284,7 @@ function showMatchDetails(match) {
 
     // Update attendance
     matchDetails.querySelector('.attendance span').textContent = match.attendance || 'N/A';
-    matchDetails.querySelector('.gameweek span').textContent = match["Game Week"] || 'N/A';
+    matchDetails.querySelector('.gameweek span').textContent = match.(GameWeek) || 'N/A';
     matchDetails.querySelector('.referee span').textContent = match.referee || 'N/A';
 
     // Update possession bar

@@ -278,14 +278,6 @@ function showMatchDetails(match) {
     matchDetails.querySelector('.away-score').textContent = match.away_team_goal_count;
     matchDetails.querySelector('.stadium').textContent = match.stadium_name;
     
-    // Update half-time score
-    matchDetails.querySelector('.home-ht').textContent = match.home_team_goal_count_half_time;
-    matchDetails.querySelector('.away-ht').textContent = match.away_team_goal_count_half_time;
-
-    // Update attendance
-    matchDetails.querySelector('.attendance span').textContent = match.attendance || 'N/A';
-    matchDetails.querySelector('.gameweek span').textContent = match["Game Week"] || 'N/A';
-    matchDetails.querySelector('.referee span').textContent = match.referee || 'N/A';
 
     // Update possession bar
     const possessionBar = matchDetails.querySelector('.possession-bar');

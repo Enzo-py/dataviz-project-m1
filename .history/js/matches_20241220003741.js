@@ -273,7 +273,7 @@ function showMatchDetails(match) {
     matchDetails.querySelector('.away-team .team-name').textContent = match.away_team_name;
 
     // Update score and match info
-    matchDetails.querySelector('.date').textContent = match.date_GMT;
+    matchDetails.querySelector('.date').textContent = new Date(match.date_GMT).toLocaleDateString();
     matchDetails.querySelector('.home-score').textContent = match.home_team_goal_count;
     matchDetails.querySelector('.away-score').textContent = match.away_team_goal_count;
     matchDetails.querySelector('.stadium').textContent = match.stadium_name;
