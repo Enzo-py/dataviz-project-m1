@@ -165,10 +165,10 @@
             message = `
                 <h3 class="title">Welcome to the Matches Page</h3>
                 <p>
-                    This page displays the most recent matches played. <br/>
+                    This page displays the most <span class="highlight">recent matches played</span>. <br/>
                     Because we don't come from the team page, all the matches are displayed here.
                     <br/><br/>
-                    To see more information on a match, please click on it.
+                    To see more information on a match, please <span class="action">click on it</span>.
                 </p>
             `
 
@@ -186,7 +186,7 @@
             message = `
                 <h3 class="title">Match Details</h3>
                 <p>
-                    Here you can see the details of the match you clicked on. <br/>
+                    Here you can see the <span class="highlight">details of the match</span> you clicked on. <br/>
                     You can see the score, the possession, the shots, the fouls, the cards, and more.
                     <br/><br/>
                     To go back to the matches list, click on the "← More Matches" button.
@@ -199,7 +199,7 @@
         function tuto_step_4() {
             message = `
                 <h3 class="title">Player Page</h3>
-                <p style="display: flex; gap: 4px; align-items: center;">Next, we’ll explore the players view. Click the <span class="material-symbols-outlined">person</span> icon to view them.</p>
+                <p style="display: flex; gap: 4px; align-items: center;">Next, we’ll explore the players view. <span class="action">Click the <span class="material-symbols-outlined">person</span> icon</span> to view them.</p>
 
                 <button onclick="tuto_step_5()" class="next-button">Explore!</button>
                 `
