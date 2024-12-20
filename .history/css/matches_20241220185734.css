@@ -697,6 +697,14 @@ tr:ho#matches-table er {
     z-index: -1;
 }
 
+.timeline-start,
+.timeline-end {
+    position: absolute;
+    top: -1.5rem;
+    font-weight: bold;
+    color: #ffffff; /* Change to white */
+}
+
 .timeline-start {
     left: 0;
 }

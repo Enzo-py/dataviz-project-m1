@@ -648,7 +648,6 @@ tr:ho#matches-table er {
     text-align: center;
     width: 100%;
     position: relative;
-    padding: 1rem 0;
 }
 
 .timeline-container h3 {
@@ -697,6 +696,14 @@ tr:ho#matches-table er {
     z-index: -1;
 }
 
+.timeline-start,
+.timeline-end {
+    position: absolute;
+    top: -1.5rem;
+    font-weight: bold;
+    color: #ffffff; /* Change to white */
+}
+
 .timeline-start {
     left: 0;
 }
@@ -714,6 +721,8 @@ tr:ho#matches-table er {
     align-self: flex-end;
     margin-top: 2rem;
 }
+
+/* ...existing code... */
 
 .goal-icon {
     width: 24px;

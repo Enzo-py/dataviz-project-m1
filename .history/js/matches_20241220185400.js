@@ -407,7 +407,6 @@ function generateMatchTimeline(match) {
 
     events.forEach(event => {
         const eventItem = timeline.append("div").attr("class", "timeline-event");
-        eventItem.append("img").attr("class", "goal-icon").attr("src", event.icon).attr("alt", "Goal Icon");
         eventItem.append("div").attr("class", "timeline-time").text(`${event.minute}'`);
         eventItem.append("div").attr("class", "timeline-description").text(event.description);
 
@@ -444,8 +443,7 @@ function parseGoalTimings(goalTimings, teamName) {
     const timings = goalTimings.split(',').map(t => parseInt(t.trim()));
     return timings.map(time => ({
         minute: time,
-        description: `Goal by ${teamName}`,
-        icon: 'https://www.svgrepo.com/show/17072/football.svg'
+        description: `Goal by ${teamName}`
     }));
 }
 
