@@ -24,7 +24,7 @@ menu.right {
 
 menu.right > * {
     border: solid 2px var(--secondary-color);
-    background-color: #fff;
+    background-color: var(--second-background-color);
     padding: 6px;
     border-radius: 8px;
     color: var(--secondary-color);
@@ -40,7 +40,7 @@ menu.right > button {
 
 menu.right > button a {
     cursor: pointer;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     color: var(--secondary-color) !important;
     text-decoration: none !important;
 }
@@ -50,11 +50,11 @@ menu.right > button a#matches-button:hover {
 }
 
 menu.right > button a#players-button:hover {
-    transform: scale(1.4);
+    transform: scale(1.2);
 }
 
 menu.right > button a#compare-button:hover {
-    transform: scale(1.4);
+    transform: scale(1.2);
 }
 
 .search-blob {
@@ -386,13 +386,31 @@ menu {
     cursor: pointer;
     color: var(--text-white-color);
     padding: 10px;
-    border-radius: 4px;
+    border-radius: 50%;
     cursor: pointer;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     column-gap: 10px;
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
+    animation: zoom-spawn 1s ease-in-out 1 forwards;
+    animation-delay: 0.5s;
+    transform: scale(0);
+}
+
+@keyframes zoom-spawn {
+    0% {
+        transform: scale(0);
+    }
+    65% {
+        transform: scale(1.1);
+    }
+    80% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
