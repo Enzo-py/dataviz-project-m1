@@ -351,12 +351,13 @@
         }
 
         function tuto_step_6() {
-            d3.select(".pop-up-wrapper").remove()
             page_tutorial_ended = true
 
             compare_team = d3.select(".compare-teams").node()
             team_name = d3.select("#team-name").text()
             compare_team.href = "team_comparison.html?club=" + team_name + "&tutorial=true"
+
+            d3.select(".pop-up-wrapper").remove()
         }
 
         function highlight_text_animation(selection) {
