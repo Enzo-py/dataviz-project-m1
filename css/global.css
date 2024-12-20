@@ -255,6 +255,7 @@ body, body * {
     overflow: auto;
     position: fixed;
     z-index: 9999;
+    transition: all 0.5s ease-in-out;
 }
 
 .pop-up .title {

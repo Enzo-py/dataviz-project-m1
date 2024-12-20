@@ -53,9 +53,9 @@ function pop_up_confirm(message, callback) {
 
     document.body.appendChild(pop_up_wrapper);
 
-    pop_up_background.onclick = function() {
-        pop_up_wrapper.remove();
-    };
+    // pop_up_background.onclick = function() {
+    //     pop_up_wrapper.remove();
+    // };
 
     // set pop_up on the middle
     var pop_up_height = pop_up.clientHeight;
@@ -102,9 +102,9 @@ function pop_up_next(message, callback, no_background) {
 
     document.body.appendChild(pop_up_wrapper);
 
-    pop_up_background.onclick = function() {
-        pop_up_wrapper.remove();
-    };
+    // pop_up_background.onclick = function() {
+    //     pop_up_wrapper.remove();
+    // };
 
     // set pop_up on the middle
     var pop_up_height = pop_up.clientHeight;
@@ -144,4 +144,20 @@ function pop_up_showcase(message) {
     pop_up.style.left = 'calc(50% - ' + pop_up_width / 2 + 'px)';
 
     return pop_up_wrapper;
+}
+
+function highlight_tr(tr) {
+    tr.transition()
+        .duration(500)
+        .style("transform", "scale(1.1)")
+        .style("filter", "brightness(1.8)")
+        .transition()
+        .duration(500)
+        .style("transform", "scale(1.02)")
+        .style("filter", "brightness(1.2)")
+        .on("end", function() {
+            if (animation_running) {
+                highlight_tr(tr)
+            }
+        })
 }

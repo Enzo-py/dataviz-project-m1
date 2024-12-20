@@ -175,7 +175,8 @@ function updateMatchesList() {
         row.addEventListener('click', () => showMatchDetails(match));
         row.style.cursor = "pointer";
         row.addEventListener("click", () => {
-            window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${match.home_team_name}`;
+            tuto = waiting_to_click_on_match ? "&tutorial-part2=true" : ""
+            window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${match.home_team_name}` + tuto
         });
         matchesListElement.appendChild(row);
         // d3.select(row).style("transform", "scale(0)").style("transform-origin", "top").style("transition", "none")
@@ -399,11 +400,6 @@ function showMatchDetails(match) {
         .style("transform", "scale(1.02)")
         .transition()
         .duration(200)
-
-    if (waiting_to_click_on_match) {
-        waiting_to_click_on_match = false
-        tuto_step_3()
-    }
 }
 
 function updateStatItem(grid, type, homeValue, awayValue) {

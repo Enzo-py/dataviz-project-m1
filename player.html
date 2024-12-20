@@ -170,7 +170,7 @@
         const filter_button = document.querySelector('.filters span')
 
         let sort_index = 3
-
+        let = tutorial_running = false
         let search_mode = 'player'
 
         function show_filter_page() {
@@ -416,7 +416,135 @@
                 button.href = `team_page.html?club=${team}`
             }
             sort_player_table(sorts['club'], sorts['player_name'], sorts['age'], sorts['score'], sorts['position'], sorts['nationality'], true)
+
+            tutorial_running = url_params.get("tutorial") == "true"
+            if (tutorial_running) {
+                tuto_step_1()
+            }
         })
+
+        function tuto_step_1() {
+            message = `
+                <h3 class="title">Welcome to the Players Page</h3>
+                <p>
+                    This page displays the players of the league. <br/>
+                    You can filter them by position, nationality, and search for a specific player or club. <br/>
+
+                    <br/><br/>
+                    You can also sort the players by clicking on the headers of the table.
+                </p>
+            `
+            pop_up_next(message, tuto_step_2)
+        }
+
+        function tuto_step_2() {
+            message = `
+                <h3 class="title">Choose a player</h3>
+                <p>
+                    To go further and see the stats of a player, click on the player's name.
+                </p>
+            `
+            pop_up_wrapper = pop_up_showcase(message)
+            pop_up = pop_up_wrapper.querySelector('.pop-up')
+            translate_x = window.innerWidth - pop_up.getBoundingClientRect().width - 20 - pop_up.getBoundingClientRect().x
+            translate_y = window.innerHeight - pop_up.getBoundingClientRect().height - 20 - pop_up.getBoundingClientRect().y
+            pop_up.style.transform = `translate(${translate_x}px, ${translate_y}px)`
+
+            tr = d3.selectAll(".players-table tbody tr[is-visible='true']").nodes().filter(tr => tr.style.display !== 'none')[0]
+            animation_running = true
+            highlight_tr(d3.select(tr))
+
+            interval_id = setInterval(() => {
+                tags = d3.select('.players-tags > span')
+                if (tags.node() !== null) {
+                    tuto_step_3()
+                    clearInterval(interval_id)
+                }
+            }, 500)
+        }
+
+        function tuto_step_3() {
+            message = `
+                <h3 class="title">Player Stats per Season</h3>
+                <p>
+                    The 3 radar charts display the stats of the player for the last 3 seasons. <br/>
+                    You can see the player's performance in different areas.
+                    <br/><br/>
+                    Each area represents a agglomeration of true indicators of the player's performance (such as the number of goals scored).
+                </p>
+            `
+            d3.select('.pop-up-wrapper').remove()
+
+            // scroll to radar charts
+            window.scrollTo({
+                top: document.querySelector('.spider-charts').offsetTop - 300,
+                behavior: 'smooth'
+            })
+
+            pop_up_next(message, tuto_step_4)
+        }
+
+        function tuto_step_4() {
+            message = `
+                <h3 class="title">Player Card</h3>
+                <p>
+                    The player card displays the player's information. <br/>
+                    You can see the player's performences average on the last 3 seasons throught 19 indicators.
+                    <br/><br/>
+
+                    This indicators are used to calculate the player's global score.
+                </p>
+                <p>&nbsp;</p>
+                <p>
+                    By hovering the player's indicators, you can see the player's performance related to <br/>
+                    the distribution of the same performance of all the players.
+                </p>
+            `
+
+            setTimeout(() => {
+            
+                // scroll to player card
+                window.scrollTo({
+                    top: document.querySelector('.players-card').offsetTop - 100,
+                    behavior: 'smooth'
+                })
+
+                pop_up_next(message, tuto_step_5)
+            }, 3000)
+        }
+
+        function tuto_step_5() {
+            message = `
+                <h3 class="title">End of the Tutorial</h3>
+                <p style="text-align: center;">
+                    You have reached the end of the tutorial. <br/>
+                    Now, you are a true expert of our DataViz platform FootyViz. <br/><br/>
+                    Enjoy exploring the data!
+                </p>
+
+                <br/>
+                <br/>
+                <i>Their is so much more to discover, but we let you explore it by yourself.</i>
+                <br/>
+                <button onclick="end_tutorial()" class="yes-button">End Tutorial</button>
+            `
+            
+            setTimeout(() => {
+                // scroll to the top
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                })
+                
+                pop_up_showcase(message)
+            }, 4500)
+        }
+
+        function end_tutorial() {
+            d3.select('.pop-up-wrapper').remove()
+            tutorial_running = false
+        }
+
     </script>
 </body>
 </html>

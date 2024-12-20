@@ -153,6 +153,11 @@
             tuto_step_1()
         }
 
+        if (url.searchParams.get("tutorial-part2") == "true") {
+            tutorial_running = true
+            tuto_step_3()
+        }
+
         function tuto_step_1() {
             message = `
                 <h3 class="title">Welcome to the Matches Page</h3>
@@ -175,22 +180,48 @@
         }
 
         function tuto_step_3() {
-            alert("Please click on a match to see more details.")
+            message = `
+                <h3 class="title">Match Details</h3>
+                <p>
+                    Here you can see the details of the match you clicked on. <br/>
+                    You can see the score, the possession, the shots, the fouls, the cards, and more.
+                    <br/><br/>
+                    To go back to the matches list, click on the "← More Matches" button.
+                </p>
+            `
+
+            pop_up_next(message, tuto_step_4)
         }
 
-        function highlight_tr(tr) {
-            tr.transition()
-                .duration(500)
-                .style("transform", "scale(1.1)")
-                .style("filter", "brightness(1.8)")
+        function tuto_step_4() {
+            message = `
+                <h3 class="title">Player Page</h3>
+                <p style="display: flex; gap: 4px; align-items: center;">Next, we’ll explore the players view. Click the <span class="material-symbols-outlined">person</span> icon to view them.</p>
+
+                <button onclick="tuto_step_5()" class="next-button">Explore!</button>
+                `
+
+            pop_up_showcase(message)
+        }
+
+        function tuto_step_5() {
+            button = d3.select(".view-players")
+            animation_running = true
+            highlight_element(button)
+
+            button.node().href = "player.html?tutorial=true"
+            d3.select(".pop-up-wrapper").remove()
+        }
+
+        function highlight_element(element) {
+            element.transition()
+                .duration(400)
+                .style("border-color", "var(--accent-color)")
                 .transition()
-                .duration(500)
-                .style("transform", "scale(1.02)")
-                .style("filter", "brightness(1.2)")
+                .duration(400)
+                .style("border-color", "")
                 .on("end", function() {
-                    if (animation_running) {
-                        highlight_tr(tr)
-                    }
+                    if (animation_running) highlight_element(element)
                 })
         }
     </script>
