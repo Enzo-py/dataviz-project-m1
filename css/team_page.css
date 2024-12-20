@@ -106,8 +106,13 @@ main {
 }
 
 #team-league {
-    margin-top: 0.5rem; 
+    margin: 14px 0;
     font-size: 1.2em;
+}
+
+#team-league #league-link {
+    color: var(--text-white-color) !important;
+    text-decoration: none !important;
 }
 
 #team-rank {
