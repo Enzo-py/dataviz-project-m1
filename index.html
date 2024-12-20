@@ -52,7 +52,6 @@
                 toast("error", "The tutorial is already running.")
                 return
             }
-            tutorial_running = true
             pop_up_confirm(`<h3 class="title">Tutorial</h3>Would you like to start the tutorial?`, tuto_step_1);
         }
 
@@ -69,7 +68,52 @@
                 </p>
 
             `
+            tutorial_running = true
             pop_up_next(message, tuto_step_2);
+
+            d3.selectAll(".logo-city .club-logo")
+                .on("click", function(event) {
+                    event.preventDefault()
+
+                    url = "team_page.html?club=" + this.getAttribute("title") + "&tutorial=true"
+                    window.location.href = url
+                })
+
+            d3.select("a.material-symbols-outlined[title='Matches']").on("click", function(event) {
+                event.preventDefault()
+                url = "matches.html"
+
+                pop_up_confirm("<h3 class='title'>Warning!</h3>You are quitting the tutorial. Do you want to continue?", () => {
+                    window.location.href = url
+                })
+            })
+
+            d3.select("a.material-symbols-outlined[title='View players']").on("click", function(event) {
+                event.preventDefault()
+                url = "player.html"
+
+                pop_up_confirm("<h3 class='title'>Warning!</h3>You are quitting the tutorial. Do you want to continue?", () => {
+                    window.location.href = url
+                })
+            })
+
+            d3.select("a.material-symbols-outlined[title='compare teams']").on("click", function(event) {
+                event.preventDefault()
+                url = "team_comparison.html"
+
+                pop_up_confirm("<h3 class='title'>Warning!</h3>You are quitting the tutorial. Do you want to continue?", () => {
+                    window.location.href = url
+                })
+            })
+
+            d3.select("a.material-symbols-outlined[title='League']").on("click", function(event) {
+                event.preventDefault()
+                url = "league.html?league=Bundesliga"
+
+                pop_up_confirm("<h3 class='title'>Warning!</h3>You are quitting the tutorial. Do you want to continue?", () => {
+                    window.location.href = url
+                })
+            })
         }
 
         function tuto_step_2() {
@@ -257,41 +301,10 @@
             distance_to_top = pop_up.getBoundingClientRect().top - 75
             pop_up.style.transform = `translate(${distance_to_right}px, ${-distance_to_top}px)`
 
-            d3.selectAll(".logo-city .club-logo")
-                .on("click", function(event) {
-                    event.preventDefault()
-
-                    url = "team_page.html?club=" + this.getAttribute("title") + "&tutorial=true"
-                    window.location.href = url
-                })
-
-            d3.select("a.material-symbols-outlined[title='Matches']").on("click", function(event) {
-                event.preventDefault()
-                url = "matches.html"
-
-                pop_up_confirm("<h3 class='title'>Warning!</h3>You are quitting the tutorial. Do you want to continue?", () => {
-                    window.location.href = url
-                })
-            })
-
-            d3.select("a.material-symbols-outlined[title='View players']").on("click", function(event) {
-                event.preventDefault()
-                url = "player.html"
-
-                pop_up_confirm("<h3 class='title'>Warning!</h3>You are quitting the tutorial. Do you want to continue?", () => {
-                    window.location.href = url
-                })
-            })
-
-            d3.select("a.material-symbols-outlined[title='compare teams']").on("click", function(event) {
-                event.preventDefault()
-                url = "team_comparison.html"
-
-                pop_up_confirm("<h3 class='title'>Warning!</h3>You are quitting the tutorial. Do you want to continue?", () => {
-                    window.location.href = url
-                })
-            })
-
+            // logo-city active force-active
+            logo_wrapper = d3.select(".logo-city.active")
+            animation_running = true
+            highlight_element(logo_wrapper)
         }
 
         function d3_pulse_animation(selection) {
@@ -314,6 +327,18 @@
                 .on("end", function() {
                     if (!stop_animation)
                         d3_pulse_animation(d3.select(this))
+                })
+        }
+
+        function highlight_element(element) {
+            element.transition()
+                .duration(400)
+                .style("border-color", "var(--accent-color)")
+                .transition()
+                .duration(400)
+                .style("border-color", "")
+                .on("end", function() {
+                    if (animation_running) highlight_element(element)
                 })
         }
     </script>

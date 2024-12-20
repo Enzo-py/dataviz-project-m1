@@ -29,6 +29,7 @@
     
     <menu>
         <a href="index.html" class="material-symbols-outlined back-to-map" title="Back to map">explore</a>
+        <a href="player.html" class="material-symbols-outlined view-players" title="View players">person</a>
         <a href="matches.html" class="material-symbols-outlined view-matches" title="View matches">sports_soccer</a>
     </menu>
 
@@ -151,7 +152,7 @@
         function tuto_step_1() {
             message = `
                 <h3 class="title">Welcome to the League Page!</h3>
-                <p>This page offer a lookup of the top teams and players in the selected league.</p>
+                <p>This page offer a lookup of the <span class="highlight">top teams and players in the selected league</span>.</p>
                 <p>&nbsp;</p>
                 <p></p>
             `
@@ -175,7 +176,7 @@
             league_block = d3.selectAll(".league-selector .league-wrapper").nodes()[3]
             league_block = d3.select(league_block)
             animation_running = true
-            highlight_element(league_block)
+            highlight_img(league_block)
 
             // for every league block if clicked:
             d3.selectAll(".league-selector .league-wrapper").on("click", function(event) {
@@ -190,7 +191,7 @@
         function tuto_step_3() {
             message = `
                 <h3 class="title">Pages Navigation</h3>
-                <p> After selecting a league, you can change the season by selecting a different year from the dropdown above.</p>
+                <p> After selecting a league, you can <span class="highlight">change the season</span> by selecting a different year from the dropdown above.</p>
                 <p>&nbsp;</p>
                 <p>You can also navigate to between player and team stats by clicking on the tabs.</p>
             `
@@ -201,7 +202,7 @@
         function tuto_step_4() {
             message = `
                 <h3 class="title">Podium</h3>
-                <p>Here you can see the top 3 teams in the league.</p>
+                <p>Here you can see the <span class="highlight">top 3 teams in the league</span>.</p>
                 <p>&nbsp;</p>
                 <p>The podium is based on points: the team with the most points is on the top.<br/>
                     A win worths 3 points, a draw 1 point, and a loss 0 points.</p>
@@ -221,7 +222,7 @@
         function tuto_step_5() {
             message = `
                 <h3 class="title">League Table</h3>
-                <p>Here you can see the full league table.</p>
+                <p>Here you can see the <span class="highlight">all the teams in the league</span> and their stats.</p>
                 <p>&nbsp;</p>
                 <p>The table is sorted by points, then by goal difference, and finally by goals scored.</p>
             `
@@ -272,20 +273,48 @@
         function tuto_step_7() {
             message = `
                 <h3 class="title">Top Players</h3>
-                <p>Here you can see the top players in the league.<br/>...</p>
+                <p>Here you can see the <span class="highlight">top players in the league</span>.<br/>
+                    They are group in different ranks: <br/> top scorers, top assists, top attackers, top midfielders, top defenders, and top goalkeepers.</p>
+                </p>
                 <p>&nbsp;</p>
                 <p>Next, let's explore the <span class="action">player view <span class="material-symbols-outlined">person</span> by clicking on its icon</span>.</p>
             `
-            pop_up_next(message, () => {})
+            pop_up_next(message, tuto_step_8)
+        }
+
+        function tuto_step_8() {
+            // higlight the player icon
+            players_href = d3.select(".view-players")
+            animation_running = true
+            highlight_element(players_href)
+
+            players_href.node().href = "player.html?tutorial=true"
+
+            window.scrollTo({
+                top: players_href.node().offsetTop - 100,
+                behavior: "smooth"
+            })
+        }
+
+        function highlight_img(element) {
+            element.transition()
+                .duration(400)
+                .style("transform", "scale(1.8)")
+                .transition()
+                .duration(400)
+                .style("transform", "scale(1)")
+                .on("end", function() {
+                    if (animation_running) highlight_img(element)
+                })
         }
 
         function highlight_element(element) {
             element.transition()
                 .duration(400)
-                .style("transform", "scale(1.3)")
+                .style("border-color", "var(--accent-color)")
                 .transition()
                 .duration(400)
-                .style("transform", "scale(1)")
+                .style("border-color", "")
                 .on("end", function() {
                     if (animation_running) highlight_element(element)
                 })
