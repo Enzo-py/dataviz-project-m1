@@ -392,9 +392,64 @@ function showMatchDetails(match) {
         .duration(200)
         .style("transform", "scale(1)")
 
-    // Remove the call to generateScoreEvolutionChart
+    // Generate score evolution chart
+    generateScoreEvolutionChart(match);
+
     // Generate match timeline
     generateMatchTimeline(match);
+}
+
+function generateScoreEvolutionChart(match) {
+    const svg = d3.select("#score-evolution-svg");
+    svg.selectAll("*").remove(); // Clear existing chart
+
+    const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+    const width = +svg.attr("width") - margin.left - margin.right;
+    const height = +svg.attr("height") - margin.top - margin.bottom;
+    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const x = d3.scaleLinear().domain([0, 90]).range([0, width]);
+    const y = d3.scaleLinear().domain([0, Math.ceil(d3.max([match.home_team_goal_count, match.away_team_goal_count]))]).range([height, 0]);
+
+    const xAxis = d3.axisBottom(x).tickFormat(d => `${d}'`);
+    const yAxis = d3.axisLeft(y).ticks(Math.ceil(d3.max([match.home_team_goal_count, match.away_team_goal_count])));
+
+    g.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", `translate(0,${height})`)
+        .call(xAxis);
+
+    g.append("g")
+        .attr("class", "axis axis--y")
+        .call(yAxis);
+
+    const line = d3.line()
+        .x(d => x(d.minute))
+        .y(d => y(d.goals))
+        .curve(d3.curveStepAfter);
+
+    const homeGoals = parseGoalTimings(match.home_team_goal_timings);
+    const awayGoals = parseGoalTimings(match.away_team_goal_timings);
+
+    // Ensure both curves go until 90 minutes
+    if (homeGoals[homeGoals.length - 1].minute < 90) {
+        homeGoals.push({ minute: 90, goals: homeGoals[homeGoals.length - 1].goals });
+    }
+    if (awayGoals[awayGoals.length - 1].minute < 90) {
+        awayGoals.push({ minute: 90, goals: awayGoals[awayGoals.length - 1].goals });
+    }
+
+    g.append("path")
+        .datum(homeGoals)
+        .attr("class", "line home-line")
+        .attr("d", line)
+        .style("stroke", "#42ca62");
+
+    g.append("path")
+        .datum(awayGoals)
+        .attr("class", "line away-line")
+        .attr("d", line)
+        .style("stroke", "#debf4f");
 }
 
 function generateMatchTimeline(match) {
@@ -410,11 +465,6 @@ function generateMatchTimeline(match) {
         eventItem.append("div").attr("class", "timeline-time").text(`${event.minute}'`);
         eventItem.append("div").attr("class", "timeline-description").text(event.description);
     });
-
-    // Draw the timeline line
-    const timelineLine = timelineContainer.append("div").attr("class", "timeline-line");
-    timelineLine.append("div").attr("class", "timeline-start").text("0'");
-    timelineLine.append("div").attr("class", "timeline-end").text("90'");
 }
 
 function parseMatchEvents(match) {

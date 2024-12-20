@@ -345,7 +345,7 @@ function showMatchDetails(match) {
         matchDetails.querySelector('.attendance span').textContent = 'N/A';
     }
     
-    //Update other details
+    //Update 
     matchDetails.querySelector('.gameweek span').textContent = match["Game Week"] || 'N/A';
     matchDetails.querySelector('.referee span').textContent = match.referee || 'N/A';
 
@@ -390,55 +390,6 @@ function showMatchDetails(match) {
         .style("transform", "scale(1.02)")
         .transition()
         .duration(200)
-        .style("transform", "scale(1)")
-
-    // Remove the call to generateScoreEvolutionChart
-    // Generate match timeline
-    generateMatchTimeline(match);
-}
-
-function generateMatchTimeline(match) {
-    const timelineContainer = d3.select("#match-timeline");
-    timelineContainer.selectAll("*").remove(); // Clear existing timeline
-
-    const events = parseMatchEvents(match);
-
-    const timeline = timelineContainer.append("div").attr("class", "timeline");
-
-    events.forEach(event => {
-        const eventItem = timeline.append("div").attr("class", "timeline-event");
-        eventItem.append("div").attr("class", "timeline-time").text(`${event.minute}'`);
-        eventItem.append("div").attr("class", "timeline-description").text(event.description);
-    });
-
-    // Draw the timeline line
-    const timelineLine = timelineContainer.append("div").attr("class", "timeline-line");
-    timelineLine.append("div").attr("class", "timeline-start").text("0'");
-    timelineLine.append("div").attr("class", "timeline-end").text("90'");
-}
-
-function parseMatchEvents(match) {
-    const events = [];
-
-    const homeGoals = parseGoalTimings(match.home_team_goal_timings, match.home_team_name);
-    const awayGoals = parseGoalTimings(match.away_team_goal_timings, match.away_team_name);
-
-    events.push(...homeGoals, ...awayGoals);
-
-    // Sort events by minute
-    events.sort((a, b) => a.minute - b.minute);
-
-    return events;
-}
-
-function parseGoalTimings(goalTimings, teamName) {
-    if (!goalTimings || goalTimings === '0') return [];
-
-    const timings = goalTimings.split(',').map(t => parseInt(t.trim()));
-    return timings.map(time => ({
-        minute: time,
-        description: `Goal by ${teamName}`
-    }));
 }
 
 function updateStatItem(grid, type, homeValue, awayValue) {
@@ -478,6 +429,7 @@ function pagination(animation) {
     var pageCount = Math.ceil((rows_length - 1) / rpp);
     var pagination = document.getElementById('pagination');
 
+    // empty the pagination
     while (pagination.firstChild) {
         pagination.removeChild(pagination.firstChild);
     }
@@ -505,6 +457,7 @@ function pagination(animation) {
         page.onclick = function () {
             var p = parseInt(this.innerHTML);
 
+            // deselect all other pages and select the 3 pages around the current page
             for (var j = 1; j <= pageCount; j++) {
                 if (j != p) {
                     document.getElementById('page' + j).removeAttribute('class');

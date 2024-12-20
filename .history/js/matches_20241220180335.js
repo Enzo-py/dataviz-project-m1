@@ -390,55 +390,6 @@ function showMatchDetails(match) {
         .style("transform", "scale(1.02)")
         .transition()
         .duration(200)
-        .style("transform", "scale(1)")
-
-    // Remove the call to generateScoreEvolutionChart
-    // Generate match timeline
-    generateMatchTimeline(match);
-}
-
-function generateMatchTimeline(match) {
-    const timelineContainer = d3.select("#match-timeline");
-    timelineContainer.selectAll("*").remove(); // Clear existing timeline
-
-    const events = parseMatchEvents(match);
-
-    const timeline = timelineContainer.append("div").attr("class", "timeline");
-
-    events.forEach(event => {
-        const eventItem = timeline.append("div").attr("class", "timeline-event");
-        eventItem.append("div").attr("class", "timeline-time").text(`${event.minute}'`);
-        eventItem.append("div").attr("class", "timeline-description").text(event.description);
-    });
-
-    // Draw the timeline line
-    const timelineLine = timelineContainer.append("div").attr("class", "timeline-line");
-    timelineLine.append("div").attr("class", "timeline-start").text("0'");
-    timelineLine.append("div").attr("class", "timeline-end").text("90'");
-}
-
-function parseMatchEvents(match) {
-    const events = [];
-
-    const homeGoals = parseGoalTimings(match.home_team_goal_timings, match.home_team_name);
-    const awayGoals = parseGoalTimings(match.away_team_goal_timings, match.away_team_name);
-
-    events.push(...homeGoals, ...awayGoals);
-
-    // Sort events by minute
-    events.sort((a, b) => a.minute - b.minute);
-
-    return events;
-}
-
-function parseGoalTimings(goalTimings, teamName) {
-    if (!goalTimings || goalTimings === '0') return [];
-
-    const timings = goalTimings.split(',').map(t => parseInt(t.trim()));
-    return timings.map(time => ({
-        minute: time,
-        description: `Goal by ${teamName}`
-    }));
 }
 
 function updateStatItem(grid, type, homeValue, awayValue) {
@@ -526,7 +477,6 @@ function pagination(animation) {
                 }
             }
 
-            // si la dernière page n'est pas afficher, on l'affiche ainsi que ...
             if (p < pageCount - 3) {
                 document.getElementById('dots_page_end').style.display = '';
                 document.getElementById('page' + pageCount).style.display = '';
@@ -537,7 +487,6 @@ function pagination(animation) {
                 document.getElementById('dots_page_start').style.display = '';
                 document.getElementById('page1').style.display = '';
 
-            // vérifier s'il y  a suffisamment de pages pour afficher les ...
             } else if (pageCount > 6) {
                 document.getElementById('dots_page_start').style.display = 'none';
             }

@@ -143,6 +143,7 @@ function updateMatchesList() {
         }
     });
 
+    // Filter matches to only include those involving the specified team
    if (urlParams.get('team') && urlParams.get('team') !== "null") {
         teamMatches = allMatches.filter(match => 
             match.home_team_name === team || match.away_team_name === team
@@ -152,11 +153,12 @@ function updateMatchesList() {
     }else{
         teamMatches = allMatches;
     }
-    //sort list
+
+    // reverse the list
     if(teamMatches){
         teamMatches.reverse();
     }
-    // Display 
+    // Display matches
     matchesListElement.innerHTML = "";
     teamMatches.forEach((match, i) => {
         const row = document.createElement("tr");
@@ -177,11 +179,20 @@ function updateMatchesList() {
             window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${match.home_team_name}` + tuto
         });
         matchesListElement.appendChild(row);
+        // d3.select(row).style("transform", "scale(0)").style("transform-origin", "top").style("transition", "none")
+        //     .transition()
+        //     .duration(500)
+        //     .delay(i * 40)
+        //     .style("transform", "scale(1.02)")
+        //     .transition()
+        //     .duration(200)
+        //     .style("transform")
+        //     .style("transition", "all 0.3s")
     });
 
     pagination(true);
 }
-
+// Helper function to get the team's league
 function getTeamLeague(teamName, season) {
     let league = null;
     if (season === "All Seasons") {
@@ -205,14 +216,16 @@ function getTeamLeague(teamName, season) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    // Get parameters from link 
     const urlParams = new URLSearchParams(window.location.search);
     const matchId = urlParams.get('match');
     const date = urlParams.get('date');
     const team = urlParams.get('team');
 
-    //  loading screen
+    // Add loading screen
     document.getElementById("loading-screen").style.display = "flex";
     load_data().then(() => {
+        // If we have a specific match to display
         if (matchId && date && team) {
             let allMatches = [];
             Object.values(ctx.matches).forEach(seasonMatches => {
@@ -231,11 +244,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.querySelector('.matches').style.display = 'none';
             }
         } else {
+            // Show all matches if no specific match is requested
             updateMatchesList();
             document.querySelector('.matches').style.display = 'block';
             document.querySelector('.match-details').style.display = 'none';
         }
 
+        // Hide the loading screen
         document.getElementById("loading-screen").style.display = "none";
     });
 
@@ -331,6 +346,8 @@ function showMatchDetails(match) {
             .style("transform", "translateY(-100px)")
     }
 
+    // matchDetails.querySelector('.home-score').textContent = match.home_team_goal_count;
+    // matchDetails.querySelector('.away-score').textContent = match.away_team_goal_count;
     matchDetails.querySelector('.stadium').textContent = match.stadium_name;
     
     // Update half-time score
@@ -338,14 +355,14 @@ function showMatchDetails(match) {
     matchDetails.querySelector('.away-ht').textContent = match.away_team_goal_count_half_time;
 
     // Update attendance
-    if(match.attendance && match.attendance > 0){
+    if(match.attendance){
         const attendance = Math.round(match.attendance)
-        matchDetails.querySelector('.attendance span').textContent = attendance.toLocaleString();
-    }else{
-        matchDetails.querySelector('.attendance span').textContent = 'N/A';
+        if (attendance === 0) {
+            matchDetails.querySelector('.attendance span').textContent = attendance.toLocaleString();
+        }
     }
     
-    //Update other details
+    matchDetails.querySelector('.attendance span').textContent = attendance>0 ? attendance : 'N/A';
     matchDetails.querySelector('.gameweek span').textContent = match["Game Week"] || 'N/A';
     matchDetails.querySelector('.referee span').textContent = match.referee || 'N/A';
 
@@ -390,55 +407,6 @@ function showMatchDetails(match) {
         .style("transform", "scale(1.02)")
         .transition()
         .duration(200)
-        .style("transform", "scale(1)")
-
-    // Remove the call to generateScoreEvolutionChart
-    // Generate match timeline
-    generateMatchTimeline(match);
-}
-
-function generateMatchTimeline(match) {
-    const timelineContainer = d3.select("#match-timeline");
-    timelineContainer.selectAll("*").remove(); // Clear existing timeline
-
-    const events = parseMatchEvents(match);
-
-    const timeline = timelineContainer.append("div").attr("class", "timeline");
-
-    events.forEach(event => {
-        const eventItem = timeline.append("div").attr("class", "timeline-event");
-        eventItem.append("div").attr("class", "timeline-time").text(`${event.minute}'`);
-        eventItem.append("div").attr("class", "timeline-description").text(event.description);
-    });
-
-    // Draw the timeline line
-    const timelineLine = timelineContainer.append("div").attr("class", "timeline-line");
-    timelineLine.append("div").attr("class", "timeline-start").text("0'");
-    timelineLine.append("div").attr("class", "timeline-end").text("90'");
-}
-
-function parseMatchEvents(match) {
-    const events = [];
-
-    const homeGoals = parseGoalTimings(match.home_team_goal_timings, match.home_team_name);
-    const awayGoals = parseGoalTimings(match.away_team_goal_timings, match.away_team_name);
-
-    events.push(...homeGoals, ...awayGoals);
-
-    // Sort events by minute
-    events.sort((a, b) => a.minute - b.minute);
-
-    return events;
-}
-
-function parseGoalTimings(goalTimings, teamName) {
-    if (!goalTimings || goalTimings === '0') return [];
-
-    const timings = goalTimings.split(',').map(t => parseInt(t.trim()));
-    return timings.map(time => ({
-        minute: time,
-        description: `Goal by ${teamName}`
-    }));
 }
 
 function updateStatItem(grid, type, homeValue, awayValue) {
@@ -478,6 +446,7 @@ function pagination(animation) {
     var pageCount = Math.ceil((rows_length - 1) / rpp);
     var pagination = document.getElementById('pagination');
 
+    // empty the pagination
     while (pagination.firstChild) {
         pagination.removeChild(pagination.firstChild);
     }
@@ -505,6 +474,7 @@ function pagination(animation) {
         page.onclick = function () {
             var p = parseInt(this.innerHTML);
 
+            // deselect all other pages and select the 3 pages around the current page
             for (var j = 1; j <= pageCount; j++) {
                 if (j != p) {
                     document.getElementById('page' + j).removeAttribute('class');

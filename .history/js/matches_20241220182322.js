@@ -392,53 +392,76 @@ function showMatchDetails(match) {
         .duration(200)
         .style("transform", "scale(1)")
 
-    // Remove the call to generateScoreEvolutionChart
-    // Generate match timeline
-    generateMatchTimeline(match);
+    // Generate score evolution chart
+    generateScoreEvolutionChart(match);
 }
 
-function generateMatchTimeline(match) {
-    const timelineContainer = d3.select("#match-timeline");
-    timelineContainer.selectAll("*").remove(); // Clear existing timeline
+function generateScoreEvolutionChart(match) {
+    const svg = d3.select("#score-evolution-svg");
+    svg.selectAll("*").remove(); // Clear existing chart
 
-    const events = parseMatchEvents(match);
+    const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+    const width = +svg.attr("width") - margin.left - margin.right;
+    const height = +svg.attr("height") - margin.top - margin.bottom;
+    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-    const timeline = timelineContainer.append("div").attr("class", "timeline");
+    const x = d3.scaleLinear().domain([0, 90]).range([0, width]);
+    const y = d3.scaleLinear().domain([0, Math.ceil(d3.max([match.home_team_goal_count, match.away_team_goal_count]))]).range([height, 0]);
 
-    events.forEach(event => {
-        const eventItem = timeline.append("div").attr("class", "timeline-event");
-        eventItem.append("div").attr("class", "timeline-time").text(`${event.minute}'`);
-        eventItem.append("div").attr("class", "timeline-description").text(event.description);
-    });
+    const xAxis = d3.axisBottom(x).tickFormat(d => `${d}'`);
+    const yAxis = d3.axisLeft(y).ticks(Math.ceil(d3.max([match.home_team_goal_count, match.away_team_goal_count])));
 
-    // Draw the timeline line
-    const timelineLine = timelineContainer.append("div").attr("class", "timeline-line");
-    timelineLine.append("div").attr("class", "timeline-start").text("0'");
-    timelineLine.append("div").attr("class", "timeline-end").text("90'");
+    g.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", `translate(0,${height})`)
+        .call(xAxis);
+
+    g.append("g")
+        .attr("class", "axis axis--y")
+        .call(yAxis);
+
+    const line = d3.line()
+        .x(d => x(d.minute))
+        .y(d => y(d.goals))
+        .curve(d3.curveStepAfter);
+
+    const homeGoals = parseGoalTimings(match.home_team_goal_timings);
+    const awayGoals = parseGoalTimings(match.away_team_goal_timings);
+
+    // Ensure both curves go until 90 minutes
+    if (homeGoals[homeGoals.length - 1].minute < 90) {
+        homeGoals.push({ minute: 90, goals: homeGoals[homeGoals.length - 1].goals });
+    }
+    if (awayGoals[awayGoals.length - 1].minute < 90) {
+        awayGoals.push({ minute: 90, goals: awayGoals[awayGoals.length - 1].goals });
+    }
+
+    g.append("path")
+        .datum(homeGoals)
+        .attr("class", "line home-line")
+        .attr("d", line)
+        .style("stroke", "#42ca62");
+
+    g.append("path")
+        .datum(awayGoals)
+        .attr("class", "line away-line")
+        .attr("d", line)
+        .style("stroke", "#debf4f");
 }
 
-function parseMatchEvents(match) {
-    const events = [];
-
-    const homeGoals = parseGoalTimings(match.home_team_goal_timings, match.home_team_name);
-    const awayGoals = parseGoalTimings(match.away_team_goal_timings, match.away_team_name);
-
-    events.push(...homeGoals, ...awayGoals);
-
-    // Sort events by minute
-    events.sort((a, b) => a.minute - b.minute);
-
-    return events;
-}
-
-function parseGoalTimings(goalTimings, teamName) {
-    if (!goalTimings || goalTimings === '0') return [];
+function parseGoalTimings(goalTimings) {
+    if (!goalTimings || goalTimings === '0') return [{ minute: 0, goals: 0 }];
 
     const timings = goalTimings.split(',').map(t => parseInt(t.trim()));
-    return timings.map(time => ({
-        minute: time,
-        description: `Goal by ${teamName}`
-    }));
+    const goals = [{ minute: 0, goals: 0 }];
+    let cumulativeGoals = 0;
+
+    timings.forEach(time => {
+        cumulativeGoals += 1;
+        goals.push({ minute: time, goals: cumulativeGoals });
+    });
+
+    return goals;
 }
 
 function updateStatItem(grid, type, homeValue, awayValue) {

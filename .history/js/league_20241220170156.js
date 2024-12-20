@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// Function to update league tableloicone 
+// Function to update league tab
 function updateLeagueStats() {
     const season = document.getElementById("season").value;
     const league = document.getElementById("league").value;

@@ -410,11 +410,6 @@ function generateMatchTimeline(match) {
         eventItem.append("div").attr("class", "timeline-time").text(`${event.minute}'`);
         eventItem.append("div").attr("class", "timeline-description").text(event.description);
     });
-
-    // Draw the timeline line
-    const timelineLine = timelineContainer.append("div").attr("class", "timeline-line");
-    timelineLine.append("div").attr("class", "timeline-start").text("0'");
-    timelineLine.append("div").attr("class", "timeline-end").text("90'");
 }
 
 function parseMatchEvents(match) {

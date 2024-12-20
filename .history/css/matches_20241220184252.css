@@ -71,11 +71,13 @@ main {
     margin: 0.2rem 0;
 }
 
+/* Remove team comparison styles and update match details */
+
 
 .matches {
     margin: 0 5%;
     width: 90%;
-    display: block; 
+    display: block; /* Show by default now */
 }
 
 .matches h2 {
@@ -99,7 +101,7 @@ main {
     text-align: center;
 }
 
-
+/* Position the season selector in the top left corner */
 .season {
     display: flex;
     flex-direction: column;
@@ -677,11 +679,11 @@ tr:ho#matches-table er {
 
 .timeline-time {
     font-weight: bold;
-    color: var(--accent-color);
+    color: #ffffff; /* Change to white */
 }
 
 .timeline-description {
-    color: var(--text-white-color);
+    color: #ffffff; /* Change to white */
 }
 
 .timeline-line {
@@ -690,7 +692,7 @@ tr:ho#matches-table er {
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--accent-color);
+    background: #ffffff; /* Change to white */
     z-index: -1;
 }
 
@@ -699,7 +701,7 @@ tr:ho#matches-table er {
     position: absolute;
     top: -1.5rem;
     font-weight: bold;
-    color: var(--accent-color);
+    color: #ffffff; /* Change to white */
 }
 
 .timeline-start {
@@ -709,3 +711,5 @@ tr:ho#matches-table er {
 .timeline-end {
     right: 0;
 }
+
+/* ...existing code... */

@@ -71,12 +71,13 @@ main {
     margin: 0.2rem 0;
 }
 
+/* Remove team comparison styles and update match details */
+
 
 .matches {
     margin: 0 5%;
     width: 90%;
     display: block; 
-}
 
 .matches h2 {
     text-align: center;
