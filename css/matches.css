@@ -52,6 +52,7 @@ main {
     flex-direction: column;
     align-items: center;
     margin: 0 1rem;
+    cursor: pointer;
 }
 
 .team-logo-name img {
@@ -387,7 +388,7 @@ table#matches-table td img {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    color: var(--text-white-color);
+    color: var(--second-background-color);
     font-weight: bold;
     font-size: 1rem;
     text-align: center;
@@ -412,11 +413,11 @@ table#matches-table td img {
 .possession-bar {
     flex-grow: 1;
     height: 30px;
-    background: var(--background-color);
+    background: #debf4f; /* away color dans team page */
     border-radius: 15px;
     position: relative;
     overflow: hidden;
-    color: var(--text-white-color);
+    color: var(--second-background-color);
     margin: 1rem 0;
 }
 
@@ -427,7 +428,7 @@ table#matches-table td img {
     top: 0;
     height: 100%;
     width: var(--home-possession, 50%);
-    background: var(--secondary-color);
+    background: #42ca62; /* home color dans team page */
     transition: width 0.3s ease;
 }
 

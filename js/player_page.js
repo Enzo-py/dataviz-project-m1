@@ -13,6 +13,8 @@ RADAR_CATEGORIES = ['DISCIPLINE', 'DEFENDING', 'VISION', 'ASSISTS', 'SCORING', '
 
 let VALUES_CARD_STATS = {}
 
+let GLOBAL_SCORE_REPARTITION = {}
+
 
 function get_color() {
     available_colors = COLORS.filter(color => !Object.values(ctx.selected_players).includes(color))
@@ -248,6 +250,18 @@ function agg_players_data() {
             })
         })
         VALUES_CARD_STATS[player_id] = cards_stats
+    })
+
+    // global score repartition
+    GLOBAL_SCORE_REPARTITION = {}
+    Object.keys(ctx.data["players_agg"]).forEach(player_id => {
+        player = ctx.data["players_agg"][player_id]
+        player_position = player[Object.keys(player)[0]]["position"]
+        score = get_player_score(player_id, player_position)
+        if (GLOBAL_SCORE_REPARTITION[score] == undefined) {
+            GLOBAL_SCORE_REPARTITION[score] = 0
+        }
+        GLOBAL_SCORE_REPARTITION[score] += 1
     })
 
     ctx.ready = true
@@ -916,6 +930,7 @@ async function create_player_card(player_id, player_card) {
     player_club = player[Object.keys(player).slice(-1)[0]]["Current_Club"]
     player_nationality = player[Object.keys(player).slice(-1)[0]]["nationality"]
     player_number = parseInt(player[Object.keys(player).slice(-1)[0]]["shirt_number"])
+    player_info = get_player_short_info(player_id, player_name)
     const player_image_url = getPlayerImageUrl(player_name);
 
     // player_card = d3.select(`.players-card .player-card#${player_id}`)
@@ -950,25 +965,30 @@ async function create_player_card(player_id, player_card) {
 
 
     sub_head_card = player_card.append("div").attr("class", "sub-head-card")
-    sub_head_card.append("img").attr("src", "./data/img/icon/shirt.png").attr("class", "shirt")
-    sub_head_card.append("span")
+    shirt_block = sub_head_card.append("div").attr("class", "shirt-block")
+    shirt_block.append("img").attr("src", "./data/img/icon/shirt.png").attr("class", "shirt")
+    shirt_block.append("span")
         .text(player_number)
         .style("color", ctx.selected_players[player_id])
         .style("font-size", d => `${player_number.toString().length > 1 ? 100 / 3 : 100 / 2}px`)
         .attr("class", "player-number")
 
-    sub_head_card.append("span").text("some information about the player")
+    // player_info as safe
+    sub_head_card.append("span").html(player_info)
         .style("text-align", "center")
-    svg_star = await load_svg_into(sub_head_card, "./data/img/icon/star.svg")
+        .classed("player-info", true)
+
+    star_block = sub_head_card.append("div").attr("class", "star-block")
+    svg_star = await load_svg_into(star_block, "./data/img/icon/star.svg")
     svg_star.attr("class", "raiting-star")
         .attr("width", "100px")
         .attr("height", "100px")
         
     
     // "#a3a33d"
-    svg_star.select("path").style("stroke", ctx.selected_players[player_id]).style("stroke-width", 0.5)
+    star_block.select("path").style("stroke", ctx.selected_players[player_id]).style("stroke-width", 0.5)
 
-    sub_head_card.append("span")
+    star_block.append("span")
         .text(`${get_player_score(player_id, player_position)}`)
         .classed("raiting", true)
         .attr("title", "Player global score")
@@ -1002,7 +1022,7 @@ async function create_player_card(player_id, player_card) {
                     // position on top of the progress bar
                     progress_bar_x = event.target.getBoundingClientRect().x
                     progress_bar_y = event.target.getBoundingClientRect().y
-                    distribution_chart.style("top", `${progress_bar_y - 15 - ctx.distribution_chart_height}px`)
+                    distribution_chart.style("top", `${progress_bar_y - 25   - ctx.distribution_chart_height}px`)
                     distribution_chart.style("left", `${progress_bar_x - 50}px`)
 
                     // color the bar where total_value is the closest
@@ -1125,8 +1145,8 @@ function get_player_score(player_id, position) {
     // score = 
     const scorification = {
         "Goalkeeper": {
-            "Saves": 0.52,
-            "Reflexes": 0.38,
+            "Saves": 0.51,
+            "Reflexes": 0.40,
             "Sweeping": 0.15,
         },
         "Defender": {
@@ -1176,9 +1196,23 @@ function get_player_score(player_id, position) {
         }
     })
 
+    playing_time_percentile = 0
+    nb_values = 0
+    Object.keys(ctx.data["players_agg"][player_id]).forEach(season => {
+        playing_time_percentile += parseFloat(ctx.data["players_agg"][player_id][season]["minutes_played_percentile_overall"]) / 100
+        nb_values += 1
+    })
+    playing_time_percentile /= nb_values
+
     // bonus/malus avg
     other_indicators = other_indicators.reduce((acc, cur) => acc + cur, 0) / other_indicators.length
+    if (playing_time_percentile <= 0.6) {
+        other_indicators *= 0.5
+    }
 
+    if (player_id == "julian-chabot-887270400") {
+        console.log("score", score, "other_indicators", other_indicators, playing_time_percentile)
+    }
     return Math.min(Math.max(parseInt((score + other_indicators * 0.3) * 100), 0), 100)
 }
 
@@ -1192,13 +1226,58 @@ function getPlayerImageUrl(player_name) {
     const [forename, surname] = player_name.toLowerCase().split(" ");
 
     const player = playerData.find(
-        p => p.Forename.toLowerCase() === forename && p.Surname.toLowerCase() === surname
-    );
+        p => (p.Forename.toLowerCase() === forename && p.Surname.toLowerCase() === surname) ||
+            (p.Forename.toLowerCase() === surname && p.Surname.toLowerCase() === forename) // sometime the forename and surname are inverted
+    )
 
     return player ? player.ImageURL : "https://upload.wikimedia.org/wikipedia/commons/d/d4/Missing_photo.svg";
 }
 
-function get_player_short_info(player) {
+function get_player_short_info(player_id, player_name) {
+    player = ctx.data["players_agg"][player_id]
+    message = ""
+    if (player["2023-2024"] != undefined) {
+        rank_in_league_top_attackers = player["2023-2024"]["rank_in_league_top_attackers"]
+        rank_in_league_top_midfielders = player["2023-2024"]["rank_in_league_top_midfielders"]
+        rank_in_league_top_defenders = player["2023-2024"]["rank_in_league_top_defenders"]
+        rank_in_club_top_scorer = player["2023-2024"]["rank_in_club_top_scorer"]
 
-    return `This player is ...`
+        ranked = false
+        if (rank_in_league_top_attackers != 999) {
+            message += `${player_name} is ranked <span class=key">#${rank_in_league_top_attackers}</span> in the league top attackers.`
+            ranked = true
+        } else if (rank_in_league_top_midfielders != 999) {
+            message += `${player_name} is ranked #${rank_in_league_top_midfielders} in the league top midfielders.`
+            ranked = true
+        } else if (rank_in_league_top_defenders != 999) {
+            message += `${player_name} is ranked #${rank_in_league_top_defenders} in the league top defenders.`
+            ranked = true
+        } else {
+            message += `${player_name} is not ranked in the league top players.`
+        }
+
+        if (rank_in_club_top_scorer != 999) {
+            if (ranked) {
+                message += ` And also #${rank_in_club_top_scorer} in the club top scorers.`
+            } else {
+                message += ` But he is ranked #${rank_in_club_top_scorer} in the club top scorers.`
+            }
+        }
+    } else {
+        message += `${player_name} is not playing in the current season.`
+    }
+
+    position = player[Object.keys(player)[0]]["position"]
+
+    score_player = get_player_score(player_id, position)
+    top_player_score = 0
+    total_player = 0
+    Object.keys(GLOBAL_SCORE_REPARTITION).forEach(key => {
+        if (score_player <= key) {
+            top_player_score += GLOBAL_SCORE_REPARTITION[key]
+        }
+        total_player += GLOBAL_SCORE_REPARTITION[key]
+    })
+    message += ` He is in the top <span class="key">${Math.round(top_player_score / total_player * 100)}%</span> players on the global score.`
+    return message
 }

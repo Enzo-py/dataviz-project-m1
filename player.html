@@ -286,7 +286,8 @@
                 filters.nationality = null
                 document.querySelector('#nationality-select').value = 'all'
             }
-            span_filter.remove()
+            span_filter = d3.select(span_filter)
+            span_filter.transition().duration(100).style("transform", "scale(0)").transition().remove()
             filter()
         }
 

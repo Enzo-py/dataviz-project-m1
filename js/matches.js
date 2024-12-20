@@ -153,7 +153,7 @@ function updateMatchesList() {
     
     // Display matches
     matchesListElement.innerHTML = "";
-    teamMatches.forEach(match => {
+    teamMatches.forEach((match, i) => {
         const row = document.createElement("tr");
         row.setAttribute("is-visible", "true");
         const homeScore = parseInt(match.home_team_goal_count);
@@ -171,9 +171,18 @@ function updateMatchesList() {
             window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
         });
         matchesListElement.appendChild(row);
+        // d3.select(row).style("transform", "scale(0)").style("transform-origin", "top").style("transition", "none")
+        //     .transition()
+        //     .duration(500)
+        //     .delay(i * 40)
+        //     .style("transform", "scale(1.02)")
+        //     .transition()
+        //     .duration(200)
+        //     .style("transform")
+        //     .style("transition", "all 0.3s")
     });
 
-    pagination(false);
+    pagination(true);
 }
 // Helper function to get the team's league
 function getTeamLeague(teamName, season) {

@@ -29,6 +29,7 @@ body menu {
     gap: 10px;
     align-items: center;
     margin: 10px 5%;
+    height: 30px;
 }
 
 .current-filters span {
@@ -263,11 +264,17 @@ body menu {
     align-items: center;
     justify-content: space-between;
     width: 80%;
-    margin: 0 20%;
+    margin: 0 10%;
     margin-top: -30px;
     padding: 10px 0;
     border-top: solid 3px var(--background-color);
     border-bottom: solid 3px var(--background-color);
+}
+
+.sub-head-card .star-block, .sub-head-card .shirt-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sub-head-card img.shirt {
@@ -277,20 +284,25 @@ body menu {
 .sub-head-card .player-number {
     position: absolute;
     font-weight: 900;
-    left: calc(20% + 6px);
-    width: 100px;
-    display: block;
-    text-align: center;
+    margin-bottom: -8px;
+}
+
+.sub-head-card .player-info {
+    max-width: calc(100% - 220px);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text-white-color);
+}
+
+.sub-head-card .player-info .key {
+    font-weight: 700;
+    color: var(--accent-color);
 }
 
 .sub-head-card .raiting {
     position: absolute;
-    width: 100px;
-    display: block;
-    text-align: center;
     margin-bottom: -8px;
     font-size: 30px;
-    right: calc(20% + 10px - 4px); 
 }
 
 .players-card .player-card .category {
@@ -510,4 +522,8 @@ a.back-to-team.active { display: block; }
     border-radius: 50%;
     background-color: var(--text-white-color);
     border: solid 6px var(--background-color);
+}
+
+.club-logo {
+    cursor: pointer;
 }
