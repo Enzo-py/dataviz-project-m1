@@ -529,9 +529,14 @@ tr:ho#matches-table er {
     background: var(--secondary-color);
 }
 
-.match-info {
-    margin-bottom: 0rem;
+div.match-info {
+    margin-top: 14px;
     text-align: center;
+    gap: 14px;
+}
+
+.match-info > span > span {
+    display: block; 
 }
 
 .half-time-score {
