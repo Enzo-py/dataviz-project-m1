@@ -137,7 +137,7 @@ function updateMatchesList() {
     const team = urlParams.get('team');
     const matchesListElement = document.getElementById("matches-list");
     let allMatches = [];
-    [ "2021-2022", "2022-2023", "2023-2024"].forEach(season => {
+    ["2023-2024", "2022-2023", "2021-2022"].forEach(season => {
         if (ctx.matches[season]) {
             allMatches = allMatches.concat(ctx.matches[season]);
         }
@@ -148,12 +148,11 @@ function updateMatchesList() {
         const teamMatches = allMatches.filter(match => 
             match.home_team_name === team || match.away_team_name === team
            );
-    }else{
-        teamMatches = allMatches;
-    }
+            // Sort matches by date in descending order (newest first)
+    teamMatches.sort((a, b) => new Date(b.date_GMT) - new Date(a.date_GMT));
+        }
 
-    // reverse the list
-    teamMatches.reverse();
+
     
     // Display matches
     matchesListElement.innerHTML = "";

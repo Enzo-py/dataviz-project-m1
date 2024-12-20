@@ -153,7 +153,8 @@ function updateMatchesList() {
     }
 
     // reverse the list
-    teamMatches.reverse();
+    
+    teamMatches.sort((a, b) => new Date(b.date_GMT) - new Date(a.date_GMT));
     
     // Display matches
     matchesListElement.innerHTML = "";

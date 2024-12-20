@@ -27,7 +27,6 @@ function create_toggle_button() {
     const toggleButton = d3.select("menu.right")
         .append("div")
         .attr("class", "toggle-button")
-        .attr("title", "Show / Hide logos on map") 
         .on("click", toggle_rendering);
 
     toggleButton.append("img")
@@ -43,7 +42,6 @@ function create_toggle_button() {
         // Center
         .style("margin", "auto")
         .style("height", "25px");
-
 }
 
 function toggle_rendering() {
@@ -70,11 +68,12 @@ function toggle_rendering() {
     } else {
         // Replace logo with green circle
         lasPalmas.style("background-image", "none")
-                 .style("width", "11px")
-                 .style("height", "11px")
+                 .style("width", "12px")
+                 .style("height", "12px")
                  .style("border-radius", "50%")
-                 .style("background-color", "transparent")
-                 .style("border", "3px solid green");
+                 .attr("fill", "transparent")
+                 .attr("stroke", "green")
+                 .attr("stroke-width", 1.5)
     }
 }
 

@@ -27,7 +27,7 @@ function create_toggle_button() {
     const toggleButton = d3.select("menu.right")
         .append("div")
         .attr("class", "toggle-button")
-        .attr("title", "Show / Hide logos on map") 
+        .attr("title", "Show / Hide logos on map") // Add title attribute for tooltip
         .on("click", toggle_rendering);
 
     toggleButton.append("img")

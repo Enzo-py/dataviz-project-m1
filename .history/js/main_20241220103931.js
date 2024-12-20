@@ -27,12 +27,12 @@ function create_toggle_button() {
     const toggleButton = d3.select("menu.right")
         .append("div")
         .attr("class", "toggle-button")
-        .attr("title", "Show / Hide logos on map") 
         .on("click", toggle_rendering);
 
     toggleButton.append("img")
         .attr("src", "https://upload.wikimedia.org/wikipedia/fr/thumb/f/ff/Logo_Paris_Saint-Germain_2024.svg/1200px-Logo_Paris_Saint-Germain_2024.svg.png")
-        .attr("alt", "PSG Logo");
+        .attr("alt", "PSG Logo")
+        .title("Display Logos on map");
 
     toggleButton.append("span")
         .style("fill", "none")
@@ -42,8 +42,8 @@ function create_toggle_button() {
         .style("border", "3px solid green")
         // Center
         .style("margin", "auto")
-        .style("height", "25px");
-
+        .style("height", "25px")
+        .title("Switch back to");
 }
 
 function toggle_rendering() {

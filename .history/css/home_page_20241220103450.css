@@ -49,12 +49,9 @@ menu.right > button a#matches-button:hover {
     transform: rotateZ(180deg) scale(1.2);
 }
 
-menu.right > button a#players-button:hover {
-    transform: scale(1.4);
-}
+menu.right > button a#matches-button img {
+    transform: scale(1.2);
 
-menu.right > button a#compare-button:hover {
-    transform: scale(1.4);
 }
 
 .search-blob {

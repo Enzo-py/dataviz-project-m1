@@ -27,7 +27,6 @@ function create_toggle_button() {
     const toggleButton = d3.select("menu.right")
         .append("div")
         .attr("class", "toggle-button")
-        .attr("title", "Show / Hide logos on map") 
         .on("click", toggle_rendering);
 
     toggleButton.append("img")
@@ -44,6 +43,7 @@ function create_toggle_button() {
         .style("margin", "auto")
         .style("height", "25px");
 
+    
 }
 
 function toggle_rendering() {

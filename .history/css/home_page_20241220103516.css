@@ -53,10 +53,6 @@ menu.right > button a#players-button:hover {
     transform: scale(1.4);
 }
 
-menu.right > button a#compare-button:hover {
-    transform: scale(1.4);
-}
-
 .search-blob {
     width: 300px;
     display: flex;

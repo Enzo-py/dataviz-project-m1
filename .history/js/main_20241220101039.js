@@ -27,7 +27,6 @@ function create_toggle_button() {
     const toggleButton = d3.select("menu.right")
         .append("div")
         .attr("class", "toggle-button")
-        .attr("title", "Show / Hide logos on map") 
         .on("click", toggle_rendering);
 
     toggleButton.append("img")
@@ -43,7 +42,6 @@ function create_toggle_button() {
         // Center
         .style("margin", "auto")
         .style("height", "25px");
-
 }
 
 function toggle_rendering() {
@@ -52,30 +50,6 @@ function toggle_rendering() {
     cities_wrapper = d3.select("#cities")
     cities_wrapper.selectAll("g").attr("active", ctx.showLogos)
     cities_wrapper.selectAll("path").attr("active", !ctx.showLogos)
-
-    // Manually change rendering for Las Palmas
-    let lasPalmas = d3.select(".extra-cities .las-palmas span");
-
-    if (ctx.showLogos) {
-        // Replace circle with Las Palmas logo
-        lasPalmas.style("background-image", "url('https://upload.wikimedia.org/wikipedia/fr/f/f5/Logo_UD_Las_Palmas.svg')")
-                 .style("background-size", "contain")
-                 .style("background-repeat", "no-repeat")
-                 .style("background-position", "center")
-                 .style("width", "20px")
-                 .style("height", "20px")
-                 .style("border-radius", "0")
-                 .style("background-color", "transparent")
-                 .style("border", "transparent");
-    } else {
-        // Replace logo with green circle
-        lasPalmas.style("background-image", "none")
-                 .style("width", "11px")
-                 .style("height", "11px")
-                 .style("border-radius", "50%")
-                 .style("background-color", "transparent")
-                 .style("border", "3px solid green");
-    }
 }
 
 function load_data() {
@@ -88,24 +62,7 @@ function load_data() {
         "data/map/all.geojson"
     ]
 
-    const playerFiles = [
-        "data/players/england-2021-2022.csv",
-        "data/players/england-2022-2023.csv",
-        "data/players/england-2023-2024.csv",
-        "data/players/france-2021-2022.csv",
-        "data/players/france-2022-2023.csv",
-        "data/players/france-2023-2024.csv",
-        "data/players/germany-2021-2022.csv",
-        "data/players/germany-2022-2023.csv",
-        "data/players/germany-2023-2024.csv",
-        "data/players/italy-2021-2022.csv",
-        "data/players/italy-2022-2023.csv",
-        "data/players/italy-2023-2024.csv",
-        "data/players/spain-2021-2022.csv",
-        "data/players/spain-2022-2023.csv",
-        "data/players/spain-2023-2024.csv",
-    ];
-
+    
     const playerPromises = playerFiles.map(file => {
         return d3.csv(file).then(data => {
             const season = file.match(/(\d{4}-\d{4})/)[0];
@@ -373,13 +330,6 @@ function render_map() {
             .attr("name", "club")
     })
 
-    let players = Array.from(new Set(Object.values(ctx.players).flat().map(d => d.full_name))).sort();
-    players.forEach(player => {
-        datalist.append("option")
-            .attr("value", player)
-            .attr("name", "player");
-    });
-
     cities = d3.selectAll("#cities path, .extra-cities span")
     cities.style("opacity", 0).transition()
         .delay((d, i) => i * 15 + 1400)
@@ -434,8 +384,6 @@ function search(event, input) {
     
     let possibleCities = ctx.data["clubs_cities"].filter(d => d.City.toLowerCase() === searchValue);
     let possibleClubs = ctx.data["clubs_cities"].filter(d => d.Club.toLowerCase() === searchValue);
-    console.log(ctx.players);   
-    let possiblePlayers = Object.values(ctx.players).flat().filter(d => d.full_name.toLowerCase() === searchValue);
 
     if (possibleCities.length > 0) {
         city_name = city_name_to_id(possibleCities[0].City)
@@ -505,48 +453,6 @@ function search(event, input) {
             .attr("stroke", "green")
             .attr("stroke-width", 1.5);
 
-    } else if (possiblePlayers.length > 0) {
-        const playerClub = possiblePlayers[0].Current_Club;
-        const cityData = ctx.data["clubs_cities"].find(d => d.Club === playerClub);
-        if (cityData) {
-            const cityName = cityData.City;
-            input.value = cityName;
-            // Start the animation as if the city name was typed
-            city_event({type: "click"}, cityName);
-
-            input.classList.add("found");
-            setTimeout(() => input.classList.remove("found"), 500);
-
-            if (d3.select(`#cities path[name='${cityName.toLowerCase()}']`).empty()) {
-                let node = d3.select(`.extra-cities .${city_name_to_id(cityName)}`).node();
-                if (node == null) return;
-                node.classList.add("found");
-                setTimeout(() => node.classList.remove("found"), 2000);
-                return;
-            }
-
-            d3.select(`#cities path[name='${cityName.toLowerCase()}']`)
-                .transition()
-                .duration(500)
-                .attr("stroke", "darkgreen")
-                .attr("stroke-width", 15)
-                .transition()
-                .duration(500)
-                .attr("stroke", "green")
-                .attr("stroke-width", 1.5)
-                .transition()
-                .duration(500)
-                .attr("stroke", "darkgreen")
-                .attr("stroke-width", 15)
-                .transition()
-                .duration(500)
-                .attr("stroke", "green")
-                .attr("stroke-width", 1.5);
-        } else {
-            // Player's club city not found
-            input.classList.add("not-found");
-            setTimeout(() => input.classList.remove("not-found"), 500);
-        }
     } else {
         // Animation for input not found
         input.classList.add("not-found");

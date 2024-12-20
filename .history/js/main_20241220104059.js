@@ -27,7 +27,6 @@ function create_toggle_button() {
     const toggleButton = d3.select("menu.right")
         .append("div")
         .attr("class", "toggle-button")
-        .attr("title", "Show / Hide logos on map") 
         .on("click", toggle_rendering);
 
     toggleButton.append("img")
@@ -44,6 +43,34 @@ function create_toggle_button() {
         .style("margin", "auto")
         .style("height", "25px");
 
+        // Create tooltip
+        const tooltip = toggleButton.append("div")
+        .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("bottom", "100%")
+        .style("left", "50%")
+        .style("transform", "translateX(-50%)")
+        .style("padding", "5px")
+        .style("background-color", "rgba(0, 0, 0, 0.7)")
+        .style("color", "#fff")
+        .style("border-radius", "3px")
+        .style("pointer-events", "none")
+        .style("opacity", 0)
+        .text("Show / Hide logos on map");
+
+    // Show tooltip on hover
+    toggleButton.on("mouseenter", () => {
+        tooltip.transition()
+            .duration(200)
+            .style("opacity", 1);
+    });
+
+    // Hide tooltip on mouse leave
+    toggleButton.on("mouseleave", () => {
+        tooltip.transition()
+            .duration(200)
+            .style("opacity", 0);
+    });
 }
 
 function toggle_rendering() {

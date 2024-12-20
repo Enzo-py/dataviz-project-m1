@@ -17,20 +17,17 @@
     <main>
         <menu class="right">
             <div class="search-blob">
-                <input type="text" id="search" placeholder="Search for a city / team / player" list="search-list" onkeydown="search(event, this)">
+                <input type="text" id="search" placeholder="Search for a team / player" list="search-list" onkeydown="search(event, this)">
                 <span class="material-symbols-outlined" onclick="search(event, this.parentNode.querySelector('input'))">search</span>
                 <datalist id="search-list">
                 </datalist>
             </div>
 
             <button>
-                <a class="material-symbols-outlined" id = "matches-button" style="font-variation-settings: 'FILL' 0, 'wght' 220, 'GRAD' 200, 'opsz' 40;" title="Matches" href="matches.html">sports_soccer</a>
+                <a class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 220, 'GRAD' 200, 'opsz' 40;" title="Matches" href="matches.html">sports_soccer</a>
             </button>
             <button>
-                <a href="player.html" id = "players-button" class="material-symbols-outlined view-players" title="View players">person</a>
-            </button>
-            <button>
-                <a href="team_comparison.html" id = "compare-button" class="material-symbols-outlined compare-teams" title="compare teams">compare_arrows</a>
+                <a href="player.html" id class="material-symbols-outlined view-players" title="View players">person</a>
             </button>
         </menu>
         <div class="map"></div>
