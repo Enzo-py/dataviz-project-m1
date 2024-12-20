@@ -57,6 +57,14 @@ menu.right > button a#compare-button:hover {
     transform: scale(1.2);
 }
 
+.pop-up span.city {
+    width: 10px;
+    height: 10px;
+    border: solid 3px darkgreen;
+    border-radius: 50%;
+    display: inline-block;
+}
+
 .search-blob {
     width: 300px;
     display: flex;
@@ -398,6 +406,11 @@ menu {
     animation: zoom-spawn 1s ease-in-out 1 forwards;
     animation-delay: 0.5s;
     transform: scale(0);
+    transition: background-color 0.3s;
+}
+
+.tuto-button:hover {
+    background-color: var(--secondary-color-light);
 }
 
 @keyframes zoom-spawn {

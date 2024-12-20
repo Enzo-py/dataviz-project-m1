@@ -427,7 +427,7 @@
             message = `
                 <h3 class="title">Welcome to the Players Page</h3>
                 <p>
-                    This page displays the players of the league. <br/>
+                    This page displays the <span class="highlight">players of all the leagues</span>. <br/>
                     You can filter them by position, nationality, and search for a specific player or club. <br/>
 
                     <br/><br/>
@@ -441,7 +441,7 @@
             message = `
                 <h3 class="title">Choose a player</h3>
                 <p>
-                    To go further and see the stats of a player, click on the player's name.
+                    To go further and see the stats of a player, <span class="action">click on the player's name</span>.
                 </p>
             `
             pop_up_wrapper = pop_up_showcase(message)
@@ -458,6 +458,7 @@
                 tags = d3.select('.players-tags > span')
                 if (tags.node() !== null) {
                     tuto_step_3()
+                    animation_running = false
                     clearInterval(interval_id)
                 }
             }, 500)
@@ -467,10 +468,10 @@
             message = `
                 <h3 class="title">Player Stats per Season</h3>
                 <p>
-                    The 3 radar charts display the stats of the player for the last 3 seasons. <br/>
+                    The 3 radar charts display the stats of the player for the <span class="highlight">last 3 seasons</span>. <br/>
                     You can see the player's performance in different areas.
                     <br/><br/>
-                    Each area represents a agglomeration of true indicators of the player's performance (such as the number of goals scored).
+                    Each area represents a <span class="highlight">agglomeration of true indicators</span> of the player's performance (such as the number of goals scored).
                 </p>
             `
             d3.select('.pop-up-wrapper').remove()
@@ -489,15 +490,15 @@
                 <h3 class="title">Player Card</h3>
                 <p>
                     The player card displays the player's information. <br/>
-                    You can see the player's performences average on the last 3 seasons throught 19 indicators.
+                    You can see the player's performences <span class="highlight">average on the last 3 seasons</span> throught 19 indicators.
                     <br/><br/>
 
-                    This indicators are used to calculate the player's global score.
+                    This indicators are used to calculate the player's <span class="highlight">global score</span>.
                 </p>
                 <p>&nbsp;</p>
                 <p>
                     By hovering the player's indicators, you can see the player's performance related to <br/>
-                    the distribution of the same performance of all the players.
+                    the <span class="highlight">distribution of the same performance of all the players</span>.
                 </p>
             `
 
@@ -518,13 +519,13 @@
                 <h3 class="title">End of the Tutorial</h3>
                 <p style="text-align: center;">
                     You have reached the end of the tutorial. <br/>
-                    Now, you are a true expert of our DataViz platform FootyViz. <br/><br/>
+                    Now, you are a <span class="highlight">true expert</span> of our DataViz platform FootyViz. <br/><br/>
                     Enjoy exploring the data!
                 </p>
 
                 <br/>
                 <br/>
-                <i>Their is so much more to discover, but we let you explore it by yourself.</i>
+                <i style="font-size: 0.9rem; color: darkgreen;">Their is so much more to discover, but we let you explore it by yourself.</i>
                 <br/>
                 <button onclick="end_tutorial()" class="yes-button">End Tutorial</button>
             `

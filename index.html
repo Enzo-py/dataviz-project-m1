@@ -56,12 +56,12 @@
             message = `
                 <h3 class="title">Welcome to FootyViz</h3>
                 <p>
-                    Explore data from the top 5 European football leagues.<br/>
+                    Explore data from the <span class="highlight">top 5</span> European football leagues.<br/>
                     Discover key stats about teams and players through intuitive visuals.
                 </p>
                 <p>&nbsp;</p>
                 <p>
-                    Start with the main page: a map showing the teams' cities across Europe.
+                    Start with the <span class="highlight">main page</span>: a map showing the teams' cities across Europe.
                 </p>
 
             `
@@ -72,7 +72,7 @@
             message = `
                 <h3 class="title">Select a City</h3>
                 <p>
-                    Click on any city (green circle) to see the list of associated clubs.
+                    <span class="action">Click</span> on any city (green circle <span class="city"></span>) to see the list of associated clubs.
                 </p>
             `
 
@@ -107,7 +107,7 @@
             message = `
                 <h3 class="title">City Information</h3>
                 <p>
-                    After selecting a city, a menu on the left will show the city's teams.
+                    After selecting a city, a menu on the left will show the <span class="highlight">city's teams</span>.
                 </p>
                 <p>&nbsp;</p>
                 <p>
@@ -150,7 +150,7 @@
             message = `
                 <h3 class="title">Display Club Logo</h3>
                 <p>
-                    Click the PSG logo to display the team's logo on the map.
+                    You can click on the PSG logo (top right corner) to <span class="highlight">display the team's logo</span> on the map.
                 </p>
             `
 
@@ -162,7 +162,7 @@
             message = `
                 <h3 class="title">Team comparaison</h3>
                 <p>
-                    You can click on the double arrow icon to compare two teams.
+                    You can click on the double arrow icon to <span class="highlight">compare two teams</span>.
                 </p>
             `
 
@@ -178,7 +178,7 @@
             message = `
                 <h3 class="title">Players list</h3>
                 <p>
-                    You can click on the player icon to view the list of all players.
+                    You can click on the player icon to view the <span class="highlight">list of all players</span>.
                 </p>
             `
 
@@ -186,6 +186,7 @@
             circle_radius = 20
             circle_y = 50
             showcase_background.style.background = `radial-gradient(circle ${circle_radius}px at calc(100% - 140px) ${circle_y}px, rgba(255, 255, 255, 0) ${circle_radius}px, #181919ee ${circle_radius + 40}px)`
+            
             pop_up_next(message, tuto_step_7, true)
         }
 
@@ -194,7 +195,7 @@
             message = `
                 <h3 class="title">Matches list</h3>
                 <p>
-                    You can click on the ball to view all matches from the 5 European leagues.
+                    You can click on the ball to view <span class="highlight">all matches</span> from the 5 European leagues.
                 </p>
             `
 
@@ -209,7 +210,7 @@
             message = `
                 <h3 class="title">Search Bar</h3>
                 <p>
-                    You can use the search bar to find a club by name or a player from the club.
+                    You can use the <span class="highlight">search</span> bar to find a club by name or a player from the club.
                 </p>
 
             `
@@ -224,7 +225,7 @@
             message = `
                 <h3 class="title">Team Information</h3>
                 <p>
-                    Please click on the team logo in the left menu to view the team's information.
+                    Please <span class="action">click on the team logo</span> in the left menu to view the team's information.
                 </p>
 
             `
