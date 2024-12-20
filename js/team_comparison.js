@@ -311,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (team1) {
             
-            document.getElementById("team1-stats").innerHTML = `<h2>${team1} Stats (${season})</h2><p>Stats for ${team1} in ${season} will be displayed here.</p>`;
+            document.getElementById("team1-stats").innerHTML = `<h2>No available statistics for this season...</p>`;
             const team1Logo = document.getElementById("team1-logo");
             const team1Info = document.getElementById("team1-info");
             const logoURL1 = ctx.logos[team1];
