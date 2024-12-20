@@ -404,17 +404,21 @@ function generateMatchTimeline(match) {
     const events = parseMatchEvents(match);
 
     const timeline = timelineContainer.append("div").attr("class", "timeline");
+    const home_team_side = timeline.append("div").attr("class", "home-team-side");
+    const away_team_side = timeline.append("div").attr("class", "away-team-side");
 
     events.forEach(event => {
-        const eventItem = timeline.append("div").attr("class", "timeline-event");
+        const eventItem = d3.create('div').attr("class", "timeline-event");
         eventItem.append("img").attr("class", "goal-icon").attr("src", event.icon).attr("alt", "Goal Icon");
         eventItem.append("div").attr("class", "timeline-time").text(`${event.minute}'`);
         eventItem.append("div").attr("class", "timeline-description").text(event.description);
 
         if (event.description.includes(match.home_team_name)) {
             eventItem.classed("home-goal", true);
+            home_team_side.node().appendChild(eventItem.node());
         } else if (event.description.includes(match.away_team_name)) {
             eventItem.classed("away-goal", true);
+            away_team_side.node().appendChild(eventItem.node());
         }
     });
 
