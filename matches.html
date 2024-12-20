@@ -21,6 +21,7 @@
     <menu>
         <a href="index.html" class="material-symbols-outlined back-to-map" title="Back to map">explore</a>
         <a href="player.html" class="material-symbols-outlined view-players" title="View players">person</a>
+        <a href="league.html?league=Bundesliga" class="material-symbols-outlined view-league" title="View league">trophy</a>
     </menu>
 
     <main>
@@ -198,21 +199,37 @@
 
         function tuto_step_4() {
             message = `
-                <h3 class="title">Player Page</h3>
-                <p style="display: flex; gap: 4px; align-items: center;">Next, we’ll explore the players view. <span class="action">Click the <span class="material-symbols-outlined">person</span> icon</span> to view them.</p>
+                <h3 class="title">Match Timeline</h3>
+                <p>
+                    This is the <span class="highlight">timeline of the match</span>. <br/>
+                    You can see the goals scored over the time.
+                </p>
+            `
+            
+            // scroll to the timeline
+            timeline = d3.select(".timeline-container")
+            timeline.node().scrollIntoView({behavior: "smooth"})
 
-                <button onclick="tuto_step_5()" class="next-button">Explore!</button>
+            pop_up_next(message, tuto_step_5)
+        }
+
+        function tuto_step_5() {
+            message = `
+                <h3 class="title">League Page</h3>
+                <p style="display: flex; gap: 4px; align-items: center;">Next, we’ll explore the league view. <span class="action">Click the <span class="material-symbols-outlined">trophy</span> icon</span> to view them.</p>
+
+                <button onclick="tuto_step_6()" class="next-button">Explore!</button>
                 `
 
             pop_up_showcase(message)
         }
 
-        function tuto_step_5() {
-            button = d3.select(".view-players")
+        function tuto_step_6() {
+            button = d3.select(".view-league")
             animation_running = true
             highlight_element(button)
 
-            button.node().href = "player.html?tutorial=true"
+            button.node().href = "league.html?league=Bundesliga&tutorial=true"
             d3.select(".pop-up-wrapper").remove()
         }
 
