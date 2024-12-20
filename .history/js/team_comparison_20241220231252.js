@@ -151,6 +151,8 @@ function updateMatchesList() {
     // Retrieve league information
     const league1 = getTeamLeague(team1, season);
     const league2 = getTeamLeague(team2, season);
+    console.log("league1", league1);
+    console.log("league2", league2);
     if (league1 !== league2) {
         matchesListElement.innerHTML = `
             <tr>
@@ -508,6 +510,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function getTeamStats(team, data) {
+        console.log("team", data);
         // Fetch team stats based on the team name and season
         // This is a placeholder function, replace with actual data fetching logic
         return {
@@ -569,6 +572,7 @@ function search(event, input) {
         return
     }
     if (possible_clubs.length > 0) {
+        console.log("Club:", possible_clubs[0].Club)
         return
     }
 

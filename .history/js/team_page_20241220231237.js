@@ -734,6 +734,7 @@ function createPerformanceChart(data) {
 
 function createGoalsTimelineChart(data) {
     if (!data) {
+        console.log("No data provided for timeline chart");
         return;
     }
     

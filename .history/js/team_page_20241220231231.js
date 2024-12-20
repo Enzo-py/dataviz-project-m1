@@ -734,9 +734,11 @@ function createPerformanceChart(data) {
 
 function createGoalsTimelineChart(data) {
     if (!data) {
+        console.log("No data provided for timeline chart");
         return;
     }
     
+    console.log("Creating timeline chart with data:", data);
     
     // Clear existing chart
     const chartContainer = d3.select("#goals-timeline-chart");

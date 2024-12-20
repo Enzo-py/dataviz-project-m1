@@ -365,6 +365,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const compare_page = "team_comparison.html?club=" + teamParam;
         player_a = d3.select("a.view-players")
         player_b = d3.select("a.compare-teams")
+        console.log(player_b)
         // player_a.attr("href", player_page)
         player_b.attr("href", compare_page)
         window.redirectToPlayers = function () {
@@ -394,6 +395,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (team1) {
             let data1;
+            // console.log(season)
             
             // Create Variables
             const teamLogo = document.getElementById("team-logo");
@@ -470,6 +472,7 @@ document.addEventListener("DOMContentLoaded", function() {
             teamRatioElement.innerHTML = ratio;
             
             updateCharts(showingLeagueAverage ? calculateLeagueAverage() : data1);
+            console.log("Charts creation completed");
        
         } else {
             document.getElementById("team1-stats").innerHTML = `<p>Please select a team.</p>`;
@@ -569,6 +572,7 @@ function search(event, input) {
         return
     }
     if (possible_clubs.length > 0) {
+        console.log("Club:", possible_clubs[0].Club)
         return
     }
 
@@ -583,6 +587,7 @@ function createPerformanceChart(data) {
         return;
     }
 
+    console.log("Creating chart with data:", data);
 
     // Clear existing chart
     d3.select("#performance-chart").html("");
@@ -601,6 +606,7 @@ function createPerformanceChart(data) {
         { label: "Possession %", home: "average_possession_home", away: "average_possession_away" }
     ];
 
+    console.log(metrics);
 
     // Process the metrics data
     const processedMetrics = metrics.map(metric => ({
@@ -734,13 +740,16 @@ function createPerformanceChart(data) {
 
 function createGoalsTimelineChart(data) {
     if (!data) {
+        console.log("No data provided for timeline chart");
         return;
     }
     
+    console.log("Creating timeline chart with data:", data);
     
     // Clear existing chart
     const chartContainer = d3.select("#goals-timeline-chart");
     if (chartContainer.empty()) {
+        console.log("Chart container not found");
         return;
     }
     chartContainer.html("");
@@ -1263,6 +1272,7 @@ function page1_anim(setup_start) {
     donut_charts = d3.selectAll("#donut-charts svg")
     donut_charts.each(function(_, i) {
         chart = d3.select(this)
+        console.log(chart.selectAll('path'))
 
         // chacher les text si setup_start
         chart.selectAll('text, rect').each(function(_, j) {

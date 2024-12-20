@@ -508,6 +508,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function getTeamStats(team, data) {
+        console.log("team", data);
         // Fetch team stats based on the team name and season
         // This is a placeholder function, replace with actual data fetching logic
         return {

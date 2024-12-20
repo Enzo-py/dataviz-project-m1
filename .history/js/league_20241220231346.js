@@ -189,6 +189,7 @@ function updateLeagueStats() {
     if (leagueTeams.length > 0) {
         leagueTeams.forEach(team => {
             const row = document.createElement("tr");
+            console.log(team.wins);
             const points = (team.wins * 3 ) + parseInt(team.draws, 10) || 0;
             const goalDiff = (parseInt(team.goals_scored, 10) || 0) - (parseInt(team.goals_conceded, 10) || 0);
             row.innerHTML = `

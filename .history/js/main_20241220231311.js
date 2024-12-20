@@ -153,6 +153,7 @@ function city_event(event, city_name) {
     // map all cities to their country code
     let countryCode;
     countryCode = city_to_country(city_name);
+    console.log("City:", city_name, "Country:", countryCode);
     let countryPath = d3.select(`#countries-area path[data-country-code="${countryCode}"]`);
     
     if (event.type === "mouseenter") {

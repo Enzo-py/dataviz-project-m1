@@ -734,13 +734,16 @@ function createPerformanceChart(data) {
 
 function createGoalsTimelineChart(data) {
     if (!data) {
+        console.log("No data provided for timeline chart");
         return;
     }
     
+    console.log("Creating timeline chart with data:", data);
     
     // Clear existing chart
     const chartContainer = d3.select("#goals-timeline-chart");
     if (chartContainer.empty()) {
+        console.log("Chart container not found");
         return;
     }
     chartContainer.html("");
@@ -1263,6 +1266,7 @@ function page1_anim(setup_start) {
     donut_charts = d3.selectAll("#donut-charts svg")
     donut_charts.each(function(_, i) {
         chart = d3.select(this)
+        console.log(chart.selectAll('path'))
 
         // chacher les text si setup_start
         chart.selectAll('text, rect').each(function(_, j) {
