@@ -230,6 +230,32 @@
         }
         
         function tuto_step_1() {
+            d3.selectAll("a").on("click", (event) => {
+                event.preventDefault()
+
+                href = event.target.href
+
+                if (href.includes("team_comparison.html") && page_tutorial_ended) {
+                    window.location.href = href
+                }
+
+                message = `
+                    <h3 class="title">Warning!</h3>
+                    <p>You are leaving the tutorial, would you like to continue?</p>
+                `
+
+                if (page_tutorial_ended) {
+                    message += `
+                        <p>&nbsp;</p>
+                        <p style="display: flex; gap: 4px; align-items: center;">Click the <span class="material-symbols-outlined">compare_arrows</span> icon to continue the tutorial.</p>
+                    `
+                }
+
+                pop_up_confirm(message, () => {
+                    window.location.href = href
+                })
+
+            })
             message = `
                 <h3 class="title">Welcome to the Club Page</h3>
 
@@ -237,7 +263,6 @@
                 <p>&nbsp;</p>
                 <p style="display: flex; gap: 4px; align-items: center;">Click the <span class="material-symbols-outlined">explore</span> icon to return to the map.</p>
             `
-
             pop_up_next(message, tuto_step_2)
         }
 
@@ -355,10 +380,6 @@
                         highlight_block_animation(selection)
                     }
                 })
-        }
-
-        history.pushState = function(state, title, url) {
-            alert("You are quitting the tutorial. Do you want to continue?")
         }
     </script>
 </body>

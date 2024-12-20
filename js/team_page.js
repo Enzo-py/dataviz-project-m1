@@ -194,7 +194,28 @@ function updateMatchesList() {
             row.style.cursor = "pointer";
             row.addEventListener("click", () => {
                 const currentTeam = document.getElementById("team1").value;
-                window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
+
+                if (tutorial_running) { // define in the page
+                    message = `
+                    <h3 class="title">Warning!</h3>
+                    <p>You are leaving the tutorial. Are you sure you want to continue?</p>
+                `
+
+                    if (page_tutorial_ended) { // define in the page
+                        message += `
+                            <p>&nbsp;</p>
+                            <p style="display: flex; gap: 4px; align-items: center;">Click the <span class="material-symbols-outlined">compare_arrows</span> icon to continue the tutorial.</p>
+                        `
+                    }
+
+                    pop_up_confirm(message, () => {
+                        tutorial_running = false
+                        window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
+                    })
+                } else {
+                    window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
+                }
+                
             });
             matchesListElement.appendChild(row);
         });
@@ -349,7 +370,24 @@ document.addEventListener("DOMContentLoaded", function() {
         player_b.attr("href", compare_page)
         window.redirectToPlayers = function () {
             if (teamParam) {
-                window.location.href = player_page;
+                if (tutorial_running) {
+                    message = `
+                        <h3 class="title">Warning!</h3>
+                        <p>You are leaving the tutorial. Are you sure you want to continue?</p>
+                    `
+                    if (page_tutorial_ended) {
+                        message += `
+                            <p>&nbsp;</p>
+                            <p style="display: flex; gap: 4px; align-items: center;">Click the <span class="material-symbols-outlined">compare_arrows</span> icon to continue the tutorial.</p>
+                        `
+                    }
+
+                    pop_up_confirm(message, () => {
+                        window.location.href = player_page;
+                    })
+                } else {
+                    window.location.href = player_page;
+                }
             } else {
                 alert("No team parameter provided in the URL!");
             }
