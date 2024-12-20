@@ -165,7 +165,10 @@ function updateMatchesList() {
         row.setAttribute("is-visible", "true");
         const homeScore = parseInt(match.home_team_goal_count);
         const awayScore = parseInt(match.away_team_goal_count);
-        currentTeam = urlParams.get('team');
+        team_to = urlParams.get('team');
+        if(teml === "null"){
+            currentTeam = match.home_team_name
+        }
         row.innerHTML = `
             <td>${match.date_GMT}</td>
             <td>${match.home_team_name}</td>
@@ -175,7 +178,7 @@ function updateMatchesList() {
         row.addEventListener('click', () => showMatchDetails(match));
         row.style.cursor = "pointer";
         row.addEventListener("click", () => {
-            window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${match.home_team_name}`;
+            window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
         });
         matchesListElement.appendChild(row);
         // d3.select(row).style("transform", "scale(0)").style("transform-origin", "top").style("transition", "none")
@@ -269,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function goBackToAllMatches() {
     const team = urlParams.get('team');
-    window.location.href = `matches.html`;
+    window.location.href = `matches.html?team=${encodeURIComponent(team)}`;
 }
 const urlParams = new URLSearchParams(window.location.search);
 

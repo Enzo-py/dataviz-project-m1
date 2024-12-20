@@ -175,7 +175,7 @@ function updateMatchesList() {
         row.addEventListener('click', () => showMatchDetails(match));
         row.style.cursor = "pointer";
         row.addEventListener("click", () => {
-            window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${match.home_team_name}`;
+            window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
         });
         matchesListElement.appendChild(row);
         // d3.select(row).style("transform", "scale(0)").style("transform-origin", "top").style("transition", "none")
@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function() {
             
             // Find the specific match
             const match = allMatches.find(m => 
-                (m.home_team_name === team || m.away_team_name === team) && 
+                
                 m.date_GMT === date
             );
             if (match) {
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function goBackToAllMatches() {
     const team = urlParams.get('team');
-    window.location.href = `matches.html`;
+    window.location.href = `matches.html?team=${encodeURIComponent(team)}`;
 }
 const urlParams = new URLSearchParams(window.location.search);
 
