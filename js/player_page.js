@@ -955,7 +955,6 @@ async function create_player_card(player_id, player_card) {
     left_head_card.append("img").attr("src", ctx.data["clubs_logo"][player_club])
         .attr("class", "club-logo")
         .on("click", function() {
-            // redirect to club page
             window.location.href = `team_page.html?club=${player_club}`
         })
         .append("title").text(player_club)
