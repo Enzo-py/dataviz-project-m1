@@ -409,7 +409,12 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("team1-stats").style.display = "";
             document.getElementById("team2-stats").style.display = "";
             console.log("team2", data2);
+            if (team1 === team2)
             compareTeams(team1, team2, data1, data2, season);
+        }else if (team1 === team2){
+            document.getElementById("matches-list").style.display = "block";
+            document.getElementById("matches-list").textContent = "Please select two different teams.";
+            
         }else{
             // Hide the stats element if no team is selected
 

@@ -393,6 +393,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Update Rank
             if (season === "All Seasons") {
                 rank2 = "Rank: N/A (All Seasons)";
+                matchesTitleElement.textContent = "Matches Record";
             } else {
                 const var2 = data2.league_position;
                 rank2 = "Rank: " + var2;
@@ -410,6 +411,10 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("team2-stats").style.display = "";
             console.log("team2", data2);
             compareTeams(team1, team2, data1, data2, season);
+        }else if (team1 === team2){
+            document.getElementById("matches-list").style.display = "block";
+            document.getElementById("matches-list").textContent = "Please select two different teams.";
+            
         }else{
             // Hide the stats element if no team is selected
 

@@ -405,12 +405,12 @@ document.addEventListener("DOMContentLoaded", function() {
             team2Info.textContent = league2 + " | " + rank2 + " | "+ ratio2;
         }
 
-        if (team1 && team2 && team1 !== team2) {
+        if (team1 && team2 && ) {
             document.getElementById("team1-stats").style.display = "";
             document.getElementById("team2-stats").style.display = "";
             console.log("team2", data2);
             compareTeams(team1, team2, data1, data2, season);
-        }else{
+        }else {
             // Hide the stats element if no team is selected
 
             document.getElementById("team1-stats").style.display = "none";
