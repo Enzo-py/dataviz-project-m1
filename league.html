@@ -26,68 +26,94 @@
             <option value="2023-2024" selected>2023-2024</option>
         </select>
     </div>
-    <div class="league-selector">
-        <label for="league">Select League:</label>
-        <select id="league">
-            <option value="Premier League">Premier League</option>
-            <option value="Ligue 1">Ligue 1</option>
-            <option value="Bundesliga">Bundesliga</option>
-            <option value="Serie A">Serie A</option>
-            <option value="La Liga">La Liga</option>
-        </select>
-    </div>
+    
     <menu>
         <a href="index.html" class="material-symbols-outlined back-to-map" title="Back to map">explore</a>
         <a href="matches.html" class="material-symbols-outlined view-matches" title="View matches">sports_soccer</a>
     </menu>
 
     <main>
-        <div class="tab">
-            <button class="tablinks" onclick="openTab(event, 'TopTeams')" id="defaultOpen">Top Teams</button>
-            <button class="tablinks" onclick="openTab(event, 'TopPlayers')">Top Players</button>
+        <div class="league-selector">
+            <div class="league-wrapper" name="Premier League">
+                <img src="data/img/Leagues/Premier League.png" alt="Premier League" class="league-logo">
+            </div>
+    
+            <div class="league-wrapper" name="Ligue 1">
+                <img src="data/img/Leagues/Ligue 1.png" alt="Ligue 1" class="league-logo">
+            </div>
+    
+            <div class="league-wrapper" name="Bundesliga">
+                <img src="data/img/Leagues/Bundesliga.png" alt="Bundesliga" class="league-logo">
+            </div>
+    
+            <div class="league-wrapper" name="Serie A">
+                <img src="data/img/Leagues/Serie A.png" alt="Serie A" class="league-logo">
+            </div>
+    
+            <div class="league-wrapper" name="La Liga">
+                <img src="data/img/Leagues/La Liga.png" alt="La Liga" class="league-logo">
+            </div>
+    
+            <!-- <label for="league">Select League:</label>
+            <select id="league">
+                <option value="Premier League">Premier League</option>
+                <option value="Ligue 1">Ligue 1</option>
+                <option value="Bundesliga">Bundesliga</option>
+                <option value="Serie A">Serie A</option>
+                <option value="La Liga">La Liga</option>
+            </select> -->
         </div>
 
-        <!-- Top Teams Tab Content -->
-        <div id="TopTeams" class="tabcontent">
-            <!-- Top Three Teams Section -->
-            <div class="top-teams">
-                <h2>Top 3 Teams</h2>
-                <ul id="top-teams-list">
-                    <!-- Top teams will be populated here -->
-                </ul>
+        <div class="data-block">
+            <h1>Current League</h1>
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'TopTeams')" id="defaultOpen">Top Teams</button>
+                <button class="tablinks" onclick="openTab(event, 'TopPlayers')">Top Players</button>
             </div>
-            <!-- League Stats Section -->
-            <div class="league-stats">
-                <h2>League Table</Table></h2>
-                <table id="league-stats-table">
-                    <thead>
-                        <tr>
-                            <th>Team</th>
-                            <th>Wins</th>
-                            <th>Losses</th>
-                            <th>Draws</th>
-                            <th>Points</th>
-                            <th>Goals Scored</th>
-                            <th>Goals Conceded</th>  
-                            <th>Goals Diff</th>
-                        </tr>
-                    </thead>
-                    <tbody id="league-stats-body">
-                        <!-- League stats will be populated here -->
-                    </tbody>
-                </table>
+    
+            <!-- Top Teams Tab Content -->
+            <div id="TopTeams" class="tabcontent">
+                <!-- Top Three Teams Section -->
+                <div class="top-teams">
+                    <h2>Top 3 Teams</h2>
+                    <ul id="top-teams-list">
+                        <!-- Top teams will be populated here -->
+                    </ul>
+                </div>
+                <!-- League Stats Section -->
+                <div class="league-stats">
+                    <h2>League Table</Table></h2>
+                    <table id="league-stats-table">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Wins</th>
+                                <th>Losses</th>
+                                <th>Draws</th>
+                                <th>Points</th>
+                                <th>Goals Scored</th>
+                                <th>Goals Conceded</th>  
+                                <th>Goals Diff</th>
+                            </tr>
+                        </thead>
+                        <tbody id="league-stats-body">
+                            <!-- League stats will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    
+            <!-- Top Players Tab Content -->
+            <div id="TopPlayers" class="tabcontent">
+                <div class="top-players">
+                    <h2>Top Players</h2>
+                    <ul id="top-players-list">
+                        <!-- Top players will be populated here -->
+                    </ul>
+                </div>
             </div>
         </div>
-
-        <!-- Top Players Tab Content -->
-        <div id="TopPlayers" class="tabcontent">
-            <div class="top-players">
-                <h2>Top Players</h2>
-                <ul id="top-players-list">
-                    <!-- Top players will be populated here -->
-                </ul>
-            </div>
-        </div>
+        
     </main>
 
     <script>

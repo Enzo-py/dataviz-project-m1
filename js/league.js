@@ -8,6 +8,8 @@ const countryToLeague = {
     "spain": "La Liga"
 };
 
+let LEAGUE = "All Leagues";
+
 function loadClubLogos() {
     return d3.csv("data/clubs_logo.csv").then(data => {
         ctx.logos = {};
@@ -108,18 +110,32 @@ function load_data() {
 document.addEventListener("DOMContentLoaded", function() {
     // Get parameters from link 
     const urlParams = new URLSearchParams(window.location.search);
-    const leagueParam = urlParams.get('league');
-    // Fill league
-    if (leagueParam) {
-        document.getElementById("league").value = leagueParam;
+    LEAGUE = urlParams.get('league');
+    
+    d3.select('h1').text(LEAGUE);
+
+    if (!Object.values(countryToLeague).includes(LEAGUE)) {
+        toast("error", "Invalid league parameter. Redirecting to All Leagues.");
+        LEAGUE = "All Leagues";
     }
+
     // Add event listeners
     document.getElementById("season").addEventListener("change", function() {
         updateLeagueStats(); // Add this function call
     });
-    document.getElementById("league").addEventListener("change", function() {
-        updateLeagueStats();
-    });
+
+
+    d3.selectAll(".league-wrapper")
+        .each(function() {
+            const wrapper = d3.select(this);
+            if (wrapper.attr("name") === LEAGUE) {
+                wrapper.classed("active", true);
+            }
+        })
+        .on("click", function() {
+            const league = d3.select(this).attr("name");
+            window.location.href = `league.html?league=${league}`;
+        })
     // Add loading screen
     document.getElementById("loading-screen").style.display = "flex";
     load_data().then(() => {
@@ -135,7 +151,6 @@ document.addEventListener("DOMContentLoaded", function() {
 // Function to update league tableloicone 
 function updateLeagueStats() {
     const season = document.getElementById("season").value;
-    const league = document.getElementById("league").value;
     let leagueTeams = [];
 
     if (season === "All Seasons") {
@@ -150,11 +165,11 @@ function updateLeagueStats() {
     // Gather all teams for the selected season
     if (ctx.teams[season]) {
         leagueTeams = ctx.teams[season];
-        if (league !== "All Leagues") {
+        if (LEAGUE !== "All Leagues") {
             leagueTeams = leagueTeams.filter(team => {
                 const country = team.country.trim().toLowerCase();
                 const teamLeague = countryToLeague[country];
-                return teamLeague === league;
+                return teamLeague === LEAGUE;
             });
         }
     }
@@ -195,16 +210,15 @@ function updateLeagueStats() {
 
 function updateTopTeams() {
     const season = document.getElementById("season").value;
-    const league = document.getElementById("league").value;
     let teams = [];
 
     if (ctx.teams[season]) {
         teams = ctx.teams[season];
-        if (league !== "All Leagues") {
+        if (LEAGUE !== "All Leagues") {
             teams = teams.filter(team => {
                 const country = team.country.trim().toLowerCase();
                 const teamLeague = countryToLeague[country];
-                return teamLeague === league;
+                return teamLeague === LEAGUE;
             });
         }
     }
@@ -232,17 +246,16 @@ function updateTopTeams() {
 
 function updateTopPlayers() {
     const season = document.getElementById("season").value;
-    const league = document.getElementById("league").value;
     let players = [];
 
     if (ctx.players[season]) {
         players = ctx.players[season];
-        if (league !== "All Leagues") {
+        if (LEAGUE !== "All Leagues") {
             players = players.filter(player => {
                 if (player.country) {
                     const country = player.country.trim().toLowerCase();
                     const playerLeague = countryToLeague[country];
-                    return playerLeague === league;
+                    return playerLeague === LEAGUE;
                 }
                 return false;
             });
