@@ -449,9 +449,10 @@ document.addEventListener("DOMContentLoaded", function() {
             // Update League
             const country = data1 && data1.length > 0 ? data1.country.toLowerCase() : data1 ? data1.country.toLowerCase() : "";
             const league = countryToLeague[country] || "Unknown League";
-            teamLeagueElement.querySelector("span").textContent = league;
+            teamLeagueElement.textContent = league;
             leagueLink.href = `league.html?league=${league}`;
-            leagueLogo.src = `data/img/Leagues/${league}.png`; // Assuming league logos are stored in this path
+            if(league === "Ligue 1") {
+            leagueLogo.src = `data/img/Leagues/${leagues}.v`; 
 
             // Update Rank
             if (season === "All Seasons") {

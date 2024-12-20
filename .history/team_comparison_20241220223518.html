@@ -103,7 +103,7 @@
                 <h3 class="title">Welcome to the Team Comparison Page</h3>
                 <p><span class="highlight">Compare two teams</span> based on various performance metrics here.</p>
                 <p style="display: flex; gap: 4px; align-items: center;">Click on the <span class="material-symbols-outlined">explore</span> icon to return to the map.</p>
-                <p>To <span class="highlight">switch seasons</span>, simply select one from the dropdown menu (top left corner).</p>
+                <p>To <span class="highlight">switch seasons</span>, simply select one from the dropdown (top left corner).</p>
             `
 
             pop_up_next(message, tuto_step_2)
@@ -112,7 +112,7 @@
         function tuto_step_2() {
             message = `
                 <h3 class="title">Team Comparison</h3>
-                <p><span class="action">Select a second team</span> using the search bar.</p>
+                <p><span class="action">Select a second team</span> from the dropdown to compare them with the first team.</p>
             `
 
             pop_up_wrapper = pop_up_showcase(message)
@@ -141,11 +141,11 @@
         function tuto_step_3() {
             message = `
                 <h3 class="title">Available Information</h3>
-                <p>If both teams have faced each other, their <span class="highlight">match history</span> will appear in the table below. You can click on a row for more details.</p>
+                <p>If both teams have faced each other, their <span class="highlight">match history</span> will appear in the table below. It's possible to click on a row for more details.</p>
                 <p>&nbsp;</p>
-                <p>The <span class="highlight">performance metrics</span> for each team will also be shown in the stats section.</p>
+                <p>The <span class="highlight">performance metrics</span> for each team will also be shown in the comparison results section.</p>
                 <p>&nbsp;</p>
-                <p style="display: flex; gap: 4px; align-items: center;">Next, we’ll explore the matches. <span class="action">Click on the <span class="material-symbols-outlined">sports_soccer</span> icon</span>.</p>
+                <p style="display: flex; gap: 4px; align-items: center;">Next, we’ll explore the matches. <span class="action">Click the <span class="material-symbols-outlined">sports_soccer</span> icon</span> to view them.</p>
 
                 <button onclick="tuto_step_4()" class="next-button">Explore!</button>
             `

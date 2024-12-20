@@ -53,12 +53,7 @@
                             </select>
                         </div>
                         
-                        <div id="team-league" style="display: flex; align-items: center; margin-top: 10px;">
-                            <a id="league-link" href="#" style="display: flex; align-items: center;">
-                                <img id="league-logo" src="" alt="League Logo" style="width: 30px; height: 30px; vertical-align: middle; margin-right: 8px;">
-                                <span>League</span>
-                            </a>
-                        </div>
+                        <h3 id="team-league">League</h3> 
                         <h3 id="team-rank">Rank</h3> 
                         <h3 id="team-ratio">Win ratio</h3>
                     </div>
@@ -277,7 +272,7 @@
                 <p>You can view the team's logo, name, league, rank, and win ratio here.</p>
                 <p>&nbsp;</p>
                 <p><span class="action">Select</span> another club using the search bar that appears when hovering over the club name.</p>
-                <p>All seasons <span class="highlight">from 2021 to 2024</span> are available. Choose a season from the dropdown menu.</p>
+                <p>Data <span class="highlight">from 2021 to 2024</span> is available. Choose a season from the dropdown to view.</p>
                 <button onclick="tuto_step_3()" class="next-button">Next</button>
             `
             pop_up_showcase(message)
@@ -299,9 +294,9 @@
 
             message = `
                 <h3 class="title">Matches</h3>
-                <p>Here you can find the <span class="highlight">matches record of the team</span>.</p>
+                <p>Here you can find the <span class="highlight">matches played by the team</span>.</p>
                 <p>&nbsp;</p>
-                <p>Click on a match to get more information about it.</p>
+                <p>Clicking on a match will be redirected to its page.</p>
                 <button onclick="tuto_step_4()" class="next-button">Next</button>
             `
             pop_up_showcase(message)
@@ -316,14 +311,14 @@
 
             message = `
                 <h3 class="title">Explore Pages</h3>
-                <p>Navigate through the team's data with the options in the above menu.</p>
+                <p>Navigate through the team's data with the options below:</p>
                 <p>&nbsp;</p>
                 <p>Click on <span class="highlight">Quickstats</span> for a snapshot of the team's key stats.</p>
                 <p>Explore the team's performance by selecting <span class="highlight">Performance</span>.</p>
                 <p>Discover the team's players by clicking on <span class="highlight">Players</span>.</p>
                 <p style="display: flex; gap: 4px; align-items: center;">Get a broader view with the league's average stats by clicking <span class="material-symbols-outlined">show_chart</span>.</p>
                 <p>&nbsp;</p>
-                <p style="display: flex; gap: 4px; align-items: center;">Compare this team to others by clicking the <span class="material-symbols-outlined">compare_arrows</span> icon.</p>
+                <p style="display: flex; gap: 4px; align-items: center;">Compare this team with others by clicking the <span class="material-symbols-outlined">compare_arrows</span> icon.</p>
                 <button onclick="tuto_step_5()" class="next-button">Next</button>
             `
 

@@ -401,8 +401,6 @@ document.addEventListener("DOMContentLoaded", function() {
             const teamLogo = document.getElementById("team-logo");
             const teamNameElement = document.getElementById("team-name");
             const teamLeagueElement = document.getElementById("team-league");
-            const leagueLogo = document.getElementById("league-logo");
-            const leagueLink = document.getElementById("league-link");
             const logoURL = ctx.logos[team1];
             const teamRankElement= document.getElementById("team-rank");
             const teamRatioElement = document.getElementById("team-ratio");
@@ -449,10 +447,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Update League
             const country = data1 && data1.length > 0 ? data1.country.toLowerCase() : data1 ? data1.country.toLowerCase() : "";
             const league = countryToLeague[country] || "Unknown League";
-            teamLeagueElement.querySelector("span").textContent = league;
-            leagueLink.href = `league.html?league=${league}`;
-            leagueLogo.src = `data/img/Leagues/${league}.png`; // Assuming league logos are stored in this path
-
+            teamLeagueElement.textContent = league;
             // Update Rank
             if (season === "All Seasons") {
                 teamRankElement.textContent = "Rank: N/A (All Seasons)";
