@@ -459,16 +459,15 @@ span.slider-button {
     content: " ";
     display: block;
     transition: all 0.3s ease-in-out; 
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
+    width: calc(100% - 4px);
     background-color: var(--secondary-color);
     position: absolute;
-    top: -2px;
-    left: -2px;
+    top: -4px;
+    left: 0;
     max-width: 0;
-    max-height: 0;
-    z-index: -1;
-    border-radius: 10px;
+    max-height: 3px;
+    z-index: 999;
+    /* border-radius: 10px; */
 }
 
 .page.active {
@@ -560,14 +559,12 @@ span.slider-button {
     margin-bottom: -22px;
 }
 
-.right-panel:has(.page-switcher span[data-page="p1"]:hover) .page.p2::before {
+.right-panel:has( .page-switcher span[data-page="p1"]:hover) .page.p2::before {
     max-width: 100%;
-    max-height: 100%;
 }
 
-.right-panel:has(.page-switcher span[data-page="p2"]:hover) .page.p1::before {
+.right-panel:has( .page-switcher span[data-page="p2"]:hover) .page.p1::before {
     max-width: 100%;
-    max-height: 100%;
 }
 
 .team-name-group {

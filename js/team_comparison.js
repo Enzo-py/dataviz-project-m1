@@ -142,7 +142,7 @@ function updateMatchesList() {
     if (!team1 || !team2) {
         matchesListElement.innerHTML = `
             <tr>
-                <td colspan="5">Please select both teams.</td>
+                <td colspan="4">Please select both teams.</td>
             </tr>`;
         matchesTable.style.display = 'none'; // Hide matches table
         return;
@@ -156,9 +156,9 @@ function updateMatchesList() {
     if (league1 !== league2) {
         matchesListElement.innerHTML = `
             <tr>
-                <td colspan="5">The teams are not in the same league.</td>
+                <td colspan="4">The teams are not in the same league.</td>
             </tr>`;
-        matchesTable.style.display = 'none'; // Hide matches table
+        // matchesTable.style.display = 'none'; // Hide matches table
         return;
     } else {
         matchesTable.style.display = 'block'; // Show matches table
@@ -191,12 +191,12 @@ function updateMatchesList() {
     }else if(team1 === team2){
         matchesListElement.innerHTML = `
         <tr>
-            <td colspan="5">Choose two different teams.</td>
+            <td colspan="4">Choose two different teams.</td>
         </tr>`;
     }else{
         matchesListElement.innerHTML = `
         <tr>
-            <td colspan="5">Choose a team to compare to.</td>
+            <td colspan="4">Choose a team to compare to.</td>
         </tr>`;
     }
 
@@ -226,7 +226,7 @@ function updateMatchesList() {
     } else {
         matchesListElement.innerHTML = `
             <tr>
-                <td colspan="5">No matches found for ${team1} ${season === "All Seasons" ? "in any season" : `in ${season}`}.</td>
+                <td colspan="4">No matches found for ${team1} ${season === "All Seasons" ? "in any season" : `in ${season}`}.</td>
             </tr>`;
     }
 }

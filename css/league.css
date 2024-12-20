@@ -92,7 +92,9 @@ menu > a:hover {
 .team-logo-name h2 {
     margin: 0;
     font-size: 1.2em;
-    color: #333;
+    color: var(--text-white-color);
+    font-weight: 300;
+    text-align: center;
 }
 
 .team-logo-name p {
@@ -206,7 +208,9 @@ menu > a:hover {
     100% { transform: rotate(360deg); }
 }
 
-.matches h2 { color: var(--text-white-color); }
+.matches h2 { 
+    color: var(--text-white-color);
+}
 
 /* Matches table */
 #matches-table {
@@ -296,9 +300,12 @@ menu > a:hover {
     border-radius: 8px;
 }
 
-.league-stats h2 {
+.league-stats h2, .top-teams h2 {
     text-align: center;
+    font-weight: 300;
     color: var(--text-white-color);
+    font-size: 1.5em;
+    margin: 14px 0;
 }
 
 #league-stats-table {
@@ -343,25 +350,26 @@ menu > a:hover {
 
 .tab button {
     background-color: inherit;
-    border: var(--secondary-color) solid 2px;
+    border: var(--background-color) solid 2px;
     border-radius: 6px;
     outline: none;
     cursor: pointer;
     padding: 12px 16px;
     transition: 0.3s;
-    color: var(--secondary-color);
+    color: var(--background-color);
     font-size: 1.1rem;
     transition: all 0.3s;
 }
 
 .tab button:not(.active):hover {
     transform: scale(1.05);
+    filter: brightness(2.4);
 }
 
 .tab button.active {
-    background-color: var(--background-color);
-    color: var(--accent-color);
-    border: var(--accent-color) solid 2px;
+    /* background-color: var(--background-color); */
+    color: var(--secondary-color);
+    border: var(--secondary-color) solid 2px;
 }
 
 .tabcontent {
@@ -408,11 +416,111 @@ menu > a:hover {
 
 .league-wrapper, .league-wrapper img {
     max-width: 100px;
-    max-height: 100px;
+    /* max-height: 100px; */
+    width: 100%;
     transition: all 0.3s;
     cursor: pointer;
 }
 
 .league-wrapper:hover {
     transform: scale(1.25);
+}
+
+#top-teams-list {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 14px;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+    height: calc(160px + 35px + 15px * 2)
+}
+
+@keyframes extend {
+    0% {
+        transform: translateY(450px);
+        color: transparent;
+    }
+    90% {
+        transform: translateY(-15px);
+        color: transparent;
+    }
+    100% {
+        transform: none;
+        color: var(--second-background-color);
+    }
+}
+
+#top-teams-list > * {
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    min-width: 100px;
+    position: relative;
+    color: transparent;
+    animation: extend 1.3s ease-in-out 1 forwards;
+    transform: translateY(450px);
+}
+
+#top-teams-list > *::before {
+    font-size: 1.5em;
+    color: var(--second-background-color);
+    position: absolute;
+    top: -45px;
+    padding: 15px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: solid 3px var(--second-background-color);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#top-teams-list > *:nth-child(2) {
+    background-color: #abafb1;
+    height: 135px;
+    animation-delay: 0.8s;
+    order: 1;
+
+}
+
+#top-teams-list > *:nth-child(2)::before {
+    content: "2st";
+    background-color: #abafb1;
+}
+
+
+#top-teams-list > *:nth-child(1) {
+    background-color: #E7B908;
+    height: 160px;
+    animation-delay: 0.3s;
+    order: 2;
+}
+
+#top-teams-list > *:nth-child(1)::before {
+    content: "1st";
+    background-color: #E7B908;
+}
+
+#top-teams-list > *:nth-child(3) {
+    background-color: #C88744;
+    height: 110px;
+    animation-delay: 1.3s;
+    order: 3;
+}
+
+#top-teams-list > *:nth-child(3)::before {
+    content: "3st";
+    background-color: #C88744;
+}
+
+#top-teams-list > * strong {
+    font-size: 1.3em;
+    margin-bottom: 14px;
 }
