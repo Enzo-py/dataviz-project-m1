@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Comparison</title>
     <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="js/toolbox.js"></script>
     <script type="text/javascript" src="js/matches.js"></script>
 
     <link rel="stylesheet" href="css/global.css">
@@ -141,5 +142,57 @@
             <!-- Options will be populated dynamically -->
         </datalist>
     </main>
+
+    <script>
+        url = new URL(window.location.href);
+        let tutorial_running = url.searchParams.get("tutorial") == "true"; 
+        let animation_running = true
+        let waiting_to_click_on_match = false
+
+        if (tutorial_running) {
+            tuto_step_1()
+        }
+
+        function tuto_step_1() {
+            message = `
+                <h3 class="title">Welcome to the Matches Page</h3>
+                <p>
+                    This page displays the most recent matches played. <br/>
+                    Because we don't come from the team page, all the matches are displayed here.
+                    <br/><br/>
+                    To see more information on a match, please click on it.
+                </p>
+            `
+
+            pop_up_next(message, tuto_step_2)
+        }
+
+        function tuto_step_2() {
+            tr = d3.select("#matches-table tbody tr[is-visible='true']")
+            animation_running = true
+            highlight_tr(tr)
+            waiting_to_click_on_match = true
+        }
+
+        function tuto_step_3() {
+            alert("Please click on a match to see more details.")
+        }
+
+        function highlight_tr(tr) {
+            tr.transition()
+                .duration(500)
+                .style("transform", "scale(1.1)")
+                .style("filter", "brightness(1.8)")
+                .transition()
+                .duration(500)
+                .style("transform", "scale(1.02)")
+                .style("filter", "brightness(1.2)")
+                .on("end", function() {
+                    if (animation_running) {
+                        highlight_tr(tr)
+                    }
+                })
+        }
+    </script>
 </body>
 </html>

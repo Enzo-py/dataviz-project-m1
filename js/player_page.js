@@ -1242,16 +1242,19 @@ function get_player_short_info(player_id, player_name) {
         rank_in_club_top_scorer = player["2023-2024"]["rank_in_club_top_scorer"]
 
         ranked = false
-        if (rank_in_league_top_attackers != 999) {
+        if (rank_in_league_top_attackers != 999 && rank_in_league_top_attackers < rank_in_league_top_midfielders && rank_in_league_top_attackers < rank_in_league_top_defenders) {
             message += `${player_name} is ranked <span class="key">#${rank_in_league_top_attackers}</span> in the league top attackers.`
             ranked = true
-        } else if (rank_in_league_top_midfielders != 999) {
+        }
+        if (rank_in_league_top_midfielders != 999 && rank_in_league_top_midfielders < rank_in_league_top_attackers && rank_in_league_top_midfielders < rank_in_league_top_defenders) {
             message += `${player_name} is ranked <span class="key">#${rank_in_league_top_midfielders}</span> in the league top midfielders.`
             ranked = true
-        } else if (rank_in_league_top_defenders != 999) {
+        }
+        if (rank_in_league_top_defenders != 999 && rank_in_league_top_defenders < rank_in_league_top_attackers && rank_in_league_top_defenders < rank_in_league_top_midfielders) {
             message += `${player_name} is ranked <span class="key">#${rank_in_league_top_defenders}</span> in the league top defenders.`
             ranked = true
-        } else {
+        } 
+        if (!ranked) {
             message += `${player_name} is not ranked in the league top players.`
         }
 
@@ -1277,6 +1280,6 @@ function get_player_short_info(player_id, player_name) {
         }
         total_player += GLOBAL_SCORE_REPARTITION[key]
     })
-    message += ` He is in the top <span class="key">${Math.round(top_player_score / total_player * 100)}%</span> players on the global score.`
+    message += ` He is in the top <span class="key">${Math.max(Math.round(top_player_score / total_player * 100), 1)}%</span> players on the global score.`
     return message
 }

@@ -399,6 +399,11 @@ function showMatchDetails(match) {
         .style("transform", "scale(1.02)")
         .transition()
         .duration(200)
+
+    if (waiting_to_click_on_match) {
+        waiting_to_click_on_match = false
+        tuto_step_3()
+    }
 }
 
 function updateStatItem(grid, type, homeValue, awayValue) {
