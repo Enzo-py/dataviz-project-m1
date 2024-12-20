@@ -172,9 +172,10 @@ main {
     margin-right: 1rem;
 }
 
-#team-name {
-    margin: 0;
-    font-size: 3em;
+.team-name {
+    animation: zoom-spawn 0.5s ease-in-out 1 forwards;
+    animation-delay: 0.6s;
+    transform: scale(0);
 }
 
 #team-league {
@@ -349,12 +350,24 @@ table#matches-table td img {
 
 .match-score {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .match-score .score {
     font-size: 3rem;
     font-weight: bold;
-    margin: 1rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 14px;
+}
+
+.match-score .score > div {
+    overflow: hidden;
+    position: relative; 
+    width: 3rem;
 }
 
 .match-score .date {
@@ -526,8 +539,10 @@ tr:ho#matches-table er {
 .half-time-score {
     text-align: center;
     font-size: 1.2rem;
-    margin: 1rem 0;
     color: #666;
+    animation: zoom-spawn 0.5s ease-in-out 1 forwards;
+    animation-delay: 3s;
+    transform: scale(0);
 }
 
 /* Remove the .goal-timings styles */
@@ -562,10 +577,24 @@ tr:ho#matches-table er {
 
 .match-info span span {
     font-weight: 600;
-    color: #333;
+    color: var(--text-white-color);
 }
 
 /* ...existing code... */
+@keyframes zoom-spawn {
+    0% {
+        transform: scale(0);
+    }
+    65% {
+        transform: scale(1.1);
+    }
+    80% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 
 .team .goal-time {
     display: inline-block;
@@ -575,6 +604,9 @@ tr:ho#matches-table er {
     border-radius: 15px;
     font-size: 0.9rem;
     color: #666;
+    transform: scale(0);
+    animation: zoom-spawn 0.5s ease-in-out 1 forwards;
+    animation-delay: 0.5s;
 }
 
 .home-goals, .away-goals {
