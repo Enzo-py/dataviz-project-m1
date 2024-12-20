@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Comparison</title>
     <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="js/toolbox.js"></script>
     <script type="text/javascript" src="js/team_comparison.js"></script>
 
     <link rel="stylesheet" href="css/global.css">
@@ -28,7 +29,7 @@
     </div>
     <menu>
         <a href="index.html" class="material-symbols-outlined back-to-map" title="Back to map">explore</a>
-        <a href="matches.html" class="material-symbols-outlined view-players" title="View matches">sports_soccer</a>
+        <a href="matches.html" class="material-symbols-outlined view-matches" title="View matches">sports_soccer</a>
     </menu>
 
     <main>
@@ -87,5 +88,97 @@
             <!-- Options will be populated dynamically -->
         </datalist>
     </main>
+
+    <script>
+        let tutorial_running = false;
+        url = new URL(window.location.href);
+        tutorial = url.searchParams.get("tutorial");
+        if (tutorial && !tutorial_running) {
+            tutorial_running = true;
+            tuto_step_1()
+        }
+
+        function tuto_step_1() {
+            message = `
+                <h3 class="title">Welcome to the Team Comparison Page</h3>
+                <p class="content">This page allows you to compare two teams based on different performance metrics.</p>
+                <p style="display: flex; gap: 4px; align-items: center;">You can click on the <span class="material-symbols-outlined">explore</span> icon to go back to the map</p>
+                <p>To change the season, select a season from the dropdown list (on the top left corner).</p>
+            `
+
+            pop_up_next(message, tuto_step_2)
+        }
+
+        function tuto_step_2() {
+            message = `
+                <h3 class="title">Team comparison</h3>
+                <p class="content">To compare two teams, select a second team from the dropdown list.</p>
+            `
+
+            pop_up_wrapper = pop_up_showcase(message)
+            pop_up = d3.select(".pop-up")
+            pop_up.style("transition", "all 0.5s ease-in-out")
+            translate_x = window.innerWidth - pop_up.node().offsetWidth - 20 - pop_up.node().offsetLeft
+            translate_y = window.innerHeight - pop_up.node().offsetHeight - 75 - pop_up.node().offsetTop
+            pop_up.style("transform", `translate(${translate_x}px, ${-translate_y}px)`)
+
+            // Highlight the team dropdown
+            select_team2 = d3.select("#team2")
+            animation_running = true
+
+            highlight_element(select_team2)
+
+            select_team2.on("change", function() {
+                if (select_team2.property("value") == "") return
+                if (animation_running) {
+                    animation_running = false
+                    pop_up_wrapper.remove()
+                    tuto_step_3()
+                }
+            })
+        }
+
+        function tuto_step_3() {
+            message = `
+                <h3 class="title">Available information</h3>
+                <p>If both selected teams have played against each other, the matches record will be displayed in the table below.<br/>
+                    You can get more information about the match by clicking on the row.
+                </p>
+                <p>&nbsp;</p>
+                <p>Additionally, the performance metrics for each team will be displayed in the comparison results section.</p>
+                <p>&nbsp;</p>
+                <p style="display: flex; gap: 4px; align-items: center;">The next step of the tutorial is about matches.
+                    You can click on the <span class="material-symbols-outlined">sports_soccer</span> icon to view the matches.
+                </p>
+
+                <button onclick="tuto_step_4()" class="next-button">Explore!</button>
+            `
+            matches_button = d3.select(".view-matches")
+            url = "matches.html?tutorial=true"
+            matches_button.attr("href", url)
+
+            pop_up_showcase(message)
+        }
+
+        function tuto_step_4() {
+            d3.select(".pop-up-wrapper").remove()
+            animation_running = true
+            matches_button = d3.select(".view-matches")
+            highlight_element(matches_button)
+        }
+
+        function highlight_element(element) {
+            element.transition()
+                .duration(400)
+                .style("border-color", "var(--accent-color)")
+                .transition()
+                .duration(400)
+                .style("border-color", "")
+                .on("end", function() {
+                    if (animation_running) highlight_element(element)
+                })
+        }
+
+    </script>
 </body>
 </html>

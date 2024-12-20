@@ -117,6 +117,10 @@
     </main>
 
     <script>
+        let tutorial_running = false;
+        let page_tutorial_ended = false;
+        let animation_running = true;
+
         let first_time_on_right = true;
         let first_time_on_left = true;
 
@@ -162,6 +166,13 @@
 
             first_time_on_right = true;
             first_time_on_left = true;
+
+            url = new URL(window.location.href);
+            tutorial = url.searchParams.get("tutorial");
+            if (tutorial && !tutorial_running) {
+                tutorial_running = true;
+                tuto_step_1()
+            }
         }
 
         function slider_left() {
@@ -216,6 +227,135 @@
                 first_time_on_right = false;
                 page2_anim()
             }
+        }
+        
+        function tuto_step_1() {
+            message = `
+                <h3 class="title">Welcome to the club page</h3>
+
+                <p>Here you can view detailed statistics of a club</p>
+                <p>&nbsp;</p>
+                <p style="display: flex; gap: 4px; align-items: center;">You can click on the <span class="material-symbols-outlined">explore</span> icon to go back to the map</p>
+            `
+
+            pop_up_next(message, tuto_step_2)
+        }
+
+        function tuto_step_2() {
+            message = `
+                <h3 class="title">Generic Information</h3>
+                <p>Here you can view the team's logo, name, league, rank, and win ratio here.</p>
+                <p>&nbsp;</p>
+                <p>You can select another club via the search bar available on hover the club name</p>
+                <p>Data from 2021 to 2024 are available, you can select the season you want to view from the dropdown</p>
+                <button onclick="tuto_step_3()" class="next-button">Next</button>
+            `
+            pop_up_showcase(message)
+            d3.select(".matches").style("opacity", 0.2)
+            d3.select(".right-panel").style("opacity", 0.2)
+
+            animation_running = true
+            highlight_text_animation(d3.select("#team-name"))
+            highlight_block_animation(d3.select("#season"))
+        }
+
+        function tuto_step_3() {
+            animation_running = false
+
+            d3.select(".matches").style("opacity", 1)
+            d3.select(".team-info").style("opacity", 0.2)
+
+            d3.select(".pop-up-wrapper").remove()
+
+            message = `
+                <h3 class="title">Matches</h3>
+                <p>Here you can view the matches played by the team</p>
+                <p>&nbsp;</p>
+                <p>If you click on a match, you will be redirected to the match page</p>
+                <button onclick="tuto_step_4()" class="next-button">Next</button>
+            `
+            pop_up_showcase(message)
+        }
+
+        function tuto_step_4() {
+            d3.select(".matches").style("opacity", 0.2)
+            d3.select(".right-panel").style("opacity", 1)
+            d3.select(".page").style("opacity", 0.2)
+
+            d3.select(".pop-up-wrapper").remove()
+
+            message = `
+                <h3 class="title">Pages</h3>
+                <p>Here you can switch between the different pages available</p>
+                <p>&nbsp;</p>
+                <p>If you click on the <span class="switcher">Quickstats</span> to view the team's quick statistics</p>
+                <p>If you click on the <span class="switcher">Performance</span> to view the team's performance</p>
+                <p>If you click on the <span class="switcher">Players</span> to view the team's players</p>
+                <p style="display: flex; gap: 4px; align-items: center;">If you click on the <span class="material-symbols-outlined">show_chart</span> to view the league average statistics</p>
+                <p>&nbsp;</p>
+                <p style="display: flex; gap: 4px; align-items: center;">You can click on the <span class="material-symbols-outlined">compare_arrows</span> icon to compare this team to another</p>
+                
+                <button onclick="tuto_step_5()" class="next-button">Next</button>
+            `
+
+            pop_up_showcase(message)
+        }
+
+        function tuto_step_5() {
+            d3.select(".matches").style("opacity", 1)
+            d3.select(".right-panel").style("opacity", 1)
+            d3.select(".page").style("opacity", 1)
+            d3.select(".team-info").style("opacity", 1)
+
+            d3.select(".pop-up-wrapper").remove()
+
+            message = `
+                <h3 class="title">Discover the team's statistics</h3>
+                <p>Now, you can navigate through the different pages to discover the team's statistics</p>
+                <p>&nbsp;</p>
+                <p>The next step of the tutorial is about team comparison</p>
+                <button onclick="tuto_step_6()" class="next-button">Explore!</button>
+            `
+            animation_running = true
+            highlight_block_animation(d3.select(".compare-teams"))
+            pop_up_showcase(message)
+        }
+
+        function tuto_step_6() {
+            d3.select(".pop-up-wrapper").remove()
+            page_tutorial_ended = true
+
+            compare_team = d3.select(".compare-teams").node()
+            team_name = d3.select("#team-name").text()
+            compare_team.href = "team_comparison.html?club=" + team_name + "&tutorial=true"
+        }
+
+        function highlight_text_animation(selection) {
+            selection.transition()
+                .duration(800)
+                .style("color", "var(--accent-color)")
+                .transition()
+                .duration(800)
+                .style("color", "var(--text-white-color)")
+                .on("end", () => {
+                    if (animation_running) {
+                        highlight_text_animation(selection)
+                    }
+                })
+        }
+
+        function highlight_block_animation(selection) {
+            selection.transition()
+                .duration(800)
+                .style("border-color", "var(--accent-color)")
+                .transition()
+                .duration(800)
+                .style("border-color", "var(--text-white-color)")
+                .on("end", () => {
+                    if (animation_running) {
+                        highlight_block_animation(selection)
+                    }
+                })
         }
     </script>
 </body>

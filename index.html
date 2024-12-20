@@ -6,6 +6,7 @@
     <title>PROJET MBAPPE</title>
 
     <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="js/toolbox.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 
     <link rel="stylesheet" href="css/global.css">
@@ -34,6 +35,217 @@
             </button>
         </menu>
         <div class="map"></div>
+
+        <span class="tuto-button" onclick="start_tuto()">?</span>
     </main>
+
+    <script>
+        let stop_animation = false
+        let tutorial_running = false
+
+        function start_tuto() {
+            if (tutorial_running) {
+                toast("error", "The tutorial is already running.")
+                return
+            }
+            tutorial_running = true
+            pop_up_confirm(`<h3 class="title">Tutorial</h3>Would you like to start the tutorial?`, tuto_step_1);
+        }
+
+        function tuto_step_1() {
+            message = `
+                <h3 class="title">Project Explanation</h3>
+                <p>
+                    This project is a data visualization of the top 5 European football leagues.<br/>
+                    We tried to present key indicators of the teams and players in a simple and intuitive way.
+                </p>
+                <p>&nbsp;</p>
+                <p>
+                    The main page is a map of Europe with the cities of the teams.
+                </p>
+            `
+            pop_up_next(message, tuto_step_2);
+        }
+
+        function tuto_step_2() {
+            message = `
+                <h3 class="title">Selection a city</h3>
+
+                <p>
+                    You can select a city by clicking on it (green circle).
+                </p>
+            `
+
+            d3.select("force-active").classed("force-active", false)
+            stop_animation = false
+
+            pop_up_wrapper = pop_up_showcase(message)
+            pop_up = pop_up_wrapper.querySelector(".pop-up")
+
+            pop_up.style.transition = "all 0.5s ease-in-out"
+            distance_to_right = window.innerWidth - pop_up.getBoundingClientRect().right - 25
+            distance_to_top = pop_up.getBoundingClientRect().top - 75
+            pop_up.style.transform = `translate(${distance_to_right}px, ${-distance_to_top}px)`
+
+            paris_city = document.querySelector("svg #cities path[name='paris']")
+            paris_city = d3.select(paris_city)
+            d3_pulse_animation(paris_city)
+
+            // check if a div get the class force-active
+            let interval = setInterval(() => {
+                if (document.querySelector(".force-active")) {
+                    clearInterval(interval)
+                    pop_up_wrapper.remove()
+                    tuto_step_3()
+                }
+            }, 500)
+        }
+
+        function tuto_step_3() {
+            stop_animation = true
+
+            message = `
+                <h3 class="title">City Information</h3>
+                <p>
+                    When you select a city, a menu on the left will appear with the teams of the city.
+                </p>
+
+                <p>
+                    You can click on a team to open the team's information page.
+                </p>
+
+                <button class="next-button">Next</button>
+            `
+
+            pop_up_wrapper = pop_up_showcase(message)
+            pop_up = pop_up_wrapper.querySelector(".pop-up")
+            pop_up_background = pop_up_wrapper.querySelector(".showcase-background")
+            
+            pop_up.querySelector(".next-button").addEventListener("click", () => {
+                pop_up.remove()
+                tuto_step_4()
+            })
+
+            circle_radius = 200
+            circle_x = 100
+            circle_y = 100
+            screen_width = parseInt(window.innerWidth / 3)
+            pop_up_background.style.zIndex = 999
+            pop_up_background.style.width = "100%"
+            pop_up_background.style.height = "100%"
+            pop_up_background.style.top = 0
+            pop_up_background.style.left = 0
+            pop_up_background.style.position = "fixed"
+            pop_up_background.style.background = `radial-gradient(circle ${circle_radius}px at ${circle_x}px ${circle_y}px, rgba(255, 255, 255, 0) ${circle_radius}px, var(--second-background-color) ${screen_width}px)`
+        }
+
+        function tuto_step_4() {
+            showcase_background = document.querySelector(".showcase-background")
+
+            showcase_background.style.transition = "all 0.5s ease-in-out"
+            circle_radius = 30
+            circle_y = 50
+            showcase_background.style.background = `radial-gradient(circle ${circle_radius}px at 100% ${circle_y}px, rgba(255, 255, 255, 0) ${circle_radius}px, #181919ee ${circle_radius + 40}px)`
+            
+            message = `
+                <h3 class="title">Display clubs logo</h3>
+                <p>
+                    You can click on PSG logo to display the logo of the team on the map.
+                </p>
+            `
+
+            pop_up_next(message, tuto_step_5, true)
+        }
+
+        function tuto_step_5() {
+
+            message = `
+                <h3 class="title">Matches</h3>
+                <p>
+                    You can click on the ball to display all the matches of the 5 European leagues.
+                </p>
+            `
+
+            showcase_background = document.querySelector(".showcase-background")
+            circle_radius = 20
+            circle_y = 50
+            showcase_background.style.background = `radial-gradient(circle ${circle_radius}px at calc(100% - 80px) ${circle_y}px, rgba(255, 255, 255, 0) ${circle_radius}px, #181919ee ${circle_radius + 40}px)`
+            pop_up_next(message, tuto_step_6, true)
+        }
+
+        function tuto_step_6() {
+            message = `
+                <h3 class="title">Search bar</h3>
+                <p>
+                    You can also use the search bar to find a club by its name or from a player who plays in this club.
+                </p>
+
+            `
+            showcase_background = document.querySelector(".showcase-background")
+            circle_radius = 160
+            circle_y = 0
+            showcase_background.style.background = `radial-gradient(circle ${circle_radius}px at calc(100% - 270px) ${circle_y}px, rgba(255, 255, 255, 0) ${circle_radius}px, var(--second-background-color) ${circle_radius + 40}px)`
+            pop_up_next(message, tuto_step_7, true)
+        }
+
+        function tuto_step_7() {
+            message = `
+                <h3 class="title">Team Information</h3>
+                <p>
+                    Now, please, click on the team logo present in the left menu to display the team information.
+                </p>
+            `
+
+            document.querySelector(".showcase-background").remove()
+            pop_up_wrapper = pop_up_showcase(message)
+            pop_up = pop_up_wrapper.querySelector(".pop-up")
+
+            pop_up.style.transition = "all 0.5s ease-in-out"
+            distance_to_right = window.innerWidth - pop_up.getBoundingClientRect().right - 25
+            distance_to_top = pop_up.getBoundingClientRect().top - 75
+            pop_up.style.transform = `translate(${distance_to_right}px, ${-distance_to_top}px)`
+
+            d3.selectAll(".logo-city .club-logo")
+                .on("click", function(event) {
+                    event.preventDefault()
+
+                    url = "team_page.html?club=" + this.getAttribute("title") + "&tutorial=true"
+                    window.location.href = url
+                })
+
+            d3.select("a.material-symbols-outlined[title='Matches']").on("click", function(event) {
+                event.preventDefault()
+                url = "matches.html"
+
+                pop_up_confirm("<h3 class='title'>Warning!</h3>You are quitting the tutorial. Do you want to continue?", () => {
+                    window.location.href = url
+                })
+            })
+
+        }
+
+        function d3_pulse_animation(selection) {
+            selection.transition()
+                .duration(500)
+                .attr("stroke", "darkgreen")
+                .attr("stroke-width", 15)
+                .transition()
+                .duration(500)
+                .attr("stroke", "green")
+                .attr("stroke-width", 1.5)
+                .transition()
+                .duration(500)
+                .attr("stroke", "darkgreen")
+                .attr("stroke-width", 15)
+                .transition()
+                .duration(500)
+                .attr("stroke", "green")
+                .attr("stroke-width", 1.5)
+                .on("end", function() {
+                    if (!stop_animation)
+                        d3_pulse_animation(d3.select(this))
+                })
+        }
+    </script>
 </body>
 </html>

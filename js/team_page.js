@@ -1247,11 +1247,11 @@ function page1_anim(setup_start) {
 
             } else {
                 path.transition()
-                    .duration(100)
+                    .duration(300)
                     .delay(j * 150 + i * 250)
                     .style("transform", "rotate(180deg) scale(0.5)")
                     .transition()
-                    .duration(350)
+                    .duration(400)
                     .style("transform", "rotate(360deg) scale(0.5)")
                     .transition()
                     .duration(400)

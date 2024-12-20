@@ -18,7 +18,10 @@
     --secondary-country-border-color: #767676;
 
     --danger-color: #af2c35;
+    --danger-color-light: #e99093;
     --success-color: #2c9f2c;
+    --success-color-light: #9ddc9d;
+    --secondary-color-light: #7793ca;
     --warning-color: #9f8625;
     --toggle-background: #f0f0f0;
     --toggle-border: #ccc;
@@ -228,3 +231,77 @@ body, body * {
 }
 
 .material-symbols-outlined { user-select: none; }
+
+.pop-up-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(25, 25, 25, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.pop-up {
+    background-color: #eee;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--second-background-color);
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    position: fixed;
+    z-index: 9999;
+}
+
+.pop-up .title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.pop-up-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 38px auto 0 auto;
+    width: 90%;
+}
+
+.pop-up-buttons button, .pop-up > .pop-up-message > button  {
+    padding: 6px 20px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.pop-up > .pop-up-message > button {
+    margin: 14px 0;
+}
+
+button.yes-button {
+    background-color: var(--success-color-light);
+    border: solid 1px var(--success-color);
+    color: var(--success-color);
+    border-radius: 4px;
+}
+
+button.no-button {
+    background-color: var(--danger-color-light);
+    border: solid 1px var(--danger-color);
+    color: var(--danger-color);
+    border-radius: 4px;
+}
+
+button.next-button {
+    background-color: var(--secondary-color-light);
+    border: solid 1px var(--secondary-color);
+    color: var(--secondary-color);
+    border-radius: 4px;
+}
+
+.pop-up-buttons button:hover, .pop-up > .pop-up-message > button:hover {
+    transform: scale(1.1);
+}
