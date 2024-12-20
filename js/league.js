@@ -8,7 +8,7 @@ const countryToLeague = {
     "spain": "La Liga"
 };
 
-let LEAGUE = "All Leagues";
+let LEAGUE = "Bundesliga";
 
 function loadClubLogos() {
     return d3.csv("data/clubs_logo.csv").then(data => {
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
     d3.select('h1').text(LEAGUE);
 
     if (!Object.values(countryToLeague).includes(LEAGUE)) {
-        toast("error", "Invalid league parameter. Redirecting to All Leagues.");
+        toast("error", "Invalid league parameter. Redirecting to the league 'Bundesliga'.");
         LEAGUE = "All Leagues";
     }
 
@@ -238,7 +238,7 @@ function updateTopTeams() {
         const listItem = document.createElement("li");
         const points = (team.wins * 3 ) + parseInt(team.draws, 10) || 0;
         listItem.innerHTML = `
-            <strong>${team.common_name}</strong> - ${points} Points
+            <strong>${team.common_name}</strong> ${points} Points
         `;
         topTeamsList.appendChild(listItem);
     });
@@ -275,7 +275,7 @@ function updateTopPlayers() {
     topPlayers.forEach(player => {
         const listItem = document.createElement("li");
         listItem.innerHTML = `
-            <strong>${player.player_name}</strong> (${player.club_name}) - ${player.goals_overall} Goals
+            <strong>${player.player_name}</strong> (${player.club_name}) ${player.goals_overall} Goals
         `;
         topPlayersList.appendChild(listItem);
     });
