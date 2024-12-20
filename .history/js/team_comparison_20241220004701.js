@@ -231,7 +231,7 @@ function updateMatchesList() {
     }
 }
 
-// Helper function to get team's league
+// Helper function to get  team's league
 function getTeamLeague(teamName, season) {
     let league = null;
     if (season === "All Seasons") {
@@ -582,3 +582,6 @@ function search(event, input) {
     }
 
 }
+
+
+
