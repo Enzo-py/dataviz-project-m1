@@ -25,6 +25,10 @@
             </div>
 
             <button>
+                <a class="material-symbols-outlined" id = "league-button" style="font-variation-settings: 'FILL' 0, 'wght' 220, 'GRAD' 200, 'opsz' 40;" title="League" href="league.html?league=Bundesliga">trophy</a>
+            </button>
+
+            <button>
                 <a class="material-symbols-outlined" id = "matches-button" style="font-variation-settings: 'FILL' 0, 'wght' 220, 'GRAD' 200, 'opsz' 40;" title="Matches" href="matches.html">sports_soccer</a>
             </button>
             <button>
@@ -208,6 +212,20 @@
 
         function tuto_step_8() {
             message = `
+                <h3 class="title">League Information</h3>
+                <p>
+                    You can click on the trophy icon to view the <span class="highlight">league information</span>.
+                </p>
+            `
+            showcase_background = document.querySelector(".showcase-background")
+            circle_radius = 20
+            circle_y = 50
+            showcase_background.style.background = `radial-gradient(circle ${circle_radius}px at calc(100% - 230px) ${circle_y}px, rgba(255, 255, 255, 0) ${circle_radius}px, #181919ee ${circle_radius + 40}px)`
+            pop_up_next(message, tuto_step_9, true)
+        }
+
+        function tuto_step_9() {
+            message = `
                 <h3 class="title">Search Bar</h3>
                 <p>
                     You can use the <span class="highlight">search</span> bar to find a club by name or a player from the club.
@@ -217,11 +235,11 @@
             showcase_background = document.querySelector(".showcase-background")
             circle_radius = 160
             circle_y = 0
-            showcase_background.style.background = `radial-gradient(circle ${circle_radius}px at calc(100% - 370px) ${circle_y}px, rgba(255, 255, 255, 0) ${circle_radius}px, var(--second-background-color) ${circle_radius + 40}px)`
-            pop_up_next(message, tuto_step_9, true)
+            showcase_background.style.background = `radial-gradient(circle ${circle_radius}px at calc(100% - 420px) ${circle_y}px, rgba(255, 255, 255, 0) ${circle_radius}px, var(--second-background-color) ${circle_radius + 40}px)`
+            pop_up_next(message, tuto_step_10, true)
         }
 
-        function tuto_step_9() {
+        function tuto_step_10() {
             message = `
                 <h3 class="title">Team Information</h3>
                 <p>

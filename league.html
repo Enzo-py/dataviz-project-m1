@@ -137,17 +137,23 @@
         let tutorial_running = false;
         url = new URL(window.location.href);
         tutorial = url.searchParams.get("tutorial");
+        tutorial_part2 = url.searchParams.get("tutorial_part2");
         if (tutorial && !tutorial_running) {
             tutorial_running = true;
             tuto_step_1()
         }
 
+        if (tutorial_part2 && !tutorial_running) {
+            tutorial_running = true;
+            tuto_step_3()
+        }
+
         function tuto_step_1() {
             message = `
-                <h3 class="title">Welcome to the Team Comparison Page</h3>
-                <p class="content">Compare two teams based on various performance metrics here.</p>
-                <p style="display: flex; gap: 4px; align-items: center;">Click the <span class="material-symbols-outlined">explore</span> icon to return to the map.</p>
-                <p>To switch seasons, simply select one from the dropdown (top left corner).</p>
+                <h3 class="title">Welcome to the League Page!</h3>
+                <p>This page offer a lookup of the top teams and players in the selected league.</p>
+                <p>&nbsp;</p>
+                <p></p>
             `
 
             pop_up_next(message, tuto_step_2)
@@ -156,64 +162,130 @@
         function tuto_step_2() {
             message = `
                 <h3 class="title">Team Comparison</h3>
-                <p class="content">Select a second team from the dropdown to compare them with the first team.</p>
+                <p>Let's start by <span class="action">selecting a league</span> from the options above.</p>
             `
 
             pop_up_wrapper = pop_up_showcase(message)
             pop_up = d3.select(".pop-up")
-            pop_up.style("transition", "all 0.5s ease-in-out")
             translate_x = window.innerWidth - pop_up.node().offsetWidth - 20 - pop_up.node().offsetLeft
             translate_y = window.innerHeight - pop_up.node().offsetHeight - 75 - pop_up.node().offsetTop
-            pop_up.style("transform", `translate(${translate_x}px, ${-translate_y}px)`)
+            pop_up.style("transform", `translate(${translate_x}px, ${translate_y}px)`)
 
-            // Highlight the team dropdown
-            select_team2 = d3.select("#team2")
+            // Highlight the league buttons
+            league_block = d3.selectAll(".league-selector .league-wrapper").nodes()[3]
+            league_block = d3.select(league_block)
             animation_running = true
+            highlight_element(league_block)
 
-            highlight_element(select_team2)
+            // for every league block if clicked:
+            d3.selectAll(".league-selector .league-wrapper").on("click", function(event) {
+                event.stopPropagation()
+                choosed_league = d3.select(this).attr("name")
 
-            select_team2.on("change", function() {
-                if (select_team2.property("value") == "") return
-                if (animation_running) {
-                    animation_running = false
-                    pop_up_wrapper.remove()
-                    tuto_step_3()
-                }
+                // redirect to the league page
+                window.location.href = `league.html?league=${choosed_league}&tutorial_part2=true`
             })
         }
 
         function tuto_step_3() {
             message = `
-                <h3 class="title">Available Information</h3>
-                <p>If both teams have faced each other, their match history will appear in the table below. It's possible to click on a row for more details.</p>
+                <h3 class="title">Pages Navigation</h3>
+                <p> After selecting a league, you can change the season by selecting a different year from the dropdown above.</p>
                 <p>&nbsp;</p>
-                <p>The performance metrics for each team will also be shown in the comparison results section.</p>
-                <p>&nbsp;</p>
-                <p style="display: flex; gap: 4px; align-items: center;">Next, we’ll explore the matches. Click the <span class="material-symbols-outlined">sports_soccer</span> icon to view them.</p>
-
-                <button onclick="tuto_step_4()" class="next-button">Explore!</button>
+                <p>You can also navigate to between player and team stats by clicking on the tabs.</p>
             `
-            matches_button = d3.select(".view-matches")
-            url = "matches.html?tutorial=true"
-            matches_button.attr("href", url)
 
-            pop_up_showcase(message)
+            pop_up_next(message, tuto_step_4)
         }
 
         function tuto_step_4() {
-            d3.select(".pop-up-wrapper").remove()
-            animation_running = true
-            matches_button = d3.select(".view-matches")
-            highlight_element(matches_button)
+            message = `
+                <h3 class="title">Podium</h3>
+                <p>Here you can see the top 3 teams in the league.</p>
+                <p>&nbsp;</p>
+                <p>The podium is based on points: the team with the most points is on the top.<br/>
+                    A win worths 3 points, a draw 1 point, and a loss 0 points.</p>
+            `
+                
+            // scroll to podium
+            setTimeout(() => {
+                podium = d3.select(".top-teams")
+                window.scrollTo({
+                    top: podium.node().offsetTop - 100,
+                    behavior: "smooth"
+                })
+                pop_up_next(message, tuto_step_5)
+            }, 1000)
+        }
+
+        function tuto_step_5() {
+            message = `
+                <h3 class="title">League Table</h3>
+                <p>Here you can see the full league table.</p>
+                <p>&nbsp;</p>
+                <p>The table is sorted by points, then by goal difference, and finally by goals scored.</p>
+            `
+            setTimeout(() => {
+                league_table = d3.select(".league-stats")
+                window.scrollTo({
+                    top: league_table.node().offsetTop - 100,
+                    behavior: "smooth"
+                })
+                pop_up_next(message, tuto_step_6)
+            }, 1000)
+        }
+
+        function tuto_step_6() {
+            message = `
+                <h3 class="title">Top Players</h3>
+                <p><span class="action">Click on the "Top Players" tab</span> to see the top players in the league.</p>
+            `
+
+            setTimeout(() => {
+                tab = d3.select(".tab")
+                window.scrollTo({
+                    top: tab.node().offsetTop - 100,
+                    behavior: "smooth"
+                })
+
+                pop_up_wrapper = pop_up_showcase(message)
+                pop_up = d3.select(".pop-up")
+
+                translate_x = window.innerWidth - pop_up.node().offsetWidth - 20 - pop_up.node().offsetLeft
+                translate_y = window.innerHeight - pop_up.node().offsetHeight - 75 - pop_up.node().offsetTop
+                pop_up.style("transform", `translate(${translate_x}px, ${-translate_y}px)`)
+
+                // Highlight the tab
+                tab = d3.select(".tab .tablinks:nth-child(2)")
+                animation_running = true
+                highlight_element(tab)
+
+                // check if the tab is clicked
+                d3.select(".tab .tablinks:nth-child(2)").on("click", function(event) {
+                    animation_running = false
+                    d3.select(".pop-up").remove()
+                    tuto_step_7()
+                })
+            }, 2000)
+        }
+
+        function tuto_step_7() {
+            message = `
+                <h3 class="title">Top Players</h3>
+                <p>Here you can see the top players in the league.<br/>...</p>
+                <p>&nbsp;</p>
+                <p>Next, let's explore the <span class="action">player view <span class="material-symbols-outlined">person</span> by clicking on its icon</span>.</p>
+            `
+            pop_up_next(message, () => {})
         }
 
         function highlight_element(element) {
             element.transition()
                 .duration(400)
-                .style("border-color", "var(--accent-color)")
+                .style("transform", "scale(1.3)")
                 .transition()
                 .duration(400)
-                .style("border-color", "")
+                .style("transform", "scale(1)")
                 .on("end", function() {
                     if (animation_running) highlight_element(element)
                 })
