@@ -524,3 +524,90 @@ menu > a:hover {
     font-size: 1.3em;
     margin-bottom: 14px;
 }
+
+/* Top assists section */
+.top-assists ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.top-assists li {
+    padding: 8px;
+    background-color: var(--second-background-color);
+    margin-bottom: 8px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: var(--text-white-color);
+}
+
+.top-assists li:hover {
+    background-color: var(--accent-color);
+}
+
+/* New styles for top players and top assists */
+.top-players-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.top-players, .top-assists {
+    flex: 1;
+}
+
+.top-players ul, .top-assists ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.top-players li, .top-assists li {
+    padding: 8px;
+    background-color: var(--second-background-color);
+    margin-bottom: 8px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: var(--text-white-color);
+}
+
+.top-players li:hover, .top-assists li:hover {
+    background-color: var(--accent-color);
+}
+
+.player-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* New styles for top players categories */
+.top-players-category {
+    margin-top: 20px;
+}
+
+.top-players-category h2 {
+    text-align: center;
+    font-weight: 300;
+    color: var(--text-white-color);
+    font-size: 1.5em;
+    margin: 14px 0;
+}
+
+.top-players-category ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.top-players-category li {
+    padding: 8px;
+    background-color: var(--second-background-color);
+    margin-bottom: 8px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: var(--text-white-color);
+}
+
+.top-players-category li:hover {
+    background-color: var(--accent-color);
+}

@@ -1,4 +1,4 @@
-const ctx = { data: {}, teams: {}, players: {}, matches: {} };
+const ctx = { data: {}, teams: {}, players: {}, matches: {}, wiki : {} };
 
 const countryToLeague = {
     "england": "Premier League",
@@ -73,6 +73,12 @@ function load_data() {
         "data/matches/spain-2022-2023.csv",
         "data/matches/spain-2023-2024.csv",
     ];
+
+    d3.json('data/img/soccer_wiki.json')
+    .then(data => {
+        ctx.wiki = data;
+    })
+    .catch(error => console.error('Error loading JSON:', error));
 
     const teamPromises = teamFiles.map(file => {
         return d3.csv(file).then(data => {
@@ -246,38 +252,123 @@ function updateTopTeams() {
 
 function updateTopPlayers() {
     const season = document.getElementById("season").value;
+    console.log(season);
     let players = [];
-
+    
     if (ctx.players[season]) {
         players = ctx.players[season];
-        if (LEAGUE !== "All Leagues") {
-            players = players.filter(player => {
-                if (player.country) {
-                    const country = player.country.trim().toLowerCase();
-                    const playerLeague = countryToLeague[country];
-                    return playerLeague === LEAGUE;
-                }
-                return false;
-            });
-        }
+        players = players.filter(player => player.league === LEAGUE);
     }
 
-    // Sort players by goals in descending order
+    // Top scorers
     players.sort((a, b) => b.goals_overall - a.goals_overall);
-
-    // Get top players (e.g., top 10)
-    const topPlayers = players.slice(0, 10);
-
-    // Populate the top players list
+    const topPlayers = players.slice(0, 5);
     const topPlayersList = document.getElementById("top-players-list");
     topPlayersList.innerHTML = "";
-
     topPlayers.forEach(player => {
         const listItem = document.createElement("li");
+        const imgSrc = getPlayerImageUrl(player.full_name);
         listItem.innerHTML = `
-            <strong>${player.player_name}</strong> (${player.club_name}) ${player.goals_overall} Goals
+            <img src="${imgSrc}" alt="${player.full_name}" class="player-img">
+            <strong>${player.full_name}</strong> (${player.Current_Club}) ${player.goals_overall} Goals
         `;
         topPlayersList.appendChild(listItem);
     });
+
+    // Top assists
+    players.sort((a, b) => b.assists_overall - a.assists_overall);
+    const topAssists = players.slice(0, 5);
+    const topAssistsList = document.getElementById("top-assists-list");
+    topAssistsList.innerHTML = "";
+    topAssists.forEach(player => {
+        const listItem = document.createElement("li");
+        const imgSrc = getPlayerImageUrl(player.full_name);
+        listItem.innerHTML = `
+            <img src="${imgSrc}" alt="${player.full_name}" class="player-img">
+            <strong>${player.full_name}</strong> (${player.Current_Club}) ${player.assists_overall} Assists
+        `;
+        topAssistsList.appendChild(listItem);
+    });
+
+    // Top attackers
+    const topAttackers = players
+        .filter(player => player.rank_in_league_top_attackers <= 5 && player.rank_in_league_top_attackers >= 1)
+        .sort((a, b) => a.rank_in_league_top_attackers - b.rank_in_league_top_attackers);
+    const topAttackersList = document.getElementById("top-attackers-list");
+    topAttackersList.innerHTML = "";
+    topAttackers.forEach(player => {
+        const listItem = document.createElement("li");
+        const imgSrc = getPlayerImageUrl(player.full_name);
+        listItem.innerHTML = `
+            <img src="${imgSrc}" alt="${player.full_name}" class="player-img">
+            <strong>${player.full_name}</strong> (${player.Current_Club}) Rank: ${player.rank_in_league_top_attackers}
+        `;
+        topAttackersList.appendChild(listItem);
+    });
+
+    // Top midfielders
+    const topMidfielders = players
+        .filter(player => player.rank_in_league_top_midfielders <= 5 && player.rank_in_league_top_midfielders >= 1)
+        .sort((a, b) => a.rank_in_league_top_midfielders - b.rank_in_league_top_midfielders);
+    const topMidfieldersList = document.getElementById("top-midfielders-list");
+    topMidfieldersList.innerHTML = "";
+    topMidfielders.forEach(player => {
+        const listItem = document.createElement("li");
+        const imgSrc = getPlayerImageUrl(player.full_name);
+        listItem.innerHTML = `
+            <img src="${imgSrc}" alt="${player.full_name}" class="player-img">
+            <strong>${player.full_name}</strong> (${player.Current_Club}) Rank: ${player.rank_in_league_top_midfielders}
+        `;
+        topMidfieldersList.appendChild(listItem);
+    });
+
+    // Top defenders
+    const topDefenders = players
+        .filter(player => player.rank_in_league_top_defenders <= 5 && player.rank_in_league_top_defenders >= 1)
+        .sort((a, b) => a.rank_in_league_top_defenders - b.rank_in_league_top_defenders);
+    const topDefendersList = document.getElementById("top-defenders-list");
+    topDefendersList.innerHTML = "";
+    topDefenders.forEach(player => {
+        const listItem = document.createElement("li");
+        const imgSrc = getPlayerImageUrl(player.full_name);
+        listItem.innerHTML = `
+            <img src="${imgSrc}" alt="${player.full_name}" class="player-img">
+            <strong>${player.full_name}</strong> (${player.Current_Club}) Rank: ${player.rank_in_league_top_defenders}
+        `;
+        topDefendersList.appendChild(listItem);
+    });
+
+    // Top goalkeepers
+    const topGoalkeepers = players
+        .filter(player => player.save_percentage_overall)
+        .sort((a, b) => b.save_percentage_overall - a.save_percentage_overall)
+        .slice(0, 5);
+    const topGoalkeepersList = document.getElementById("top-goalkeepers-list");
+    topGoalkeepersList.innerHTML = "";
+    topGoalkeepers.forEach(player => {
+        const listItem = document.createElement("li");
+        const imgSrc = getPlayerImageUrl(player.full_name);
+        listItem.innerHTML = `
+            <img src="${imgSrc}" alt="${player.full_name}" class="player-img">
+            <strong>${player.full_name}</strong> (${player.Current_Club}) Save %: ${player.save_percentage_overall}
+        `;
+        topGoalkeepersList.appendChild(listItem);
+    });
 }
 
+function getPlayerImageUrl(player_name) {
+    if (!ctx.wiki) {
+        console.error("soccer_wiki data is not loaded");
+        return null;
+    }
+
+    const playerData = ctx.wiki.PlayerData;
+    const [forename, surname] = player_name.toLowerCase().split(" ");
+
+    const player = playerData.find(
+        p => (p.Forename.toLowerCase() === forename && p.Surname.toLowerCase() === surname) ||
+            (p.Forename.toLowerCase() === surname && p.Surname.toLowerCase() === forename) // sometime the forename and surname are inverted
+    )
+
+    return player ? player.ImageURL : "https://upload.wikimedia.org/wikipedia/commons/d/d4/Missing_photo.svg";
+}
