@@ -101,9 +101,9 @@
         function tuto_step_1() {
             message = `
                 <h3 class="title">Welcome to the Team Comparison Page</h3>
-                <p class="content">This page allows you to compare two teams based on different performance metrics.</p>
-                <p style="display: flex; gap: 4px; align-items: center;">You can click on the <span class="material-symbols-outlined">explore</span> icon to go back to the map</p>
-                <p>To change the season, select a season from the dropdown list (on the top left corner).</p>
+                <p class="content">Compare two teams based on various performance metrics here.</p>
+                <p style="display: flex; gap: 4px; align-items: center;">Click the <span class="material-symbols-outlined">explore</span> icon to return to the map.</p>
+                <p>To switch seasons, simply select one from the dropdown (top left corner).</p>
             `
 
             pop_up_next(message, tuto_step_2)
@@ -111,8 +111,8 @@
 
         function tuto_step_2() {
             message = `
-                <h3 class="title">Team comparison</h3>
-                <p class="content">To compare two teams, select a second team from the dropdown list.</p>
+                <h3 class="title">Team Comparison</h3>
+                <p class="content">Select a second team from the dropdown to compare them with the first team.</p>
             `
 
             pop_up_wrapper = pop_up_showcase(message)
@@ -140,16 +140,12 @@
 
         function tuto_step_3() {
             message = `
-                <h3 class="title">Available information</h3>
-                <p>If both selected teams have played against each other, the matches record will be displayed in the table below.<br/>
-                    You can get more information about the match by clicking on the row.
-                </p>
+                <h3 class="title">Available Information</h3>
+                <p>If both teams have faced each other, their match history will appear in the table below. It's possible to click on a row for more details.</p>
                 <p>&nbsp;</p>
-                <p>Additionally, the performance metrics for each team will be displayed in the comparison results section.</p>
+                <p>The performance metrics for each team will also be shown in the comparison results section.</p>
                 <p>&nbsp;</p>
-                <p style="display: flex; gap: 4px; align-items: center;">The next step of the tutorial is about matches.
-                    You can click on the <span class="material-symbols-outlined">sports_soccer</span> icon to view the matches.
-                </p>
+                <p style="display: flex; gap: 4px; align-items: center;">Next, we’ll explore the matches. Click the <span class="material-symbols-outlined">sports_soccer</span> icon to view them.</p>
 
                 <button onclick="tuto_step_4()" class="next-button">Explore!</button>
             `

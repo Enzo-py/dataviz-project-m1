@@ -1243,13 +1243,13 @@ function get_player_short_info(player_id, player_name) {
 
         ranked = false
         if (rank_in_league_top_attackers != 999) {
-            message += `${player_name} is ranked <span class=key">#${rank_in_league_top_attackers}</span> in the league top attackers.`
+            message += `${player_name} is ranked <span class="key">#${rank_in_league_top_attackers}</span> in the league top attackers.`
             ranked = true
         } else if (rank_in_league_top_midfielders != 999) {
-            message += `${player_name} is ranked #${rank_in_league_top_midfielders} in the league top midfielders.`
+            message += `${player_name} is ranked <span class="key">#${rank_in_league_top_midfielders}</span> in the league top midfielders.`
             ranked = true
         } else if (rank_in_league_top_defenders != 999) {
-            message += `${player_name} is ranked #${rank_in_league_top_defenders} in the league top defenders.`
+            message += `${player_name} is ranked <span class="key">#${rank_in_league_top_defenders}</span> in the league top defenders.`
             ranked = true
         } else {
             message += `${player_name} is not ranked in the league top players.`
@@ -1257,9 +1257,9 @@ function get_player_short_info(player_id, player_name) {
 
         if (rank_in_club_top_scorer != 999) {
             if (ranked) {
-                message += ` And also #${rank_in_club_top_scorer} in the club top scorers.`
+                message += ` And also <span class="key">#${rank_in_club_top_scorer}</span> in the club top scorers.`
             } else {
-                message += ` But he is ranked #${rank_in_club_top_scorer} in the club top scorers.`
+                message += ` But he is ranked <span class="key">#${rank_in_club_top_scorer}</span> in the club top scorers.`
             }
         }
     } else {

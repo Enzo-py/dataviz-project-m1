@@ -231,11 +231,11 @@
         
         function tuto_step_1() {
             message = `
-                <h3 class="title">Welcome to the club page</h3>
+                <h3 class="title">Welcome to the Club Page</h3>
 
-                <p>Here you can view detailed statistics of a club</p>
+                <p>Here you can view detailed statistics of the selected club.</p>
                 <p>&nbsp;</p>
-                <p style="display: flex; gap: 4px; align-items: center;">You can click on the <span class="material-symbols-outlined">explore</span> icon to go back to the map</p>
+                <p style="display: flex; gap: 4px; align-items: center;">Click the <span class="material-symbols-outlined">explore</span> icon to return to the map.</p>
             `
 
             pop_up_next(message, tuto_step_2)
@@ -244,10 +244,10 @@
         function tuto_step_2() {
             message = `
                 <h3 class="title">Generic Information</h3>
-                <p>Here you can view the team's logo, name, league, rank, and win ratio here.</p>
+                <p>View the team's logo, name, league, rank, and win ratio here.</p>
                 <p>&nbsp;</p>
-                <p>You can select another club via the search bar available on hover the club name</p>
-                <p>Data from 2021 to 2024 are available, you can select the season you want to view from the dropdown</p>
+                <p>Select another club using the search bar that appears when hovering over the club name.</p>
+                <p>Data from 2021 to 2024 is available. Choose a season from the dropdown to view.</p>
                 <button onclick="tuto_step_3()" class="next-button">Next</button>
             `
             pop_up_showcase(message)
@@ -269,9 +269,9 @@
 
             message = `
                 <h3 class="title">Matches</h3>
-                <p>Here you can view the matches played by the team</p>
+                <p>Here you can find the matches played by the team.</p>
                 <p>&nbsp;</p>
-                <p>If you click on a match, you will be redirected to the match page</p>
+                <p>If you click on a match, you will be redirected to its page.</p>
                 <button onclick="tuto_step_4()" class="next-button">Next</button>
             `
             pop_up_showcase(message)
@@ -285,16 +285,15 @@
             d3.select(".pop-up-wrapper").remove()
 
             message = `
-                <h3 class="title">Pages</h3>
-                <p>Here you can switch between the different pages available</p>
+                <h3 class="title">Explore Pages</h3>
+                <p>Navigate through the team's data with the options below:</p>
                 <p>&nbsp;</p>
-                <p>If you click on the <span class="switcher">Quickstats</span> to view the team's quick statistics</p>
-                <p>If you click on the <span class="switcher">Performance</span> to view the team's performance</p>
-                <p>If you click on the <span class="switcher">Players</span> to view the team's players</p>
-                <p style="display: flex; gap: 4px; align-items: center;">If you click on the <span class="material-symbols-outlined">show_chart</span> to view the league average statistics</p>
+                <p>Click on <span class="switcher">Quickstats</span> for a snapshot of the team's key stats.</p>
+                <p>Explore the team's performance by selecting <span class="switcher">Performance</span>.</p>
+                <p>Discover the team's players by clicking on <span class="switcher">Players</span>.</p>
+                <p style="display: flex; gap: 4px; align-items: center;">Get a broader view with the league's average stats by clicking <span class="material-symbols-outlined">show_chart</span>.</p>
                 <p>&nbsp;</p>
-                <p style="display: flex; gap: 4px; align-items: center;">You can click on the <span class="material-symbols-outlined">compare_arrows</span> icon to compare this team to another</p>
-                
+                <p style="display: flex; gap: 4px; align-items: center;">Compare this team with others by clicking the <span class="material-symbols-outlined">compare_arrows</span> icon.</p>
                 <button onclick="tuto_step_5()" class="next-button">Next</button>
             `
 
@@ -310,11 +309,11 @@
             d3.select(".pop-up-wrapper").remove()
 
             message = `
-                <h3 class="title">Discover the team's statistics</h3>
-                <p>Now, you can navigate through the different pages to discover the team's statistics</p>
+                <h3 class="title">Discover the Team's Statistics</h3>
+                <p>Explore the team's statistics by navigating through the different pages.</p>
                 <p>&nbsp;</p>
-                <p>The next step of the tutorial is about team comparison</p>
-                <button onclick="tuto_step_6()" class="next-button">Explore!</button>
+                <p>Next, we’ll dive into team comparisons to see how they stack up!</p>
+                <button onclick="tuto_step_6()" class="next-button">Let’s Explore!</button>
             `
             animation_running = true
             highlight_block_animation(d3.select(".compare-teams"))
@@ -350,12 +349,16 @@
                 .style("border-color", "var(--accent-color)")
                 .transition()
                 .duration(800)
-                .style("border-color", "var(--text-white-color)")
+                .style("border-color", "var(--secondary-color)")
                 .on("end", () => {
                     if (animation_running) {
                         highlight_block_animation(selection)
                     }
                 })
+        }
+
+        history.pushState = function(state, title, url) {
+            alert("You are quitting the tutorial. Do you want to continue?")
         }
     </script>
 </body>

@@ -54,25 +54,25 @@
 
         function tuto_step_1() {
             message = `
-                <h3 class="title">Project Explanation</h3>
+                <h3 class="title">Welcome to Football Insights</h3>
                 <p>
-                    This project is a data visualization of the top 5 European football leagues.<br/>
-                    We tried to present key indicators of the teams and players in a simple and intuitive way.
+                    Explore data from the top 5 European football leagues.<br/>
+                    Discover key stats about teams and players through intuitive visuals.
                 </p>
                 <p>&nbsp;</p>
                 <p>
-                    The main page is a map of Europe with the cities of the teams.
+                    Start with the main page: a map showing the teams' cities across Europe.
                 </p>
+
             `
             pop_up_next(message, tuto_step_2);
         }
 
         function tuto_step_2() {
             message = `
-                <h3 class="title">Selection a city</h3>
-
+                <h3 class="title">Select a City</h3>
                 <p>
-                    You can select a city by clicking on it (green circle).
+                    Click on any city (green circle) to see the list of associated clubs.
                 </p>
             `
 
@@ -107,11 +107,11 @@
             message = `
                 <h3 class="title">City Information</h3>
                 <p>
-                    When you select a city, a menu on the left will appear with the teams of the city.
+                    After selecting a city, a menu on the left will show the city's teams.
                 </p>
-
+                <p>&nbsp;</p>
                 <p>
-                    You can click on a team to open the team's information page.
+                    You can click on a team to view its details later.
                 </p>
 
                 <button class="next-button">Next</button>
@@ -148,9 +148,9 @@
             showcase_background.style.background = `radial-gradient(circle ${circle_radius}px at 100% ${circle_y}px, rgba(255, 255, 255, 0) ${circle_radius}px, #181919ee ${circle_radius + 40}px)`
             
             message = `
-                <h3 class="title">Display clubs logo</h3>
+                <h3 class="title">Display Club Logo</h3>
                 <p>
-                    You can click on PSG logo to display the logo of the team on the map.
+                    Click the PSG logo to display the team's logo on the map.
                 </p>
             `
 
@@ -162,7 +162,7 @@
             message = `
                 <h3 class="title">Matches</h3>
                 <p>
-                    You can click on the ball to display all the matches of the 5 European leagues.
+                    You can click on the ball to view all matches from the 5 European leagues.
                 </p>
             `
 
@@ -175,9 +175,9 @@
 
         function tuto_step_6() {
             message = `
-                <h3 class="title">Search bar</h3>
+                <h3 class="title">Search Bar</h3>
                 <p>
-                    You can also use the search bar to find a club by its name or from a player who plays in this club.
+                    You can use the search bar to find a club by name or a player from the club.
                 </p>
 
             `
@@ -192,8 +192,9 @@
             message = `
                 <h3 class="title">Team Information</h3>
                 <p>
-                    Now, please, click on the team logo present in the left menu to display the team information.
+                    Please click on the team logo in the left menu to view the team's information.
                 </p>
+
             `
 
             document.querySelector(".showcase-background").remove()
