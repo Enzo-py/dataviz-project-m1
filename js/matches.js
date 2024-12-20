@@ -153,7 +153,7 @@ function updateMatchesList() {
     
     // Display matches
     matchesListElement.innerHTML = "";
-    teamMatches.forEach(match => {
+    teamMatches.forEach((match, i) => {
         const row = document.createElement("tr");
         row.setAttribute("is-visible", "true");
         const homeScore = parseInt(match.home_team_goal_count);
@@ -171,9 +171,18 @@ function updateMatchesList() {
             window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
         });
         matchesListElement.appendChild(row);
+        // d3.select(row).style("transform", "scale(0)").style("transform-origin", "top").style("transition", "none")
+        //     .transition()
+        //     .duration(500)
+        //     .delay(i * 40)
+        //     .style("transform", "scale(1.02)")
+        //     .transition()
+        //     .duration(200)
+        //     .style("transform")
+        //     .style("transition", "all 0.3s")
     });
 
-    pagination(false);
+    pagination(true);
 }
 // Helper function to get the team's league
 function getTeamLeague(teamName, season) {
@@ -274,8 +283,63 @@ function showMatchDetails(match) {
 
     // Update score and match info
     matchDetails.querySelector('.date').textContent = match.date_GMT;
-    matchDetails.querySelector('.home-score').textContent = match.home_team_goal_count;
-    matchDetails.querySelector('.away-score').textContent = match.away_team_goal_count;
+
+    home_score = d3.select(matchDetails).select(".home-score")
+    away_score = d3.select(matchDetails).select(".away-score")
+
+    nb_rd_home = Math.floor(Math.random() * 6)
+    home_score.append("span").text(match.home_team_goal_count)
+        .attr("class", "true-score")
+        .style("position", "absolute")
+        .style("transform", "translateY(100px)")
+        .style("right", "0")
+        .transition()
+        .duration(900)
+        .delay(800 * nb_rd_home)
+        .style("transform", "translateY(-20px)")
+        .transition()
+        .duration(900)
+        .style("transform", "translateY(0)")
+
+    nb_rd_away = Math.floor(Math.random() * 5)
+    away_score.append("span").text(match.away_team_goal_count)
+        .attr("class", "true-score")
+        .style("position", "absolute")
+        .style("transform", "translateY(100px)")
+        .style("left", "0")
+        .transition()
+        .duration(900)
+        .delay(900 * nb_rd_away + 100)
+        .style("transform", "translateY(-20px)")
+        .transition()
+        .duration(900)
+        .style("transform", "translateY(0)")
+
+    // create counter animation for score
+    for (var i = 0; i < nb_rd_home; i++) {
+        home_score.append("span").text(String(Math.floor(Math.random() * 7)))
+            .style("position", "absolute")
+            .style("transform", "translateY(100px)")
+            .style("right", "0")
+            .transition("ease-in-out")
+            .duration(900 + i * 400)
+            .delay(i * 800 - i * 20)
+            .style("transform", "translateY(-100px)")
+    }
+
+    for (var i = 0; i < nb_rd_away; i++) {
+        away_score.append("span").text(String(Math.floor(Math.random() * 7)))
+            .style("position", "absolute")
+            .style("transform", "translateY(100px)")
+            .style("left", "0")
+            .transition("ease-in-out")
+            .duration(900 + i * 400 + 100)
+            .delay(i * 800 - i * 20 + 150)
+            .style("transform", "translateY(-100px)")
+    }
+
+    // matchDetails.querySelector('.home-score').textContent = match.home_team_goal_count;
+    // matchDetails.querySelector('.away-score').textContent = match.away_team_goal_count;
     matchDetails.querySelector('.stadium').textContent = match.stadium_name;
     
     // Update half-time score
@@ -312,6 +376,22 @@ function showMatchDetails(match) {
     // Update possession percentages
     matchDetails.querySelector('.home-possession').textContent = `${match.home_team_possession}%`;
     matchDetails.querySelector('.away-possession').textContent = `${match.away_team_possession}%`;
+
+    // animation
+    d3.selectAll(".match-details .team-logo").style("transform", "scale(0)")
+        .transition()
+        .duration(500)
+        .style("transform", "scale(1.02)")
+        .transition()
+        .duration(200)
+
+    d3.selectAll(".match-details .stat-item").style("transform", "scale(0)").style("transform-origin", "top")
+        .transition()
+        .duration(500)
+        .delay((d, i) => i * 180)
+        .style("transform", "scale(1.02)")
+        .transition()
+        .duration(200)
 }
 
 function updateStatItem(grid, type, homeValue, awayValue) {
