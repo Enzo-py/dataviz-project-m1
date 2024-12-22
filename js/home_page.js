@@ -80,30 +80,30 @@ function toggle_rendering() {
 
 function load_data() {
     const files = [
-        "data/map/nutsbn.geojson", 
-        "data/map/nutsrg.geojson",
-        "data/clubs_cities.csv",
-        "data/map/cities.geojson",
-        "data/clubs_logo.csv",
-        "data/map/all.geojson"
+        "/data/map/nutsbn.geojson", 
+        "/data/map/nutsrg.geojson",
+        "/data/clubs_cities.csv",
+        "/data/map/cities.geojson",
+        "/data/clubs_logo.csv",
+        "/data/map/all.geojson"
     ]
 
     const playerFiles = [
-        "data/players/england-2021-2022.csv",
-        "data/players/england-2022-2023.csv",
-        "data/players/england-2023-2024.csv",
-        "data/players/france-2021-2022.csv",
-        "data/players/france-2022-2023.csv",
-        "data/players/france-2023-2024.csv",
-        "data/players/germany-2021-2022.csv",
-        "data/players/germany-2022-2023.csv",
-        "data/players/germany-2023-2024.csv",
-        "data/players/italy-2021-2022.csv",
-        "data/players/italy-2022-2023.csv",
-        "data/players/italy-2023-2024.csv",
-        "data/players/spain-2021-2022.csv",
-        "data/players/spain-2022-2023.csv",
-        "data/players/spain-2023-2024.csv",
+        "/data/players/england-2021-2022.csv",
+        "/data/players/england-2022-2023.csv",
+        "/data/players/england-2023-2024.csv",
+        "/data/players/france-2021-2022.csv",
+        "/data/players/france-2022-2023.csv",
+        "/data/players/france-2023-2024.csv",
+        "/data/players/germany-2021-2022.csv",
+        "/data/players/germany-2022-2023.csv",
+        "/data/players/germany-2023-2024.csv",
+        "/data/players/italy-2021-2022.csv",
+        "/data/players/italy-2022-2023.csv",
+        "/data/players/italy-2023-2024.csv",
+        "/data/players/spain-2021-2022.csv",
+        "/data/players/spain-2022-2023.csv",
+        "/data/players/spain-2023-2024.csv",
     ];
 
     const playerPromises = playerFiles.map(file => {
@@ -352,7 +352,7 @@ function render_map() {
             .attr("class", "club-logo")
             .style("cursor", "pointer")
             .on("click", () => {
-                window.location.href = `/team_page.html?club=${d.Club}`;
+                window.location.href = `/html/team_page.html?club=${d.Club}`;
             });
     })
 

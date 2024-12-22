@@ -9,7 +9,7 @@ const countryToLeague = {
 };
 
 function loadClubLogos() {
-    return d3.csv("data/clubs_logo.csv").then(data => {
+    return d3.csv("/data/clubs_logo.csv").then(data => {
         ctx.logos = {};
         data.forEach(d => {
             ctx.logos[d.Club.trim()] = d.Logo_URL;
@@ -19,57 +19,57 @@ function loadClubLogos() {
 
 function load_data() {
     const teamFiles = [
-        "data/teams/england-2021-2022.csv",
-        "data/teams/england-2022-2023.csv",
-        "data/teams/england-2023-2024.csv",
-        "data/teams/france-2021-2022.csv",
-        "data/teams/france-2022-2023.csv",
-        "data/teams/france-2023-2024.csv",
-        "data/teams/germany-2021-2022.csv",
-        "data/teams/germany-2022-2023.csv",
-        "data/teams/germany-2023-2024.csv",
-        "data/teams/italy-2021-2022.csv",
-        "data/teams/italy-2022-2023.csv",
-        "data/teams/italy-2023-2024.csv",
-        "data/teams/spain-2021-2022.csv",
-        "data/teams/spain-2022-2023.csv",
-        "data/teams/spain-2023-2024.csv",
+        "/data/teams/england-2021-2022.csv",
+        "/data/teams/england-2022-2023.csv",
+        "/data/teams/england-2023-2024.csv",
+        "/data/teams/france-2021-2022.csv",
+        "/data/teams/france-2022-2023.csv",
+        "/data/teams/france-2023-2024.csv",
+        "/data/teams/germany-2021-2022.csv",
+        "/data/teams/germany-2022-2023.csv",
+        "/data/teams/germany-2023-2024.csv",
+        "/data/teams/italy-2021-2022.csv",
+        "/data/teams/italy-2022-2023.csv",
+        "/data/teams/italy-2023-2024.csv",
+        "/data/teams/spain-2021-2022.csv",
+        "/data/teams/spain-2022-2023.csv",
+        "/data/teams/spain-2023-2024.csv",
     ];
 
     const playerFiles = [
-        "data/players/england-2021-2022.csv",
-        "data/players/england-2022-2023.csv",
-        "data/players/england-2023-2024.csv",
-        "data/players/france-2021-2022.csv",
-        "data/players/france-2022-2023.csv",
-        "data/players/france-2023-2024.csv",
-        "data/players/germany-2021-2022.csv",
-        "data/players/germany-2022-2023.csv",
-        "data/players/germany-2023-2024.csv",
-        "data/players/italy-2021-2022.csv",
-        "data/players/italy-2022-2023.csv",
-        "data/players/italy-2023-2024.csv",
-        "data/players/spain-2021-2022.csv",
-        "data/players/spain-2022-2023.csv",
-        "data/players/spain-2023-2024.csv",
+        "/data/players/england-2021-2022.csv",
+        "/data/players/england-2022-2023.csv",
+        "/data/players/england-2023-2024.csv",
+        "/data/players/france-2021-2022.csv",
+        "/data/players/france-2022-2023.csv",
+        "/data/players/france-2023-2024.csv",
+        "/data/players/germany-2021-2022.csv",
+        "/data/players/germany-2022-2023.csv",
+        "/data/players/germany-2023-2024.csv",
+        "/data/players/italy-2021-2022.csv",
+        "/data/players/italy-2022-2023.csv",
+        "/data/players/italy-2023-2024.csv",
+        "/data/players/spain-2021-2022.csv",
+        "/data/players/spain-2022-2023.csv",
+        "/data/players/spain-2023-2024.csv",
     ];
 
     const matchesFiles = [
-        "data/matches/england-2021-2022.csv",
-        "data/matches/england-2022-2023.csv",
-        "data/matches/england-2023-2024.csv",
-        "data/matches/france-2021-2022.csv",
-        "data/matches/france-2022-2023.csv",
-        "data/matches/france-2023-2024.csv",
-        "data/matches/germany-2021-2022.csv",
-        "data/matches/germany-2022-2023.csv",
-        "data/matches/germany-2023-2024.csv",
-        "data/matches/italy-2021-2022.csv",
-        "data/matches/italy-2022-2023.csv",
-        "data/matches/italy-2023-2024.csv",
-        "data/matches/spain-2021-2022.csv",
-        "data/matches/spain-2022-2023.csv",
-        "data/matches/spain-2023-2024.csv",
+        "/data/matches/england-2021-2022.csv",
+        "/data/matches/england-2022-2023.csv",
+        "/data/matches/england-2023-2024.csv",
+        "/data/matches/france-2021-2022.csv",
+        "/data/matches/france-2022-2023.csv",
+        "/data/matches/france-2023-2024.csv",
+        "/data/matches/germany-2021-2022.csv",
+        "/data/matches/germany-2022-2023.csv",
+        "/data/matches/germany-2023-2024.csv",
+        "/data/matches/italy-2021-2022.csv",
+        "/data/matches/italy-2022-2023.csv",
+        "/data/matches/italy-2023-2024.csv",
+        "/data/matches/spain-2021-2022.csv",
+        "/data/matches/spain-2022-2023.csv",
+        "/data/matches/spain-2023-2024.csv",
     ];
 
     const teamPromises = teamFiles.map(file => {
@@ -214,7 +214,7 @@ function updateMatchesList() {
             row.style.cursor = "pointer";
             row.addEventListener("click", () => {
                 const currentTeam = document.getElementById("team1").value;
-                window.location.href = `matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
+                window.location.href = `/html/matches.html?match=${match}&date=${match.date_GMT}&team=${currentTeam}`;
             });
             matchesListElement.appendChild(row);
         });

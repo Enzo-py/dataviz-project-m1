@@ -11,7 +11,7 @@ By focusing on user-friendly design and engaging visualizations, the platform di
 
 1. Start a web server at the project root directory. For example, using Python:
 ```bash
-    python -m http.server
+python -m http.server
 ```
 
 2. Open the platform in your web browser:
@@ -34,7 +34,7 @@ For a comprehensive overview of the project, refer to the **Project Report** (`R
 
 ### Disclaimer about the Data
 
-The dataset used in this project is sourced from [FootyStats](https://footystats.org/), accessed through a paid subscription. It includes football data from the 2021-2024 seasons and is used solely for academic purposes as part of the Data Visualization course at École Polytechnique.
+The dataset used in this project is sourced from [FootyStats](https://footystats.org/), accessed through a paid subscription. It includes football data from the 2021-2024 seasons and is used solely for academic purposes.
 
 This project is non-commercial and serves to showcase the work completed during the course. The dataset is not updated or used for any financial gain. We respect the rights of FootyStats as the data provider and encourage anyone interested in accessing similar data to explore their subscription options. 
 

@@ -29,26 +29,26 @@ async function setup_radar() {
 
 function load_data() {
     const files = [
-        './data/players/england-2021-2022.csv',
-        './data/players/england-2022-2023.csv',
-        './data/players/england-2023-2024.csv',
-        './data/players/france-2021-2022.csv',
-        './data/players/france-2022-2023.csv',
-        './data/players/france-2023-2024.csv',
-        './data/players/germany-2021-2022.csv',
-        './data/players/germany-2022-2023.csv',
-        './data/players/germany-2023-2024.csv',
-        './data/players/italy-2021-2022.csv',
-        './data/players/italy-2022-2023.csv',
-        './data/players/italy-2023-2024.csv',
-        './data/players/spain-2021-2022.csv',
-        './data/players/spain-2022-2023.csv',
-        './data/players/spain-2023-2024.csv',
-        './data/nationalities_flag.csv',
-        './data/clubs_logo.csv',
-        './data/player_card_stats.json',
-        './data/players_radar_categories.json',
-        './data/img/soccer_wiki.json'
+        '/data/players/england-2021-2022.csv',
+        '/data/players/england-2022-2023.csv',
+        '/data/players/england-2023-2024.csv',
+        '/data/players/france-2021-2022.csv',
+        '/data/players/france-2022-2023.csv',
+        '/data/players/france-2023-2024.csv',
+        '/data/players/germany-2021-2022.csv',
+        '/data/players/germany-2022-2023.csv',
+        '/data/players/germany-2023-2024.csv',
+        '/data/players/italy-2021-2022.csv',
+        '/data/players/italy-2022-2023.csv',
+        '/data/players/italy-2023-2024.csv',
+        '/data/players/spain-2021-2022.csv',
+        '/data/players/spain-2022-2023.csv',
+        '/data/players/spain-2023-2024.csv',
+        '/data/nationalities_flag.csv',
+        '/data/clubs_logo.csv',
+        '/data/player_card_stats.json',
+        '/data/players_radar_categories.json',
+        '/data/img/soccer_wiki.json'
     ]
 
     d3.select("body .players-view")
@@ -960,12 +960,12 @@ async function create_player_card(player_id, player_card) {
         .append("title").text(player_club)
 
     // load the svg of the shirt
-    // left_head_card.append("object").attr("data", "./data/img/icon/shirt2.svg").attr("class", "shirt")
+    // left_head_card.append("object").attr("data", "/data/img/icon/shirt2.svg").attr("class", "shirt")
 
 
     sub_head_card = player_card.append("div").attr("class", "sub-head-card")
     shirt_block = sub_head_card.append("div").attr("class", "shirt-block")
-    shirt_block.append("img").attr("src", "./data/img/icon/shirt.png").attr("class", "shirt")
+    shirt_block.append("img").attr("src", "/data/img/icon/shirt.png").attr("class", "shirt")
     shirt_block.append("span")
         .text(player_number)
         .style("color", ctx.selected_players[player_id])
@@ -978,7 +978,7 @@ async function create_player_card(player_id, player_card) {
         .classed("player-info", true)
 
     star_block = sub_head_card.append("div").attr("class", "star-block")
-    svg_star = await load_svg_into(star_block, "./data/img/icon/star.svg")
+    svg_star = await load_svg_into(star_block, "/data/img/icon/star.svg")
     svg_star.attr("class", "raiting-star")
         .attr("width", "100px")
         .attr("height", "100px")
